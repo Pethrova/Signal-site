@@ -1,153 +1,1347 @@
-/* ═══════════════════════════════════════════════════════════════
-   SIGNAL RESOLUTION — Global Stylesheet
-   Matches v7 design DNA: obsidian / gold / ember / IBM Plex Mono
-═══════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#080706;--s1:#0f0e0c;--s2:#161410;--s3:#1c1a16;
+  --bdr:rgba(255,200,80,.07);--bdr-hi:rgba(255,200,80,.18);
+  --bdr-em:rgba(255,107,53,.16);--bdr-em-lo:rgba(255,107,53,.09);
+  --gold:#f5a623;--gold-hi:#ffd166;--gold-lo:rgba(245,166,35,.08);
+  --ember:#ff6b35;--ember-lo:rgba(255,107,53,.07);
+  --text:#ede8df;--slate:#c8c4bb;--muted:#6e6860;--dim:#3a3530;--void:#1a1714;
+  --F:'Bebas Neue',sans-serif;--S:'Fraunces',serif;--M:'IBM Plex Mono',monospace;
+  --max:1200px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--S);overflow-x:hidden;cursor:none;}
 
-/* ── TOKENS ─────────────────────────────────────────────────── */
-:root {
-  --bg:     #080706;
-  --s1:     #0f0e0c;
-  --s2:     #161410;
-  --s3:     #1c1a16;
-  --bdr:    rgba(255,200,80,.07);
-  --bdr-hi: rgba(255,200,80,.18);
-  --gold:   #f5a623;
-  --gold-hi:#ffd166;
-  --gold-lo:rgba(245,166,35,.08);
-  --ember:  #ff6b35;
-  --text:   #ede8df;
-  --slate:  #c8c4bb;
-  --muted:  #6e6860;
-  --dim:    #3a3530;
-  --F: 'Bebas Neue', sans-serif;
-  --S: 'Fraunces', serif;
-  --M: 'IBM Plex Mono', monospace;
-  --max: 1200px;
+/* ═══ CURSOR ═══ */
+#cur{position:fixed;width:7px;height:7px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .15s,height .15s;}
+#curR{position:fixed;width:28px;height:28px;border:1px solid rgba(245,166,35,.28);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
+body:has(a:hover) #cur,body:has(button:hover) #cur{width:14px;height:14px;}
+body:has(a:hover) #curR,body:has(button:hover) #curR{width:48px;height:48px;border-color:rgba(245,166,35,.08);}
+
+/* ═══ GRAIN ═══ */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9997;opacity:.45;}
+
+/* ═══ NAV ═══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:18px 56px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,border-color .4s;}
+nav.stuck{background:rgba(8,7,6,.96);backdrop-filter:blur(28px);border-bottom:1px solid var(--bdr);}
+.n-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.n-sigil svg{animation:spin 28s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.n-word{font-family:var(--F);font-size:16px;letter-spacing:.14em;color:var(--text);}
+.n-links{display:flex;gap:36px;list-style:none;}
+.n-links a{font-family:var(--M);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.n-links a:hover{color:var(--gold);}
+.n-cta{font-family:var(--M);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;padding:10px 22px;border:1px solid var(--gold);color:var(--gold);text-decoration:none;position:relative;overflow:hidden;transition:color .25s;}
+.n-cta::before{content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-101%);transition:transform .26s ease;}
+.n-cta:hover::before{transform:translateX(0);}
+.n-cta:hover{color:var(--bg);}
+
+/* ═══ SHARED ═══ */
+.inner{max-width:var(--max);margin:0 auto;}
+.sec{padding:100px 56px;}
+.eyebrow{font-family:var(--M);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--gold);}
+.eyebrow.red{color:var(--ember);}
+.eyebrow.red::before{background:var(--ember);}
+.sec-hl{font-family:var(--F);font-size:clamp(46px,6vw,86px);line-height:.92;letter-spacing:.02em;color:var(--text);margin-bottom:20px;}
+.sec-hl em{color:var(--gold);font-style:normal;}
+.sec-hl .r{color:var(--ember);}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .75s ease,transform .75s ease;}
+.rv.in{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.08s;}.d2{transition-delay:.16s;}.d3{transition-delay:.24s;}.d4{transition-delay:.32s;}.d5{transition-delay:.4s;}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--bg);font-family:var(--M);font-size:10.5px;font-weight:500;letter-spacing:.11em;text-transform:uppercase;padding:15px 30px;text-decoration:none;cursor:pointer;border:none;position:relative;overflow:hidden;transition:box-shadow .28s,transform .2s;}
+.btn::before{content:'';position:absolute;inset:0;background:var(--gold-hi);transform:translateX(-101%) skewX(-8deg);transition:transform .35s ease;}
+.btn:hover::before{transform:translateX(180%) skewX(-8deg);}
+.btn:hover{box-shadow:0 0 56px rgba(245,166,35,.32);transform:translateY(-1px);}
+.btn span{position:relative;z-index:1;}
+.btn-ghost{font-family:var(--M);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:color .2s;}
+.btn-ghost:hover{color:var(--gold);}
+.btn-ghost .arr{transition:transform .2s;}
+.btn-ghost:hover .arr{transform:translateX(5px);}
+
+/* ═══ HERO ═══ */
+.hero{min-height:100vh;padding:0 56px;position:relative;overflow:hidden;display:flex;align-items:center;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(245,166,35,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,.018) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 90% 75% at 45% 35%,black 40%,transparent 100%);}
+.orb{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;animation:drift 12s ease-in-out infinite alternate;}
+.orb1{width:620px;height:620px;background:rgba(245,166,35,.045);top:-200px;right:-120px;animation-duration:14s;}
+.orb2{width:380px;height:380px;background:rgba(255,107,53,.055);bottom:0;left:-60px;animation-duration:10s;animation-delay:-4s;}
+.orb3{width:200px;height:200px;background:rgba(245,166,35,.035);top:30%;left:32%;animation-duration:8s;animation-delay:-2s;}
+@keyframes drift{0%{transform:translate(0,0) scale(1);}100%{transform:translate(30px,20px) scale(1.05);}}
+.hero-inner{max-width:var(--max);margin:0 auto;width:100%;position:relative;z-index:2;display:grid;grid-template-columns:1fr 480px;gap:56px;align-items:start;padding:140px 0 90px;}
+
+.hero-kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--M);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ember);border:1px solid var(--bdr-em);background:var(--ember-lo);padding:5px 14px;margin-bottom:28px;}
+.kicker-dot{width:5px;height:5px;background:var(--ember);border-radius:50%;animation:pulse 1.8s infinite;}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,107,53,.4);}50%{opacity:.3;box-shadow:0 0 0 6px rgba(255,107,53,0);}}
+
+.hero-hl{font-family:var(--F);font-size:clamp(64px,8.5vw,124px);line-height:.90;letter-spacing:.01em;color:var(--text);}
+.hero-hl .g{color:var(--dim);}
+.hero-hl .gold{color:var(--gold);}
+.hero-tagline{font-family:var(--S);font-style:italic;font-size:clamp(16px,1.7vw,20px);color:var(--slate);line-height:1.75;max-width:500px;margin:28px 0 20px;}
+.hero-pain-bar{max-width:490px;margin-bottom:36px;}
+.hpb-line{font-family:var(--M);font-size:12.5px;color:var(--muted);line-height:1.9;padding:20px 22px;border-left:2px solid var(--ember);background:linear-gradient(90deg,rgba(255,107,53,.05),transparent);}
+.hpb-line .em{color:var(--ember);font-weight:500;}
+.hpb-line .hi{color:var(--slate);}
+.hero-actions{display:flex;align-items:center;gap:18px;margin-bottom:44px;flex-wrap:wrap;}
+.hero-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.hm-pip{display:flex;align-items:center;gap:7px;font-family:var(--M);font-size:11px;color:var(--dim);}
+.hm-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+.hm-sep{width:1px;height:16px;background:var(--dim);}
+
+/* ─── HERO RIGHT: SCORE PREVIEW CARD ─── */
+/* margin-top pushes the card down so its top edge aligns with the
+   baseline of "PIPELINE" (line 2 of the h1).
+   Breakdown: kicker block (~52px) + line 1 "YOUR" at 8.5vw × line-height .90
+   Both lines use the same clamp(64px,8.5vw,124px) × .90 = one rendered line.         */
+.score-card{background:var(--s1);border:1px solid var(--bdr-hi);overflow:hidden;position:relative;margin-top:calc(52px + clamp(58px,7.65vw,112px));}
+.score-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold) 0%,var(--ember) 55%,transparent 100%);}
+.sc-head{padding:28px 32px 24px;border-bottom:1px solid var(--bdr);}
+.sc-eyebrow{font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.sc-title{font-family:var(--F);font-size:28px;letter-spacing:.04em;color:var(--text);line-height:.96;}
+
+/* animated signal score ring area */
+.sc-score-area{padding:28px 32px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:28px;background:var(--gold-lo);}
+.sc-ring{width:110px;height:110px;flex-shrink:0;position:relative;}
+.sc-ring svg{transform:rotate(-90deg);}
+.sc-ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.sc-ring-val{font-family:var(--F);font-size:38px;color:var(--gold);line-height:1;}
+.sc-ring-sub{font-family:var(--M);font-size:10px;color:var(--muted);letter-spacing:.1em;}
+.sc-score-right{}
+.sc-score-label{font-family:var(--M);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.sc-delivers{display:flex;flex-direction:column;gap:8px;}
+.sc-deliver{font-family:var(--M);font-size:12px;color:var(--slate);display:flex;align-items:flex-start;gap:9px;line-height:1.5;}
+.sc-deliver::before{content:'→';color:var(--gold);flex-shrink:0;}
+
+/* category bars preview */
+.sc-cats{display:flex;flex-direction:column;gap:0;}
+.sc-cat{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--bdr);}
+.sc-cat:last-child{border-bottom:none;}
+.sc-cat-name{font-family:var(--M);font-size:11px;color:var(--muted);padding:14px 18px;width:148px;flex-shrink:0;border-right:1px solid var(--bdr);}
+.sc-cat-bar-wrap{flex:1;padding:14px 18px;background:var(--s2);}
+.sc-cat-bar{height:6px;background:var(--bdr);position:relative;overflow:hidden;border-radius:1px;}
+.sc-cat-fill{height:100%;background:var(--gold);transition:width 1.4s ease;width:0;}
+.sc-cat.weak .sc-cat-fill{background:var(--ember);}
+.sc-cat.weak .sc-cat-name{color:var(--ember);}
+.sc-cat-pct{font-family:var(--M);font-size:11px;color:var(--dim);padding:14px 16px;flex-shrink:0;min-width:46px;text-align:right;}
+.sc-cat.weak .sc-cat-pct{color:var(--ember);}
+
+.sc-foot{padding:24px 32px;}
+.sc-foot-body{font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.75;margin-bottom:18px;}
+.sc-foot-body strong{color:var(--gold);}
+
+/* ═══ TICKER ═══ */
+.ticker-strip{border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);background:var(--s1);padding:12px 0;overflow:hidden;position:relative;}
+.ticker-strip::before,.ticker-strip::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none;}
+.ticker-strip::before{left:0;background:linear-gradient(90deg,var(--s1),transparent);}
+.ticker-strip::after{right:0;background:linear-gradient(-90deg,var(--s1),transparent);}
+.ticker{display:flex;animation:tick 38s linear infinite;width:max-content;}
+.t-item{font-family:var(--M);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:0 34px;display:flex;align-items:center;gap:16px;white-space:nowrap;}
+.t-sep{color:var(--gold);font-size:8px;}
+@keyframes tick{to{transform:translateX(-50%);}}
+
+/* ═══ PAIN ═══ */
+.pain{background:var(--s1);}
+.pain-layout{display:grid;grid-template-columns:1fr 1fr;gap:88px;align-items:start;}
+.pain-intro{font-family:var(--S);font-style:italic;font-size:18px;color:var(--slate);line-height:1.9;margin:18px 0 36px;}
+.pain-intro strong{color:var(--text);font-style:normal;}
+
+/* compound cost ledger */
+.cost-ledger{margin-bottom:32px;}
+.cl-label{font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.cl-label::before{content:'';width:18px;height:1px;background:var(--ember);}
+.cl-rows{display:flex;flex-direction:column;gap:2px;}
+.cl-row{display:flex;align-items:stretch;border:1px solid var(--bdr-em-lo);transition:border-color .25s,background .25s;}
+.cl-row:hover{border-color:var(--bdr-em);background:rgba(255,107,53,.04);}
+.cl-num{width:48px;min-width:48px;background:rgba(255,107,53,.06);display:flex;align-items:center;justify-content:center;font-family:var(--F);font-size:18px;color:rgba(255,107,53,.3);border-right:1px solid var(--bdr-em-lo);transition:color .25s;}
+.cl-row:hover .cl-num{color:var(--ember);}
+.cl-body{padding:18px 22px;flex:1;}
+.cl-title{font-family:var(--M);font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px;}
+.cl-sub{font-family:var(--M);font-size:11px;color:var(--muted);line-height:1.65;}
+.cl-impact{padding:0 18px;align-self:center;font-family:var(--M);font-size:10px;color:var(--ember);border-left:1px solid var(--bdr-em-lo);white-space:nowrap;text-align:center;}
+.cl-impact strong{display:block;font-size:13px;margin-bottom:1px;}
+
+.cost-total{padding:16px 20px;border:1px solid rgba(255,107,53,.28);background:rgba(255,107,53,.05);display:flex;justify-content:space-between;align-items:center;margin-top:2px;}
+.ct-label{font-family:var(--M);font-size:10px;color:var(--slate);}
+.ct-val{font-family:var(--F);font-size:22px;color:var(--ember);letter-spacing:.04em;}
+
+.data-anchor{padding:22px 24px;border:1px solid var(--bdr);background:var(--s2);margin-top:22px;}
+.da-label{font-family:var(--M);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.da-stats{display:flex;gap:0;}
+.da-stat{flex:1;padding:10px 18px;border-right:1px solid var(--bdr);}
+.da-stat:last-child{border-right:none;}
+.da-stat-val{font-family:var(--F);font-size:32px;color:var(--gold);line-height:1;}
+.da-stat-sub{font-family:var(--M);font-size:10.5px;color:var(--muted);line-height:1.5;margin-top:4px;}
+
+.pain-right{position:sticky;top:120px;}
+.morning{background:var(--s2);border:1px solid var(--bdr);padding:32px;margin-bottom:22px;}
+.morn-label{font-family:var(--M);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+.morn-thoughts{display:flex;flex-direction:column;gap:10px;}
+.morn-t{font-family:var(--S);font-style:italic;font-size:15.5px;color:var(--slate);line-height:1.65;padding:12px 16px;border-left:2px solid var(--dim);transition:border-color .3s;}
+.morn-t:hover{border-left-color:var(--gold);}
+.morn-t .em{color:var(--text);font-style:normal;}
+.reframe{border-left:3px solid var(--gold);padding:32px 36px;background:rgba(245,166,35,.025);margin-bottom:22px;}
+.rf-label{font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.rf-q{font-family:var(--S);font-style:italic;font-size:clamp(19px,2.2vw,26px);color:var(--text);line-height:1.45;margin-bottom:18px;}
+.rf-q em{color:var(--gold);font-style:normal;}
+.rf-body{font-family:var(--M);font-size:12px;color:var(--muted);line-height:1.8;}
+.pain-cta-mini{text-align:center;padding:32px;border:1px solid var(--bdr-hi);background:var(--gold-lo);}
+.pcm-hl{font-family:var(--F);font-size:26px;letter-spacing:.04em;color:var(--text);margin-bottom:12px;}
+.pcm-sub{font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.65;margin-bottom:20px;}
+
+/* ═══ TRANSFORMATION ═══ */
+.transform{background:var(--bg);}
+.ba-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:44px 0 52px;}
+.ba-col{padding:42px 38px;border:1px solid var(--bdr);}
+.ba-before{background:var(--s1);border-color:rgba(255,107,53,.14);}
+.ba-after{background:linear-gradient(135deg,rgba(245,166,35,.04) 0%,var(--s1) 60%);border-color:var(--bdr-hi);}
+.ba-tag{font-family:var(--M);font-size:10px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:9px;}
+.ba-tag.neg{color:var(--ember);}
+.ba-tag.neg::before{content:'—';font-size:12px;}
+.ba-tag.pos{color:var(--gold);}
+.ba-tag.pos::before{content:'+';font-size:12px;}
+.ba-hl{font-family:var(--F);font-size:32px;letter-spacing:.04em;margin-bottom:26px;line-height:1.0;}
+.ba-before .ba-hl{color:var(--ember);}
+.ba-after .ba-hl{color:var(--gold);}
+.ba-list{display:flex;flex-direction:column;gap:16px;}
+.ba-item{display:flex;gap:12px;font-family:var(--S);font-size:16px;line-height:1.65;}
+.ba-item.neg{color:var(--muted);}
+.ba-item.pos{color:var(--slate);}
+.ba-mk{flex-shrink:0;margin-top:3px;font-family:var(--M);font-size:14px;}
+.ba-item.neg .ba-mk{color:var(--ember);}
+.ba-item.pos .ba-mk{color:var(--gold);}
+.ba-close{display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;}
+.ba-close-hl{font-family:var(--F);font-size:clamp(28px,3.5vw,48px);color:var(--text);letter-spacing:.03em;line-height:1;}
+.ba-close-hl em{color:var(--gold);font-style:normal;}
+.ba-close-body{font-family:var(--S);font-style:italic;font-size:16px;color:var(--muted);max-width:560px;line-height:1.7;}
+
+/* ═══ CTA INTERRUPT BAND ═══ */
+.cta-band{background:var(--void);border-top:1px solid var(--bdr-hi);border-bottom:1px solid var(--bdr-hi);padding:0 56px;position:relative;overflow:hidden;}
+.cta-band::before{content:'NINE QUESTIONS';position:absolute;left:-10px;top:50%;transform:translateY(-50%);font-family:var(--F);font-size:180px;color:rgba(245,166,35,.012);pointer-events:none;white-space:nowrap;line-height:1;}
+.cb-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr auto;align-items:center;gap:60px;padding:52px 0;}
+.cb-kicker{font-family:var(--M);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ember);margin-bottom:12px;display:flex;align-items:center;gap:9px;}
+.cb-kicker::before{content:'';width:18px;height:1px;background:var(--ember);}
+.cb-hl{font-family:var(--F);font-size:clamp(36px,4.5vw,62px);letter-spacing:.02em;color:var(--text);line-height:.93;margin-bottom:16px;}
+.cb-hl em{color:var(--gold);font-style:normal;}
+.cb-body{font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.8;max-width:560px;}
+.cb-body strong{color:var(--slate);}
+.cb-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px;flex-shrink:0;}
+.cb-note{font-family:var(--M);font-size:9.5px;color:var(--dim);text-align:right;line-height:1.6;}
+
+/* ═══ METHOD ═══ */
+.method{background:var(--s1);}
+.method-intro{font-family:var(--M);font-size:13px;color:var(--muted);line-height:1.85;max-width:580px;margin:16px 0 48px;}
+.layers{display:flex;flex-direction:column;gap:2px;margin-bottom:36px;}
+.layer{display:flex;align-items:stretch;border:1px solid var(--bdr);transition:border-color .3s,background .3s;}
+.layer:hover{border-color:var(--bdr-hi);background:rgba(245,166,35,.022);}
+.layer-n{width:60px;min-width:60px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-family:var(--F);font-size:22px;color:var(--dim);border-right:1px solid var(--bdr);transition:color .3s;}
+.layer:hover .layer-n{color:var(--gold);}
+.layer-body{padding:24px 28px;flex:1;}
+.layer-name{font-family:var(--M);font-size:13.5px;font-weight:500;color:var(--text);margin-bottom:6px;}
+.layer-sub{font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.7;}
+.layer-tag{align-self:center;margin-right:24px;padding:5px 14px;font-family:var(--M);font-size:9px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;}
+.tag-gate{border:1px solid rgba(255,107,53,.3);color:var(--ember);}
+.tag-ctx{border:1px solid rgba(245,166,35,.28);color:var(--gold);}
+.tag-sig{border:1px solid rgba(255,213,100,.22);color:var(--gold-hi);}
+.tag-time{border:1px solid rgba(200,196,187,.16);color:var(--slate);}
+.method-note{padding:18px 24px;background:var(--s2);border:1px solid var(--bdr);border-top:2px solid var(--gold);font-family:var(--M);font-size:10.5px;color:var(--muted);line-height:1.75;margin-bottom:36px;}
+.method-note strong{color:var(--gold);}
+
+/* ═══ DIAGNOSTIC — WHAT IT ACTUALLY MEASURES ═══ */
+.diag-what{background:var(--bg);}
+.dw-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:44px;}
+.dw-left{}
+.dw-cats{display:flex;flex-direction:column;gap:2px;margin:28px 0 32px;}
+.dw-cat{display:flex;align-items:center;border:1px solid var(--bdr);transition:border-color .25s,background .25s;}
+.dw-cat:hover{border-color:var(--bdr-hi);background:rgba(245,166,35,.025);}
+.dw-cat-n{width:52px;min-width:52px;background:var(--s1);display:flex;align-items:center;justify-content:center;font-family:var(--M);font-size:11px;color:var(--dim);border-right:1px solid var(--bdr);padding:16px;text-align:center;transition:color .25s;}
+.dw-cat:hover .dw-cat-n{color:var(--gold);}
+.dw-cat-body{padding:16px 20px;flex:1;}
+.dw-cat-name{font-family:var(--M);font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.dw-cat-sub{font-family:var(--M);font-size:11px;color:var(--muted);line-height:1.5;}
+.dw-cat-maturity{padding:0 18px;align-self:center;font-family:var(--M);font-size:10px;letter-spacing:.08em;white-space:nowrap;border-left:1px solid var(--bdr);}
+.dw-cat-maturity.weak{color:var(--ember);}
+.dw-cat-maturity.str{color:var(--gold);}
+
+/* frames explanation */
+.dw-frames{display:flex;flex-direction:column;gap:2px;margin-bottom:32px;}
+.dw-frame{display:flex;align-items:center;gap:0;border:1px solid var(--bdr);transition:border-color .25s;}
+.dw-frame:hover{border-color:var(--bdr-hi);}
+.dw-frame-ico{width:48px;min-width:48px;display:flex;align-items:center;justify-content:center;font-size:16px;border-right:1px solid var(--bdr);padding:14px;}
+.dw-frame-body{padding:13px 18px;flex:1;}
+.dw-frame-name{font-family:var(--M);font-size:11px;font-weight:500;color:var(--text);margin-bottom:2px;}
+.dw-frame-sub{font-family:var(--M);font-size:9.5px;color:var(--muted);line-height:1.5;}
+
+.dw-right{position:sticky;top:120px;}
+/* maturity scale visual */
+.maturity-card{background:var(--s1);border:1px solid var(--bdr);padding:32px;margin-bottom:20px;}
+.mc-label{font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+.mc-levels{display:flex;flex-direction:column;gap:2px;}
+.mc-level{display:flex;align-items:center;gap:16px;padding:15px 16px;border:1px solid var(--bdr);transition:background .2s;}
+.mc-level:hover{background:rgba(245,166,35,.03);}
+.mc-bar{width:5px;height:40px;flex-shrink:0;border-radius:2px;}
+.mc-name{font-family:var(--M);font-size:12px;font-weight:500;flex-shrink:0;width:120px;}
+.mc-desc{font-family:var(--M);font-size:11px;color:var(--muted);line-height:1.55;}
+
+.archetype-card{background:var(--s1);border:1px solid var(--bdr);padding:32px;margin-bottom:20px;}
+.arch-label{font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.arch-list{display:flex;flex-direction:column;gap:10px;}
+.arch-item{font-family:var(--M);font-size:11.5px;color:var(--muted);display:flex;gap:12px;line-height:1.6;}
+.arch-item .ai-ico{flex-shrink:0;color:var(--gold);}
+
+/* ═══ BUYER STATES ═══ */
+.states{background:var(--s1);}
+.states-intro{font-family:var(--S);font-style:italic;font-size:16px;color:var(--muted);max-width:580px;line-height:1.85;margin:14px 0 44px;}
+.state-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.state-card{background:var(--bg);border:1px solid var(--bdr);padding:30px 26px;position:relative;overflow:hidden;transition:border-color .3s;}
+.state-card:hover{border-color:var(--bdr-hi);}
+.state-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.state-card:hover::after{transform:scaleX(1);}
+.sc-icon{font-size:22px;margin-bottom:18px;}
+.sc-name{font-family:var(--F);font-size:21px;letter-spacing:.04em;color:var(--text);margin-bottom:12px;line-height:1.1;}
+.sc-desc{font-family:var(--M);font-size:12px;color:var(--muted);line-height:1.75;}
+.sc-signal{margin-top:16px;padding-top:16px;border-top:1px solid var(--bdr);font-family:var(--M);font-size:11px;color:var(--gold);}
+.states-footer{margin-top:20px;display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border:1px solid var(--bdr);background:var(--bg);}
+.sf-text{font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.6;}
+.sf-text strong{color:var(--slate);}
+.sf-link{font-family:var(--M);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:gap .2s;}
+.sf-link:hover{gap:12px;}
+
+/* ═══ DIAGNOSTIC CTA ═══ */
+.diag-cta{background:var(--s1);position:relative;overflow:hidden;}
+.diag-cta::before{content:'SIGNAL';position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:var(--F);font-size:300px;color:rgba(245,166,35,.018);pointer-events:none;line-height:1;}
+.diag-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:2;}
+.diag-delivers{display:flex;flex-direction:column;gap:2px;margin:30px 0 38px;}
+.dd-row{display:flex;gap:18px;align-items:flex-start;padding:20px;border:1px solid var(--bdr);background:var(--bg);transition:border-color .3s;}
+.dd-row:hover{border-color:var(--bdr-hi);}
+.dd-n{font-family:var(--F);font-size:32px;color:rgba(245,166,35,.18);line-height:1;flex-shrink:0;transition:color .3s;}
+.dd-row:hover .dd-n{color:rgba(245,166,35,.5);}
+.dd-title{font-family:var(--M);font-size:13px;font-weight:500;color:var(--text);margin-bottom:5px;}
+.dd-sub{font-family:var(--M);font-size:11px;color:var(--muted);line-height:1.65;}
+.diag-meta{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:4px;}
+.dm{font-family:var(--M);font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+.dm::before{content:'·';color:var(--gold);}
+.diag-card{background:var(--bg);border:1px solid var(--bdr-hi);padding:44px 40px;text-align:center;position:relative;overflow:hidden;}
+.diag-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--ember),transparent);}
+.dc-eyebrow{font-family:var(--M);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.dc-hl{font-family:var(--F);font-size:clamp(30px,4vw,48px);letter-spacing:.03em;color:var(--text);line-height:.92;margin-bottom:20px;}
+.dc-hl em{color:var(--gold);font-style:normal;}
+.dc-urgency{font-family:var(--M);font-size:11px;color:var(--muted);line-height:1.8;margin-bottom:18px;padding:14px;border:1px solid var(--bdr-em-lo);background:var(--ember-lo);text-align:left;}
+.dc-urgency strong{color:var(--ember);}
+.dc-body{font-family:var(--S);font-style:italic;font-size:15px;color:var(--slate);line-height:1.7;margin-bottom:30px;}
+.dc-note{font-family:var(--M);font-size:9.5px;color:var(--dim);margin-top:14px;line-height:1.5;}
+
+/* ═══ PROOF ═══ */
+.proof{background:var(--bg);}
+.proof-intro{font-family:var(--S);font-style:italic;font-size:16px;color:var(--muted);max-width:500px;margin:14px 0 44px;line-height:1.85;}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.pc{background:var(--s1);border:1px solid var(--bdr);padding:38px 34px;transition:border-color .3s;}
+.pc:hover{border-color:var(--bdr-hi);}
+.pc-stars{font-size:13px;color:var(--gold);letter-spacing:3px;margin-bottom:18px;}
+.pc-quote{font-family:var(--S);font-style:italic;font-size:16px;color:var(--slate);line-height:1.8;margin-bottom:26px;}
+.pc-quote em{color:var(--gold);font-style:normal;font-weight:600;}
+.pc-author{display:flex;align-items:flex-start;gap:14px;}
+.pc-av{width:42px;height:42px;min-width:42px;background:var(--s2);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-family:var(--M);font-size:12px;color:var(--gold);}
+.pc-name{font-family:var(--M);font-size:12.5px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.pc-role{font-family:var(--M);font-size:11px;color:var(--muted);margin-bottom:5px;line-height:1.4;}
+.pc-result{font-family:var(--M);font-size:11px;color:var(--gold);display:flex;align-items:center;gap:5px;}
+.pc-result::before{content:'→';}
+.pc-bottleneck{margin-top:14px;padding-top:14px;border-top:1px solid var(--bdr);font-family:var(--M);font-size:10.5px;color:var(--muted);}
+.pc-bottleneck strong{color:var(--ember);}
+
+/* ═══ ABOUT ═══ */
+.about{background:var(--s1);}
+.about-layout{display:grid;grid-template-columns:1fr 1fr;gap:88px;margin-top:48px;}
+.about-statement{font-family:var(--S);font-style:italic;font-size:clamp(17px,2vw,22px);color:var(--text);line-height:1.6;margin-bottom:26px;padding-bottom:26px;border-bottom:1px solid var(--bdr);}
+.about-body{font-family:var(--S);font-size:16px;color:var(--slate);line-height:1.9;margin-bottom:32px;}
+.about-rules{display:flex;flex-direction:column;gap:14px;}
+.ar{display:flex;gap:16px;align-items:flex-start;font-family:var(--M);font-size:12px;line-height:1.65;}
+.ar-code{color:var(--gold);flex-shrink:0;font-size:10px;letter-spacing:.1em;padding-top:2px;min-width:56px;}
+.ar-text{color:var(--muted);}
+.ar-text strong{color:var(--slate);}
+.about-cards{display:flex;flex-direction:column;gap:2px;}
+.acard{background:var(--bg);border:1px solid var(--bdr);padding:28px 32px;}
+.acard-lbl{font-family:var(--M);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.acard-body{font-family:var(--M);font-size:12px;color:var(--muted);line-height:1.8;}
+.acard-list{display:flex;flex-direction:column;gap:11px;}
+.acard-li{font-family:var(--M);font-size:12px;color:var(--muted);display:flex;align-items:center;gap:10px;}
+.acard-li::before{content:'';width:3px;height:3px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+
+/* ═══ WRITING ═══ */
+.writing{background:var(--bg);}
+.writing-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;}
+.view-all{font-family:var(--M);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.view-all:hover{color:var(--gold);}
+.posts{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2px;}
+.post{background:var(--s1);border:1px solid var(--bdr);padding:30px 28px;text-decoration:none;display:flex;flex-direction:column;gap:14px;transition:border-color .3s;}
+.post:hover{border-color:var(--bdr-hi);}
+.post.feat{background:linear-gradient(140deg,rgba(245,166,35,.04),var(--s1));}
+.ptag{font-family:var(--M);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;}
+.ptag-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+.ptitle{font-family:var(--S);font-size:17px;color:var(--text);line-height:1.4;}
+.pexcerpt{font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.75;flex:1;}
+.pmeta{display:flex;justify-content:space-between;align-items:center;font-family:var(--M);font-size:11px;color:var(--dim);}
+.pread{color:var(--gold);}
+
+/* ═══ FINAL CTA ═══ */
+.final{background:var(--s1);border-top:1px solid var(--bdr);position:relative;overflow:hidden;padding:100px 56px;}
+.final::before{content:'RESOLVE';position:absolute;left:-20px;top:50%;transform:translateY(-50%);font-family:var(--F);font-size:300px;color:rgba(245,166,35,.015);pointer-events:none;line-height:1;white-space:nowrap;}
+.final-inner{max-width:660px;margin:0 auto;text-align:center;position:relative;z-index:2;}
+.final-pre{font-family:var(--M);font-size:11px;color:var(--ember);letter-spacing:.2em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px;}
+.final-pre::before,.final-pre::after{content:'';flex:1;max-width:80px;height:1px;background:var(--ember);}
+.final-hl{font-family:var(--F);font-size:clamp(58px,9vw,120px);line-height:.88;letter-spacing:.02em;color:var(--text);margin-bottom:28px;}
+.final-hl em{color:var(--gold);font-style:normal;}
+.final-body{font-family:var(--S);font-style:italic;font-size:18px;color:var(--slate);line-height:1.8;margin-bottom:20px;max-width:520px;margin-left:auto;margin-right:auto;}
+.final-delivers{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:36px;text-align:left;}
+.fd-item{padding:20px 22px;border:1px solid var(--bdr);background:var(--bg);}
+.fd-icon{font-family:var(--M);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.fd-text{font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.65;}
+.fd-text strong{color:var(--slate);}
+.final-actions{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.final-note{font-family:var(--M);font-size:11px;color:var(--dim);}
+
+/* ═══ FOOTER ═══ */
+footer{padding:40px 56px;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+.ft-brand{font-family:var(--F);font-size:19px;letter-spacing:.1em;color:var(--dim);}
+.ft-tag{font-family:var(--M);font-size:11px;color:var(--dim);letter-spacing:.08em;}
+.ft-links{display:flex;gap:32px;list-style:none;}
+.ft-links a{font-family:var(--M);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s;}
+.ft-links a:hover{color:var(--gold);}
+.ft-copy{font-family:var(--M);font-size:11px;color:var(--dim);text-align:right;line-height:1.6;}
+</style>
+<!-- Canonical blog / AEO structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "Signal Resolution",
+      "url": "https://signalresolution.com",
+      "description": "Signal Resolution helps seed-to-Series-A B2B SaaS founders identify and fix ICP signal misalignment through a nine-question GTM maturity diagnostic.",
+      "foundingDate": "2025",
+      "sameAs": ["https://signalresolution.com"]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Signal Resolution GTM Diagnostic",
+      "applicationCategory": "BusinessApplication",
+      "description": "A nine-question GTM maturity assessment that identifies archetype, primary bottleneck, and commercial pathway for seed-to-Series-A B2B SaaS founders.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is ICP misalignment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ICP misalignment occurs when a B2B SaaS company's go-to-market targeting attracts buyers who do not match the economic, psychographic, or behavioral profile of their best-fit customers — causing rising CAC, low conversion, and pipeline that never closes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a GTM signal diagnostic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A GTM signal diagnostic scores your go-to-market operations across nine categories — ICP Clarity, Positioning, Offer Logic, Activation, Onboarding, Conversion Flow, Strategic Signal, Pricing, and Dark Funnel — to identify which category is your primary bottleneck."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Firmographic Gate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Firmographic Gate is the first layer of the ICP Resolution Framework. It is a binary pass/fail check — does this company meet economic viability criteria including revenue band, headcount trajectory, ACV ceiling, and sales motion? It eliminates up to 60% of pipeline waste before a human ever touches a lead."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="curR"></div>
+
+<!-- ════ NAV ════ -->
+<nav id="mainNav">
+  <a href="/" class="n-logo">
+    <div class="n-sigil">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <circle cx="13" cy="13" r="11" stroke="rgba(245,166,35,.28)" stroke-width="1"/>
+        <circle cx="13" cy="13" r="4.5" stroke="#f5a623" stroke-width="1.2"/>
+        <line x1="13" y1="2" x2="13" y2="8.5" stroke="rgba(245,166,35,.5)" stroke-width="1"/>
+        <line x1="24" y1="13" x2="17.5" y2="13" stroke="rgba(245,166,35,.5)" stroke-width="1"/>
+        <line x1="13" y1="24" x2="13" y2="17.5" stroke="rgba(245,166,35,.5)" stroke-width="1"/>
+        <line x1="2" y1="13" x2="8.5" y2="13" stroke="rgba(245,166,35,.5)" stroke-width="1"/>
+        <circle cx="13" cy="2" r="1.5" fill="rgba(245,166,35,.4)"/>
+        <circle cx="24" cy="13" r="1.5" fill="rgba(245,166,35,.4)"/>
+      </svg>
+    </div>
+    <span class="n-word">SIGNAL RESOLUTION</span>
+  </a>
+  <ul class="n-links">
+    <li><a href="#pain">The Problem</a></li>
+    <li><a href="#what-it-measures">What It Measures</a></li>
+    <li><a href="#method">Method</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="blog/index.html">Writing</a></li>
+  </ul>
+  <a href="assessment.html" class="n-cta">Run the Diagnostic →</a>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="hero-inner">
+    <!-- LEFT -->
+    <div>
+      <div class="hero-kicker"><span class="kicker-dot"></span>Nine questions. Your bottleneck named. Even if you've already built an ICP framework that isn't working.</div>
+      <h1 class="hero-hl">
+        <span class="g">YOUR</span><br>
+        <span class="gold">PIPELINE</span><br>
+        <span class="g">ISN'T</span><br>
+        BROKEN.<br>
+        <span class="gold">YOUR</span><br>
+        SIGNAL IS.
+      </h1>
+      <p class="hero-tagline">High CAC is the symptom. ICP misalignment is the disease. Most founders have already tried to fix this — and fixed the wrong layer. The diagnostic finds which one.</p>
+      <div class="hero-pain-bar">
+        <div class="hpb-line">
+          <span class="em">Every wrong-fit lead taxes your sales team.</span> Every weak demo makes your CAC lie. Every campaign built on a fuzzy ICP <span class="hi">buys confusion at scale.</span>
+          <br><br>
+          Here's what nobody tells you: <strong style="color:var(--slate);">the fix almost never lives where you're looking.</strong> Nine questions surface the exact layer that's breaking — in four minutes. Free. No account. Instant results.
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="assessment.html" class="btn"><span>Run the Diagnostic — Free →</span></a>
+        <a href="#pain" class="btn-ghost">See what it's costing <span class="arr">→</span></a>
+      </div>
+      <div class="hero-meta">
+        <div class="hm-pip"><span class="hm-dot"></span>9 questions</div>
+        <div class="hm-sep"></div>
+        <div class="hm-pip"><span class="hm-dot"></span>4 minutes</div>
+        <div class="hm-sep"></div>
+        <div class="hm-pip"><span class="hm-dot"></span>Archetype identified</div>
+        <div class="hm-sep"></div>
+        <div class="hm-pip"><span class="hm-dot"></span>Bottleneck named</div>
+        <div class="hm-sep"></div>
+        <div class="hm-pip"><span class="hm-dot"></span>340+ founders scored</div>
+      </div>
+    </div>
+
+    <!-- RIGHT — SIGNAL SCORE PREVIEW CARD -->
+    <div class="score-card rv d2">
+      <div class="sc-head">
+        <div class="sc-eyebrow">What 340+ founders discovered in 4 minutes</div>
+        <div class="sc-title">YOUR GTM SIGNAL<br>SCORED ACROSS<br>9 CATEGORIES.</div>
+      </div>
+
+      <div class="sc-score-area">
+        <div class="sc-ring">
+          <svg width="110" height="110" viewBox="0 0 110 110">
+            <circle cx="55" cy="55" r="44" fill="none" stroke="rgba(245,166,35,.1)" stroke-width="7"/>
+            <circle cx="55" cy="55" r="44" fill="none" stroke="#f5a623" stroke-width="7"
+              stroke-dasharray="276" stroke-dashoffset="96" stroke-linecap="round"/>
+          </svg>
+          <div class="sc-ring-label">
+            <span class="sc-ring-val">65</span>
+            <span class="sc-ring-sub">/ 100</span>
+          </div>
+        </div>
+        <div class="sc-score-right">
+          <div class="sc-score-label">Example result — what you'll see</div>
+          <div class="sc-delivers">
+            <div class="sc-deliver">Your archetype identified</div>
+            <div class="sc-deliver">Primary bottleneck named</div>
+            <div class="sc-deliver">Your pathway + next move</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category bars preview — example signal score layout -->
+      <div class="sc-cats">
+        <div class="sc-cat">
+          <div class="sc-cat-name">ICP Clarity</div>
+          <div class="sc-cat-bar-wrap"><div class="sc-cat-bar"><div class="sc-cat-fill" data-pct="72"></div></div></div>
+          <div class="sc-cat-pct">72%</div>
+        </div>
+        <div class="sc-cat weak">
+          <div class="sc-cat-name">Positioning</div>
+          <div class="sc-cat-bar-wrap"><div class="sc-cat-bar"><div class="sc-cat-fill" data-pct="34"></div></div></div>
+          <div class="sc-cat-pct">34% ↓</div>
+        </div>
+        <div class="sc-cat">
+          <div class="sc-cat-name">Offer Logic</div>
+          <div class="sc-cat-bar-wrap"><div class="sc-cat-bar"><div class="sc-cat-fill" data-pct="61"></div></div></div>
+          <div class="sc-cat-pct">61%</div>
+        </div>
+        <div class="sc-cat weak">
+          <div class="sc-cat-name">Conversion Flow</div>
+          <div class="sc-cat-bar-wrap"><div class="sc-cat-bar"><div class="sc-cat-fill" data-pct="41"></div></div></div>
+          <div class="sc-cat-pct">41% ↓</div>
+        </div>
+        <div class="sc-cat">
+          <div class="sc-cat-name">Strategic Signal</div>
+          <div class="sc-cat-bar-wrap"><div class="sc-cat-bar"><div class="sc-cat-fill" data-pct="58"></div></div></div>
+          <div class="sc-cat-pct">58%</div>
+        </div>
+      </div>
+
+      <div class="sc-foot">
+        <div class="sc-foot-body">Your score reveals where you're losing pipeline before it ever reaches sales. <strong>The bottleneck is named. The next move is specific.</strong></div>
+        <a href="assessment.html" class="btn" style="width:100%;justify-content:center;"><span>Run the Diagnostic — Free →</span></a>
+        <p style="font-family:var(--M);font-size:10px;color:var(--dim);margin-top:12px;text-align:center;line-height:1.6;">If you complete all 9 questions and don't have a named bottleneck in 4 minutes, email us. We'll review your session manually at no cost.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TICKER ════ -->
+<div class="ticker-strip">
+  <div class="ticker">
+    <div class="t-item">High CAC Is the Symptom <span class="t-sep">◆</span></div>
+    <div class="t-item">ICP Misalignment Is the Disease <span class="t-sep">◆</span></div>
+    <div class="t-item">GTM Maturity Scored Across 9 Categories <span class="t-sep">◆</span></div>
+    <div class="t-item">Archetype Identified · Bottleneck Named <span class="t-sep">◆</span></div>
+    <div class="t-item">340+ Seed-to-Series-A Founders Scored <span class="t-sep">◆</span></div>
+    <div class="t-item">The Fix Almost Never Lives Where You're Looking <span class="t-sep">◆</span></div>
+    <div class="t-item">Psychographic Resolution™ <span class="t-sep">◆</span></div>
+    <div class="t-item">Ad Hoc → Emerging → Operational → Evidence-Led <span class="t-sep">◆</span></div>
+    <div class="t-item">signalresolution.com <span class="t-sep">◆</span></div>
+    <div class="t-item">9 Questions · 4 Minutes · No Account Required <span class="t-sep">◆</span></div>
+    <div class="t-item">High CAC Is the Symptom <span class="t-sep">◆</span></div>
+    <div class="t-item">ICP Misalignment Is the Disease <span class="t-sep">◆</span></div>
+    <div class="t-item">GTM Maturity Scored Across 9 Categories <span class="t-sep">◆</span></div>
+    <div class="t-item">Archetype Identified · Bottleneck Named <span class="t-sep">◆</span></div>
+    <div class="t-item">340+ Seed-to-Series-A Founders Scored <span class="t-sep">◆</span></div>
+    <div class="t-item">The Fix Almost Never Lives Where You're Looking <span class="t-sep">◆</span></div>
+    <div class="t-item">Psychographic Resolution™ <span class="t-sep">◆</span></div>
+    <div class="t-item">Ad Hoc → Emerging → Operational → Evidence-Led <span class="t-sep">◆</span></div>
+    <div class="t-item">signalresolution.com <span class="t-sep">◆</span></div>
+    <div class="t-item">9 Questions · 4 Minutes · No Account Required <span class="t-sep">◆</span></div>
+  </div>
+</div>
+
+<!-- ════ PAIN ════ -->
+<section class="sec pain" id="pain">
+  <div class="inner">
+    <div class="pain-layout">
+      <div class="rv">
+        <p class="eyebrow red">The Real Problem</p>
+        <h2 class="sec-hl">YOUR CAC ISN'T<br>LYING. <span class="r">YOUR</span><br>GTM SIGNAL IS.</h2>
+        <p class="pain-intro">Founders assume rising CAC is a media problem. A copy problem. A channel problem. <strong>It is almost always a signal problem.</strong> When your GTM motion is built on assumption instead of evidence, every system downstream amplifies the noise — and every dollar you spend to fix the symptom makes the root cause worse.</p>
+
+        <div class="cost-ledger">
+          <div class="cl-label">The compound cost of one broken signal layer</div>
+          <div class="cl-rows">
+            <div class="cl-row">
+              <div class="cl-num">1</div>
+              <div class="cl-body">
+                <div class="cl-title">ICP is built from memory, not evidence</div>
+                <div class="cl-sub">Founder intuition replaces buyer signal. The fit criteria are assumed. Wrong-fit leads self-select in because nothing stops them.</div>
+              </div>
+              <div class="cl-impact"><strong>CAC</strong>climbs</div>
+            </div>
+            <div class="cl-row">
+              <div class="cl-num">2</div>
+              <div class="cl-body">
+                <div class="cl-title">Positioning is generic across buyer states</div>
+                <div class="cl-sub">One pitch for everyone. Messaging sounds right but doesn't match the specific state your best buyers are actually in. Conversion suffers silently.</div>
+              </div>
+              <div class="cl-impact"><strong>CVR</strong>falls</div>
+            </div>
+            <div class="cl-row">
+              <div class="cl-num">3</div>
+              <div class="cl-body">
+                <div class="cl-title">Sales burns capacity on low-intent calls</div>
+                <div class="cl-sub">Wrong-fit leads look qualified until the demo. Every cycle spent here is a cycle not spent on buyers ready to close.</div>
+              </div>
+              <div class="cl-impact"><strong>Win rate</strong>drops</div>
+            </div>
+            <div class="cl-row">
+              <div class="cl-num">4</div>
+              <div class="cl-body">
+                <div class="cl-title">Conversion is treated as a funnel problem</div>
+                <div class="cl-sub">You A/B test pages, optimize flows, rewrite copy. The root cause is upstream. The funnel didn't break the signal — the signal broke the funnel.</div>
+              </div>
+              <div class="cl-impact"><strong>Close rate</strong>lies</div>
+            </div>
+            <div class="cl-row">
+              <div class="cl-num">5</div>
+              <div class="cl-body">
+                <div class="cl-title">Scaling makes every layer worse</div>
+                <div class="cl-sub">More budget. More outreach. More content. All executing on broken signal. Speed compounds the misalignment — it doesn't fix it.</div>
+              </div>
+              <div class="cl-impact"><strong>Every layer</strong>compounds</div>
+            </div>
+          </div>
+          <div class="cost-total">
+            <div class="ct-label">Total cost of running on broken signal</div>
+            <div class="ct-val">CAC + Time + Clarity + Momentum</div>
+          </div>
+        </div>
+
+        <!-- FASCINATION BULLETS — Suby-style curiosity loops -->
+        <div style="margin-bottom:24px;padding:20px 22px;border:1px solid var(--bdr);background:var(--s2);" class="rv">
+          <div style="font-family:var(--M);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">What the diagnostic reveals</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.7;display:flex;gap:10px;"><span style="color:var(--gold);flex-shrink:0;">→</span>The one GTM category that predicts close rate better than all others — and almost no seed-stage team optimises it</div>
+            <div style="font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.7;display:flex;gap:10px;"><span style="color:var(--gold);flex-shrink:0;">→</span>Why founders who have already built an ICP doc are often in a worse position than those who haven't</div>
+            <div style="font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.7;display:flex;gap:10px;"><span style="color:var(--gold);flex-shrink:0;">→</span>The AI-era buyer pattern that looks like a pipeline problem but is actually a language problem — and how nine questions separate them</div>
+            <div style="font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.7;display:flex;gap:10px;"><span style="color:var(--gold);flex-shrink:0;">→</span>What you should never do when your CAC is rising — and what most founders do instead (it makes the signal worse)</div>
+          </div>
+        </div>
+
+        <div class="data-anchor rv">
+          <div class="da-label">2026 B2B SaaS Benchmarks</div>
+          <div class="da-stats">
+            <div class="da-stat">
+              <div class="da-stat-val">$341</div>
+              <div class="da-stat-sub">Avg inorganic CAC<br>(HubSpot 2026)</div>
+            </div>
+            <div class="da-stat">
+              <div class="da-stat-val">$1,450</div>
+              <div class="da-stat-sub">Fintech vertical CAC<br>per acquisition</div>
+            </div>
+            <div class="da-stat">
+              <div class="da-stat-val">67%</div>
+              <div class="da-stat-sub">B2B buyers prefer<br>rep-free research (Gartner)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pain-right">
+        <div class="morning rv d1">
+          <div class="morn-label">What founders wake up thinking</div>
+          <div class="morn-thoughts">
+            <div class="morn-t">"Why is CAC up <em>again</em> when we didn't change anything?"</div>
+            <div class="morn-t">"We have a full pipeline. Why is <em>nothing converting</em>?"</div>
+            <div class="morn-t">"We A/B tested the page. We rewrote the emails. <em>Nothing moved.</em>"</div>
+            <div class="morn-t">"Our ICP doc says one thing. Our close rate says <em>something different.</em>"</div>
+          </div>
+        </div>
+        <div class="reframe rv d2">
+          <div class="rf-label">The Reframe</div>
+          <div class="rf-q">This isn't a funnel problem.<br>This isn't a copy problem.<br><em>This is a signal problem.</em></div>
+          <div class="rf-body">Nine questions expose exactly where your GTM signal is breaking. Your maturity scored across every category. Your primary bottleneck named. Your next move specific. In four minutes, you stop guessing which lever to pull — and which ones are actually pulling you down.</div>
+        </div>
+        <div class="pain-cta-mini rv d3">
+          <div class="pcm-hl">NAME THE BOTTLENECK</div>
+          <div class="pcm-sub">Nine questions. Your archetype identified, your primary bottleneck named, your next move clarified. 340+ founders have already scored. Free. Instant.</div>
+          <a href="assessment.html" class="btn" style="width:100%;justify-content:center;"><span>Run the Diagnostic — Free →</span></a>
+          <p style="font-family:var(--M);font-size:10px;color:var(--dim);margin-top:10px;">4 minutes · No account required · Manual review guarantee if no bottleneck identified</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TRANSFORMATION ════ -->
+<section class="sec transform">
+  <div class="inner">
+    <p class="eyebrow rv">Before & After Signal</p>
+    <h2 class="sec-hl rv">WHAT CHANGES WHEN<br><em>THE BOTTLENECK IS NAMED.</em></h2>
+    <div class="ba-wrap">
+      <div class="ba-col ba-before rv">
+        <div class="ba-tag neg">Running on assumption — before</div>
+        <div class="ba-hl">GUESSING. SPENDING. HOPING.</div>
+        <div class="ba-list">
+          <div class="ba-item neg"><span class="ba-mk">—</span>ICP built from founder memory, not buyer signal</div>
+          <div class="ba-item neg"><span class="ba-mk">—</span>Positioning generic across all buyer states</div>
+          <div class="ba-item neg"><span class="ba-mk">—</span>Sales touching every lead regardless of fit or timing</div>
+          <div class="ba-item neg"><span class="ba-mk">—</span>Conversion treated as a page problem, not a signal problem</div>
+          <div class="ba-item neg"><span class="ba-mk">—</span>Dark funnel demand exists but nothing captures it</div>
+          <div class="ba-item neg"><span class="ba-mk">—</span>AI executes the wrong motion faster — makes it worse</div>
+        </div>
+      </div>
+      <div class="ba-col ba-after rv d2">
+        <div class="ba-tag pos">Running on evidence — after</div>
+        <div class="ba-hl">CLARITY. TIMING. PIPELINE.</div>
+        <div class="ba-list">
+          <div class="ba-item pos"><span class="ba-mk">+</span>ICP definition updated from real buyer signal</div>
+          <div class="ba-item pos"><span class="ba-mk">+</span>Messaging matched to the exact buyer state in the room</div>
+          <div class="ba-item pos"><span class="ba-mk">+</span>Sales only touches companies in an active buying window</div>
+          <div class="ba-item pos"><span class="ba-mk">+</span>Low conversion diagnosed upstream before spend scales</div>
+          <div class="ba-item pos"><span class="ba-mk">+</span>Dark funnel signals captured and routed into pipeline</div>
+          <div class="ba-item pos"><span class="ba-mk">+</span>AI executes the right strategy 10× faster — compounds it</div>
+        </div>
+      </div>
+    </div>
+    <div class="ba-close rv">
+      <div class="ba-close-hl">THE BOTTLENECK<br>WAS THERE<br><em>THE WHOLE TIME.</em></div>
+      <p class="ba-close-body">Nine questions surface it. The diagnostic names which of your nine GTM categories is the weakest link — and maps that directly to the one move that unblocks the most value downstream.</p>
+      <a href="assessment.html" class="btn"><span>Run the Diagnostic — Free →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CTA INTERRUPT ════ -->
+<div class="cta-band">
+  <div class="cb-inner">
+    <div class="rv">
+      <div class="cb-kicker">Before you spend another dollar on ads, outbound, or content</div>
+      <h3 class="cb-hl">NINE QUESTIONS.<br><em>YOUR BOTTLENECK NAMED.</em></h3>
+      <p class="cb-body">The diagnostic scores your GTM signal across ICP Clarity, Positioning, Offer Logic, Activation, Onboarding, Conversion Flow, Strategic Signal, Pricing, and Dark Funnel Awareness. <strong>Then it names your primary bottleneck and tells you what to fix this week.</strong> Not a generic report. A specific, scored signal map. 340+ founders have already run it. The ones who didn't are still optimising the wrong layer.</p>
+    </div>
+    <div class="cb-right rv d2">
+      <a href="assessment.html" class="btn"><span>Run the Diagnostic — Free →</span></a>
+      <div class="cb-note">9 questions · 4 minutes total<br>No account required · Instant results</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ WHAT IT ACTUALLY MEASURES ════ -->
+<section class="sec diag-what" id="what-it-measures">
+  <div class="inner">
+    <p class="eyebrow rv">What the Diagnostic Actually Measures</p>
+    <h2 class="sec-hl rv">NINE CATEGORIES.<br>ONE PRIMARY<br><em>BOTTLENECK.</em></h2>
+    <div class="dw-layout">
+      <div class="dw-left">
+        <p style="font-family:var(--M);font-size:12px;color:var(--muted);line-height:1.85;margin-bottom:28px;" class="rv">Each question maps to a GTM category and is scored on a four-level maturity arc. The weakest-scoring category becomes your primary bottleneck — the one constraint that's pulling down every metric downstream.</p>
+
+        <div class="dw-cats rv">
+          <div class="dw-cat">
+            <div class="dw-cat-n">Q1</div>
+            <div class="dw-cat-body">
+              <div class="dw-cat-name">ICP Clarity</div>
+              <div class="dw-cat-sub">How your team decides which prospects are the best fit to convert</div>
+            </div>
+            <div class="dw-cat-maturity weak">Often: Ad Hoc</div>
+          </div>
+          <div class="dw-cat">
+            <div class="dw-cat-n">Q2</div>
+            <div class="dw-cat-body">
+              <div class="dw-cat-name">Positioning</div>
+              <div class="dw-cat-sub">What happens when a qualified buyer lands on your site or pitch</div>
+            </div>
+            <div class="dw-cat-maturity weak">Often: Emerging</div>
+          </div>
+          <div class="dw-cat">
+            <div class="dw-cat-n">Q3</div>
+            <div class="dw-cat-body">
+              <div class="dw-cat-name">Offer Logic</div>
+              <div class="dw-cat-sub">How your core offer is structured and presented to buyers</div>
+            </div>
+            <div class="dw-cat-maturity">Often: Emerging</div>
+          </div>
+          <div class="dw-cat">
+            <div class="dw-cat-n">Q4</div>
+            <div class="dw-cat-body">
+              <div class="dw-cat-name">Activation</div>
+              <div class="dw-cat-sub">How quickly new users reach the first moment of real value</div>
+            </div>
+            <div class="dw-cat-maturity weak">Often: Ad Hoc</div>
+          </div>
+          <div class="dw-cat">
+            <div class="dw-cat-n">Q5</div>
+            <div class="dw-cat-body">
+              <div class="dw-cat-name">Onboarding</div>
+              <div class="dw-cat-sub">What happens in the first 48 hours after a customer signs up</div>
+            </div>
+            <div class="dw-cat-maturity">Often: Emerging</div>
+          </div>
+          <div class="dw-cat">
+            <div class="dw-cat-n">Q6</div>
+            <div class="dw-cat-body">
+              <div class="dw-cat-name">Conversion Flow</div>
+              <div class="dw-cat-sub">The handoff from marketing to sales, or trial to paid</div>
+            </div>
+            <div class="dw-cat-maturity weak">Often: Ad Hoc</div>
+          </div>
+          <div class="dw-cat">
+            <div class="dw-cat-n">Q7</div>
+            <div class="dw-cat-body">
+              <div class="dw-cat-name">Strategic Signal</div>
+              <div class="dw-cat-sub">How your founding team interprets market signals and buyer intelligence</div>
+            </div>
+            <div class="dw-cat-maturity">Often: Emerging</div>
+          </div>
+          <div class="dw-cat">
+            <div class="dw-cat-n">Q8</div>
+            <div class="dw-cat-body">
+              <div class="dw-cat-name">Pricing Confidence</div>
+              <div class="dw-cat-sub">Whether your pricing captures the real value you deliver</div>
+            </div>
+            <div class="dw-cat-maturity weak">Often: Ad Hoc</div>
+          </div>
+          <div class="dw-cat">
+            <div class="dw-cat-n">Q9</div>
+            <div class="dw-cat-body">
+              <div class="dw-cat-name">Dark Funnel</div>
+              <div class="dw-cat-sub">How much of your pipeline comes from channels you can't attribute</div>
+            </div>
+            <div class="dw-cat-maturity">Often: Emerging</div>
+          </div>
+        </div>
+
+        <p style="font-family:var(--M);font-size:10px;color:var(--muted);line-height:1.7;padding:16px;border:1px solid var(--bdr);background:var(--s1);margin-top:20px;" class="rv">The three entry frames (ICP / Positioning, Conversion / Revenue, Scale / Operator) bias question ordering — so the diagnostic starts where your problem lives. But the result is always determined by your answers, not your frame selection.</p>
+      </div>
+
+      <div class="dw-right rv d2">
+        <!-- Maturity Scale Card -->
+        <div class="maturity-card">
+          <div class="mc-label">The four-level maturity arc every question uses</div>
+          <div class="mc-levels">
+            <div class="mc-level">
+              <div class="mc-bar" style="background:var(--ember);"></div>
+              <div class="mc-name" style="color:var(--ember);">Ad Hoc</div>
+              <div class="mc-desc">Mostly unclear or founder-gut. No repeatable system. The bottleneck is structural.</div>
+            </div>
+            <div class="mc-level">
+              <div class="mc-bar" style="background:#e8943a;"></div>
+              <div class="mc-name" style="color:#e8943a;">Emerging</div>
+              <div class="mc-desc">Some structure exists but it's inconsistent. Works sometimes — not reliably.</div>
+            </div>
+            <div class="mc-level">
+              <div class="mc-bar" style="background:rgba(245,166,35,.5);"></div>
+              <div class="mc-name" style="color:rgba(245,166,35,.7);">Operational</div>
+              <div class="mc-desc">Clear, repeatable, and working most of the time. Scaling is possible from here.</div>
+            </div>
+            <div class="mc-level">
+              <div class="mc-bar" style="background:var(--gold);"></div>
+              <div class="mc-name" style="color:var(--gold);">Evidence-Led</div>
+              <div class="mc-desc">Evidence-based, measured, and continuously improved. This is the operator standard.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Archetype Card -->
+        <div class="archetype-card">
+          <div class="arch-label">The 7 archetypes the engine can identify</div>
+          <div class="arch-list">
+            <div class="arch-item"><span class="ai-ico">◎</span>Signal-Blind Founder — ICP built on assumption, not signal</div>
+            <div class="arch-item"><span class="ai-ico">◎</span>Message Drift Team — Positioning exists but buyer resonance is unstable</div>
+            <div class="arch-item"><span class="ai-ico">◎</span>Story Without System — Narrative strong, conversion architecture weak</div>
+            <div class="arch-item"><span class="ai-ico">◎</span>Busy but Inefficient Operator — Activity high, economics soft</div>
+            <div class="arch-item"><span class="ai-ico">◎</span>Hidden Demand, Missed Capture — Real influence exists, not captured</div>
+            <div class="arch-item"><span class="ai-ico">◎</span>Fragmented Scale Architect — Capable system, no integration layer</div>
+            <div class="arch-item"><span class="ai-ico">◎</span>Operator Without Prioritization — Execution strong, leverage unclear</div>
+          </div>
+        </div>
+
+        <div style="padding:20px;border:1px solid var(--bdr-hi);background:var(--gold-lo);text-align:center;">
+          <p style="font-family:var(--M);font-size:10px;color:var(--muted);line-height:1.7;margin-bottom:14px;">The archetype personalizes the framing. The bottleneck drives the commercial route. Nine questions. One result. Instant.</p>
+          <a href="assessment.html" class="btn" style="width:100%;justify-content:center;"><span>Run the Diagnostic — Free →</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ METHOD (4-LAYER FRAMEWORK — what Signal Resolution does as a system) ════ -->
+<section class="sec method" id="method">
+  <div class="inner">
+    <p class="eyebrow rv">The ICP Resolution Framework</p>
+    <h2 class="sec-hl rv">WHAT SIGNAL<br>RESOLUTION DOES<br><em>AFTER THE SCORE.</em></h2>
+    <p class="method-intro rv">The diagnostic identifies your bottleneck. Signal Resolution then fixes it using a four-layer intelligence system — the same system that powers every client engagement. Here's what that system covers.</p>
+    <div class="layers">
+      <div class="layer rv">
+        <div class="layer-n">L1</div>
+        <div class="layer-body">
+          <div class="layer-name">Firmographic Gate™</div>
+          <div class="layer-sub">Binary pass/fail. Does this company meet your economic viability criteria? Revenue band, headcount trajectory, ACV ceiling, sales motion — it either passes or it doesn't. This gate eliminates 60% of pipeline waste before a human touches it. Most teams skip this and call the result "a hard market."</div>
+        </div>
+        <div class="layer-tag tag-gate">Gate</div>
+      </div>
+      <div class="layer rv d1">
+        <div class="layer-n">L2</div>
+        <div class="layer-body">
+          <div class="layer-name">Technographic Context</div>
+          <div class="layer-sub">Stack velocity over snapshots. What changed in the last 90 days — not what tools they have. Migrations, AI adoption, consolidation patterns — all read as strategic direction. Tool count alone no longer predicts buying urgency. Velocity does.</div>
+        </div>
+        <div class="layer-tag tag-ctx">Context</div>
+      </div>
+      <div class="layer rv d2">
+        <div class="layer-n">L3</div>
+        <div class="layer-body">
+          <div class="layer-name">Psychographic Resolution™</div>
+          <div class="layer-sub">Language mining for buyer state. The most overlooked layer and the highest-converting one. Which of the five AI-era states does this company occupy right now? This determines whether your messaging matches how they experience their own pain — or misses it entirely.</div>
+        </div>
+        <div class="layer-tag tag-sig">Signal</div>
+      </div>
+      <div class="layer rv d3">
+        <div class="layer-n">L4</div>
+        <div class="layer-body">
+          <div class="layer-name">Behavioral Timing</div>
+          <div class="layer-sub">Trigger events and urgency windows. Funding rounds, hiring surges, exec changes, stack migrations — these open the narrow window when a company is actually ready to buy. One company at the right moment beats 100 at the wrong one.</div>
+        </div>
+        <div class="layer-tag tag-time">Timing</div>
+      </div>
+    </div>
+    <div class="method-note rv">
+      <strong>How the diagnostic connects to the framework:</strong> The diagnostic scores your GTM operations — how you currently run ICP, positioning, conversion, and signal interpretation. The four-layer system is how Signal Resolution resolves those gaps using live market intelligence. The diagnostic shows you where the rot is. The system removes it.
+    </div>
+    <a href="assessment.html" class="btn rv"><span>Find Your Bottleneck First →</span></a>
+  </div>
+</section>
+
+<!-- ════ BUYER STATES ════ -->
+<section class="sec states">
+  <div class="inner">
+    <p class="eyebrow rv">AI-Era Buyer States</p>
+    <h2 class="sec-hl rv">PERSONAS DESCRIBE<br>PEOPLE. BUYER STATES<br><em>EXPLAIN DECISIONS.</em></h2>
+    <p class="states-intro rv">The diagnostic identifies which state your buyers are currently in — then tells you whether your messaging is written for it. If your positioning doesn't match the state, conversion fails regardless of how good the product is.</p>
+    <div class="state-grid">
+      <div class="state-card rv">
+        <div class="sc-icon">⚡</div>
+        <div class="sc-name">AI-POWERED CHAOS SCALER</div>
+        <div class="sc-desc">Adopted AI fast. Now scaling problems faster than solutions. Urgency is real but strategy is absent. High-velocity buyer — needs a clear framework, not another tool.</div>
+        <div class="sc-signal">Signal: "We're moving fast but I'm not sure in what direction."</div>
+      </div>
+      <div class="state-card rv d1">
+        <div class="sc-icon">🔁</div>
+        <div class="sc-name">AMPLIFIED STUCK OPTIMIZER</div>
+        <div class="sc-desc">Running the same playbook harder with AI. Metrics declining. Breakthrough requires naming what's broken upstream — not adding more speed to the wrong motion.</div>
+        <div class="sc-signal">Signal: "We've tried everything and the numbers aren't moving."</div>
+      </div>
+      <div class="state-card rv d2">
+        <div class="sc-icon">📊</div>
+        <div class="sc-name">DATA-OVERWHELMED STRATEGIST</div>
+        <div class="sc-desc">Has dashboards. Has reports. Has no clarity. More data produced less signal. Needs resolution, not visibility. Highest-value state for the right offer.</div>
+        <div class="sc-signal">Signal: "I have all the data but no idea what to do with it."</div>
+      </div>
+    </div>
+    <div class="states-footer rv">
+      <div class="sf-text"><strong>The diagnostic tells you which state your buyers occupy</strong> — and whether your current messaging is built for it or for a buyer who no longer exists.</div>
+      <a href="ebook.html" class="sf-link">Get all 5 buyer states — free <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ DIAGNOSTIC CTA SECTION ════ -->
+<section class="sec diag-cta" id="diag">
+  <div class="inner">
+    <div class="diag-layout">
+      <div class="rv">
+        <p class="eyebrow">Free GTM Signal Diagnostic</p>
+        <h2 class="sec-hl">NINE QUESTIONS.<br>YOUR BOTTLENECK<br><em>NAMED.</em></h2>
+        <div class="diag-delivers">
+          <div class="dd-row">
+            <div class="dd-n">01</div>
+            <div>
+              <div class="dd-title">GTM Signal Score — 0 to 100</div>
+              <div class="dd-sub">Scored across nine categories with per-category maturity ratings. You see exactly where each category sits on the Ad Hoc → Evidence-Led arc.</div>
+            </div>
+          </div>
+          <div class="dd-row">
+            <div class="dd-n">02</div>
+            <div>
+              <div class="dd-title">Your Archetype Identified</div>
+              <div class="dd-sub">One of seven archetypes — a specific narrative that describes what's actually happening in your system, not generic advice.</div>
+            </div>
+          </div>
+          <div class="dd-row">
+            <div class="dd-n">03</div>
+            <div>
+              <div class="dd-title">Primary Bottleneck Named</div>
+              <div class="dd-sub">The single weakest category in your GTM signal — the one constraint pulling down every metric downstream. Named specifically, not generically.</div>
+            </div>
+          </div>
+          <div class="dd-row">
+            <div class="dd-n">04</div>
+            <div>
+              <div class="dd-title">Your Commercial Pathway + Next Move</div>
+              <div class="dd-sub">One specific action to take this week. Your pathway (ICP Clarity, Conversion Efficiency, Scale Operator, or Nurture) with a concrete directive — not a framework, a move.</div>
+            </div>
+          </div>
+        </div>
+        <div class="diag-meta">
+          <div class="dm">9 questions</div>
+          <div class="dm">4 minutes total</div>
+          <div class="dm">Instant results</div>
+          <div class="dm">No account required</div>
+        </div>
+      </div>
+
+      <div class="rv d2">
+        <div class="diag-card">
+          <div class="dc-eyebrow">Signal Resolution · Free · Instant · No Account Required</div>
+          <h3 class="dc-hl">NAME YOUR<br><em>PRIMARY</em><br>BOTTLENECK.</h3>
+          <div class="dc-urgency">
+            <strong>Before you spend another dollar</strong> on ads, outbound, campaigns, or content — run nine questions. In four minutes you'll know your GTM maturity score, your archetype, and the one bottleneck to fix first.
+          </div>
+          <p class="dc-body" style="margin-top:18px;">In 4 minutes, the assessment tells you whether your GTM signal is clean enough to convert — or broken in a specific, nameable way.</p>
+          <a href="assessment.html" class="btn" style="width:100%;justify-content:center;"><span>Run the Diagnostic — Free →</span></a>
+          <div class="dc-note">Your bottleneck has a name. Four minutes to find it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROOF ════ -->
+<section class="sec proof">
+  <div class="inner">
+    <p class="eyebrow rv">Real Outcomes</p>
+    <h2 class="sec-hl rv">WHAT HAPPENS WHEN<br><em>THE BOTTLENECK CLEARS.</em></h2>
+    <p class="proof-intro rv">340+ seed-to-Series-A founders have run the diagnostic. These are three who found the bottleneck on the first pass — and fixed it at the source instead of the symptom.</p>
+    <div class="proof-grid">
+      <div class="pc rv">
+        <div class="pc-stars">★★★★★</div>
+        <div class="pc-quote">"Nine questions, four minutes — the diagnostic named our bottleneck as ICP Clarity. <em>We'd been blaming messaging for 8 months</em> when the real issue was that our ICP was built on assumption the whole time."</div>
+        <div class="pc-author">
+          <div class="pc-av">MK</div>
+          <div>
+            <div class="pc-name">Marcus K.</div>
+            <div class="pc-role">Founder & CEO · $1.4M ARR SaaS</div>
+            <div class="pc-result">40% increase in qualified pipeline in 30 days</div>
+          </div>
+        </div>
+        <div class="pc-bottleneck">Identified bottleneck: <strong>ICP Clarity → Signal-Blind Founder archetype</strong></div>
+      </div>
+      <div class="pc rv d1">
+        <div class="pc-stars">★★★★★</div>
+        <div class="pc-quote">"The diagnostic scored our Positioning at Ad Hoc — the lowest maturity level. <em>That single output explained 6 months of stalled deals.</em> We weren't in the wrong market. We had the wrong language for the buyer state."</div>
+        <div class="pc-author">
+          <div class="pc-av">SL</div>
+          <div>
+            <div class="pc-name">Simone L.</div>
+            <div class="pc-role">Head of Revenue · Series A B2B</div>
+            <div class="pc-result">Outbound close rate up 40%</div>
+          </div>
+        </div>
+        <div class="pc-bottleneck">Identified bottleneck: <strong>Positioning Narrative → Message Drift Team archetype</strong></div>
+      </div>
+      <div class="pc rv d2">
+        <div class="pc-stars">★★★★★</div>
+        <div class="pc-quote">"Deployed in 3 days. The bottleneck was Conversion Flow — and once we fixed the handoff, the first high-ICP deal converted in week 2. <em>We'd been patching the wrong layer</em> for six months."</div>
+        <div class="pc-author">
+          <div class="pc-av">DP</div>
+          <div>
+            <div class="pc-name">David P.</div>
+            <div class="pc-role">Co-Founder · $800K ARR SaaS</div>
+            <div class="pc-result">First enterprise deal closed in week 2</div>
+          </div>
+        </div>
+        <div class="pc-bottleneck">Identified bottleneck: <strong>Conversion Flow → Story Without System archetype</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ ABOUT ════ -->
+<section class="sec about" id="about">
+  <div class="inner">
+    <p class="eyebrow rv">About</p>
+    <h2 class="sec-hl rv">A POINT OF VIEW,<br>NOT <em>A DASHBOARD.</em></h2>
+    <div class="about-layout">
+      <div class="rv">
+        <div class="about-statement">Most GTM tooling speeds up execution before strategy is resolved. <em>Signal Resolution exists to fix the upstream problem first — before you scale another wrong motion faster.</em></div>
+        <div class="about-body">The bottleneck is almost always upstream of where founders are looking. They optimize the funnel when the ICP is wrong. They rewrite copy when the buyer state is misread. They add tools when the signal architecture is broken.<br><br>Signal Resolution identifies the upstream constraint first — then resolves it using a live, evidence-based intelligence system that updates as market conditions shift.<br><br><strong>The framework was built around one question:</strong> how do you build pipeline on signal that actually predicts buying behavior — not just activity?</div>
+        <div class="about-rules">
+          <div class="ar"><div class="ar-code">RULE 01</div><div class="ar-text"><strong>Evidence over opinion.</strong> Every claim must be falsifiable.</div></div>
+          <div class="ar"><div class="ar-code">RULE 02</div><div class="ar-text"><strong>Resolution over description.</strong> Naming a state is not understanding it.</div></div>
+          <div class="ar"><div class="ar-code">RULE 03</div><div class="ar-text"><strong>Signal over noise.</strong> Anything not increasing clarity is waste.</div></div>
+          <div class="ar"><div class="ar-code">RULE 04</div><div class="ar-text"><strong>Structure over randomness.</strong> Systems are the only thing that scales.</div></div>
+        </div>
+      </div>
+      <div class="about-cards rv d2">
+        <div class="acard">
+          <div class="acard-lbl">Built for</div>
+          <div class="acard-body">Seed-stage and early Series A B2B SaaS founders running a founder-led or hybrid sales motion. $500K–$3M ARR. 10–40 people. $25K–$100K ACV.</div>
+        </div>
+        <div class="acard">
+          <div class="acard-lbl">What the diagnostic covers</div>
+          <div class="acard-list">
+            <div class="acard-li">ICP Clarity — are you qualifying on evidence or memory?</div>
+            <div class="acard-li">Positioning — does your message match the buyer state?</div>
+            <div class="acard-li">Offer Logic — is your offer built on buyer signal?</div>
+            <div class="acard-li">Conversion Flow — where is the handoff breaking?</div>
+            <div class="acard-li">Strategic Signal — is your team running on gut or evidence?</div>
+          </div>
+        </div>
+        <div class="acard" style="background:rgba(245,166,35,.03);border-color:var(--bdr-hi);">
+          <div class="acard-lbl">What it refuses to do</div>
+          <div class="acard-list">
+            <div class="acard-li">Give you a generic score with no specific output</div>
+            <div class="acard-li">Describe the problem without naming the bottleneck</div>
+            <div class="acard-li">Speed up execution before the strategy is resolved</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ WRITING ════ -->
+<section class="sec writing">
+  <div class="inner">
+    <div class="writing-hd">
+      <div>
+        <p class="eyebrow rv">Writing</p>
+        <h2 class="sec-hl rv" style="margin-bottom:0;">THINKING.<br><em>OUT LOUD.</em></h2>
+      </div>
+      <a href="blog/index.html" class="view-all rv">All posts →</a>
+    </div>
+    <div class="posts">
+      <a href="blog/post-technographic-signals.html" class="post feat rv">
+        <div class="ptag"><span class="ptag-dot"></span>Featured · ICP Methodology</div>
+        <div class="ptitle">Traditional Technographic Signals Are Broken. Here's What Replaced Them.</div>
+        <div class="pexcerpt">AI agents have abstracted away integration pain. Tool count no longer predicts buying urgency. The entire technographic signal layer needs to be rebuilt around stack velocity, adoption patterns, and migration sequences.</div>
+        <div class="pmeta"><span>Mar 2026 · 12 min</span><span class="pread">Read →</span></div>
+      </a>
+      <a href="blog/post-buyer-states.html" class="post rv d1">
+        <div class="ptag"><span class="ptag-dot"></span>Psychographics</div>
+        <div class="ptitle">The 5 AI-Era Buyer States — And Why 2023 Personas Are Obsolete</div>
+        <div class="pexcerpt">AI changed how companies experience and articulate their problems. Here are the 5 states that replaced the persona.</div>
+        <div class="pmeta"><span>Feb 2026 · 8 min</span><span class="pread">Read →</span></div>
+      </a>
+      <a href="blog/post-timing.html" class="post rv d2">
+        <div class="ptag"><span class="ptag-dot"></span>Signal Theory</div>
+        <div class="ptitle">Timing Is the Most Underrated GTM Variable</div>
+        <div class="pexcerpt">Every outbound framework treats timing as an afterthought. That's the wrong frame. Timing is a signal layer, not a scheduling decision.</div>
+        <div class="pmeta"><span>Jan 2026 · 7 min</span><span class="pread">Read →</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FINAL CTA ════ -->
+<section class="final">
+  <div class="final-inner">
+    <div class="final-pre rv">340+ founders scored. Spots for manual review are limited.</div>
+    <h2 class="final-hl rv">NAME THE<br><em>BREAK</em><br>FIRST.</h2>
+    <p class="final-body rv">Before you spend another dollar on ads, outbound, campaigns, or content — run the diagnostic. In four minutes you'll know your GTM maturity score, your archetype, and the one bottleneck that's been pulling down every metric downstream.</p>
+    <div class="final-delivers rv">
+      <div class="fd-item">
+        <div class="fd-icon">Output 01</div>
+        <div class="fd-text"><strong>GTM Signal Score</strong> — 0 to 100, scored across all nine categories with per-category maturity breakdown</div>
+      </div>
+      <div class="fd-item">
+        <div class="fd-icon">Output 02</div>
+        <div class="fd-text"><strong>Archetype Identified</strong> — one of seven specific narratives that describes what's actually happening in your system</div>
+      </div>
+      <div class="fd-item">
+        <div class="fd-icon">Output 03</div>
+        <div class="fd-text"><strong>Primary Bottleneck Named</strong> — the single weakest category pulling down your pipeline, named specifically</div>
+      </div>
+      <div class="fd-item">
+        <div class="fd-icon">Output 04</div>
+        <div class="fd-text"><strong>Next Move</strong> — one specific action for this week, tied to your exact score and pathway</div>
+      </div>
+    </div>
+
+    <!-- GUARANTEE BLOCK -->
+    <div style="padding:18px 24px;border:1px solid rgba(245,166,35,.22);background:rgba(245,166,35,.04);margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto;" class="rv">
+      <div style="font-family:var(--M);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">Our commitment</div>
+      <p style="font-family:var(--M);font-size:11.5px;color:var(--muted);line-height:1.75;">Complete all 9 questions. If you don't have a clearly named bottleneck in your results, email us. We'll review your session manually at no cost and tell you exactly where the signal is breaking. <strong style="color:var(--slate);">No risk. No account needed to start.</strong></p>
+    </div>
+
+    <div class="final-actions rv">
+      <a href="assessment.html" class="btn"><span>Run the Diagnostic — Free →</span></a>
+      <a href="#what-it-measures" class="btn-ghost">See what it measures <span class="arr">→</span></a>
+      <div class="final-note">9 questions · 4 minutes · Manual review guarantee · No account required</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div>
+    <div class="ft-brand">SIGNAL RESOLUTION</div>
+    <div class="ft-tag">signalresolution.com</div>
+  </div>
+  <ul class="ft-links">
+    <li><a href="#pain">The Problem</a></li>
+    <li><a href="#what-it-measures">What It Measures</a></li>
+    <li><a href="#method">Method</a></li>
+    <li><a href="#diag">Diagnostic</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="blog/index.html">Writing</a></li>
+    <li><a href="ebook.html">Free Ebook</a></li>
+  </ul>
+  <div class="ft-copy">© 2026 Signal Resolution.<br>All rights reserved.</div>
+</footer>
+
+<script>
+/* ── CURSOR ── */
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+/* ── NAV STUCK ── */
+window.addEventListener('scroll',()=>document.getElementById('mainNav').classList.toggle('stuck',scrollY>60));
+
+/* ── SCROLL REVEAL ── */
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.07,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+
+/* ── HERO ENTRANCE ── */
+document.addEventListener('DOMContentLoaded',()=>{
+  ['.hero-kicker','.hero-hl','.hero-tagline','.hero-pain-bar','.hero-actions','.hero-meta'].forEach((s,i)=>{
+    const el=document.querySelector(s);
+    if(!el)return;
+    el.style.cssText=`opacity:0;transform:translateY(20px);transition:opacity .8s ease ${i*.13}s,transform .8s ease ${i*.13}s`;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.opacity='1';el.style.transform='translateY(0)';}));
+  });
+});
+
+/* ── SCORE CARD BAR ANIMATION ── */
+const scoreCard=document.querySelector('.score-card');
+let barsRan=false;
+if(scoreCard){
+  const so=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting&&!barsRan){
+        barsRan=true;
+        document.querySelectorAll('.sc-cat-fill').forEach(fill=>{
+          const pct=fill.getAttribute('data-pct');
+          setTimeout(()=>{fill.style.width=pct+'%';},300);
+        });
+      }
+    });
+  },{threshold:.4});
+  so.observe(scoreCard);
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--S);
-  overflow-x: hidden;
-  cursor: none;
+/* ── COST ROW STAGGER ── */
+const ceWrap=document.querySelector('.cl-rows');
+if(ceWrap){
+  const co=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.cl-row').forEach((row,i)=>{
+          row.style.cssText=`opacity:0;transform:translateX(-12px);transition:opacity .5s ease ${i*.07}s,transform .5s ease ${i*.07}s`;
+          requestAnimationFrame(()=>requestAnimationFrame(()=>{row.style.opacity='1';row.style.transform='translateX(0)';}));
+        });
+      }
+    });
+  },{threshold:.1});
+  co.observe(ceWrap);
 }
 
-/* ── CURSOR ──────────────────────────────────────────────────── */
-#cur  { position:fixed; width:7px; height:7px; background:var(--gold); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); mix-blend-mode:screen; transition:width .15s,height .15s; }
-#curR { position:fixed; width:28px; height:28px; border:1px solid rgba(245,166,35,.28); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .2s,height .2s; }
-body:has(a:hover) #cur, body:has(button:hover) #cur { width:14px; height:14px; }
-body:has(a:hover) #curR, body:has(button:hover) #curR { width:48px; height:48px; border-color:rgba(245,166,35,.08); }
-
-/* ── GRAIN ───────────────────────────────────────────────────── */
-body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:9997; opacity:.45; }
-
-/* ── NAV ─────────────────────────────────────────────────────── */
-nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:18px 56px; display:flex; align-items:center; justify-content:space-between; transition:background .4s,border-color .4s; }
-nav.stuck { background:rgba(8,7,6,.96); backdrop-filter:blur(28px); border-bottom:1px solid var(--bdr); }
-.n-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
-.n-sigil svg { animation:spin 28s linear infinite; }
-@keyframes spin { to { transform:rotate(360deg); } }
-.n-word { font-family:var(--F); font-size:16px; letter-spacing:.14em; color:var(--text); }
-.n-links { display:flex; gap:36px; list-style:none; }
-.n-links a { font-family:var(--M); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .2s; }
-.n-links a:hover { color:var(--gold); }
-.n-cta { font-family:var(--M); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase; padding:10px 22px; border:1px solid var(--gold); color:var(--gold); text-decoration:none; position:relative; overflow:hidden; transition:color .25s; }
-.n-cta::before { content:''; position:absolute; inset:0; background:var(--gold); transform:translateX(-101%); transition:transform .26s ease; }
-.n-cta:hover::before { transform:translateX(0); }
-.n-cta:hover { color:var(--bg); }
-
-/* ── SHARED ──────────────────────────────────────────────────── */
-.inner  { max-width:var(--max); margin:0 auto; padding:0 56px; }
-.eyebrow { font-family:var(--M); font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:20px; }
-.eyebrow::before { content:''; width:22px; height:1px; background:var(--gold); }
-.sec-hl { font-family:var(--F); font-size:clamp(44px,6vw,80px); line-height:.96; letter-spacing:.01em; margin-bottom:40px; }
-.sec-hl em { color:var(--gold); font-style:italic; }
-.btn { display:inline-flex; align-items:center; gap:10px; font-family:var(--M); font-size:10px; letter-spacing:.14em; text-transform:uppercase; padding:16px 32px; background:var(--gold); color:var(--bg); text-decoration:none; position:relative; overflow:hidden; transition:color .25s; font-weight:500; }
-.btn::before { content:''; position:absolute; inset:0; background:var(--gold-hi); transform:translateX(-101%) skewX(-8deg); transition:transform .35s ease; }
-.btn:hover::before { transform:translateX(0) skewX(0); }
-
-/* ── SCROLL REVEAL ───────────────────────────────────────────── */
-.rv { opacity:0; transform:translateY(18px); transition:opacity .75s ease, transform .75s ease; }
-.rv.in { opacity:1; transform:translateY(0); }
-.rv.d1 { transition-delay:.12s; }
-.rv.d2 { transition-delay:.24s; }
-
-/* ── FOOTER ──────────────────────────────────────────────────── */
-footer { padding:40px 56px; border-top:1px solid var(--bdr); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
-.ft-brand { font-family:var(--F); font-size:18px; letter-spacing:.12em; color:var(--text); }
-.ft-tag { font-family:var(--M); font-size:9px; color:var(--muted); letter-spacing:.14em; margin-top:4px; }
-.ft-links { list-style:none; display:flex; flex-wrap:wrap; gap:8px 28px; }
-.ft-links a { font-family:var(--M); font-size:9.5px; color:var(--muted); text-decoration:none; letter-spacing:.1em; transition:color .2s; }
-.ft-links a:hover { color:var(--gold); }
-.ft-copy { font-family:var(--M); font-size:9px; color:var(--dim); line-height:1.7; }
-
-/* ── BLOG INDEX ──────────────────────────────────────────────── */
-.blog-index { padding:140px 0 100px; }
-.blog-hd { margin-bottom:60px; max-width:640px; }
-.blog-intro { font-family:var(--M); font-size:11.5px; color:var(--muted); line-height:1.8; letter-spacing:.04em; max-width:520px; margin-top:16px; }
-.blog-featured { margin-bottom:4px; }
-.blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:2px; }
-
-/* Post cards */
-.posts { display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:2px; }
-.post { background:var(--s1); border:1px solid var(--bdr); padding:30px 28px; text-decoration:none; display:flex; flex-direction:column; gap:14px; transition:border-color .3s; }
-.post:hover { border-color:var(--bdr-hi); }
-.post.feat { background:linear-gradient(140deg,rgba(245,166,35,.04),var(--s1)); grid-column:1 / -1; }
-.ptag { font-family:var(--M); font-size:9.5px; color:var(--ember); letter-spacing:.14em; text-transform:uppercase; display:flex; align-items:center; gap:8px; }
-.ptag-dot { width:5px; height:5px; background:var(--ember); border-radius:50%; }
-.ptitle { font-family:var(--F); font-size:22px; line-height:1.1; letter-spacing:.01em; color:var(--text); }
-.post.feat .ptitle { font-size:32px; max-width:640px; }
-.pexcerpt { font-family:var(--S); font-size:13.5px; color:var(--slate); line-height:1.65; flex:1; }
-.pmeta { display:flex; justify-content:space-between; align-items:center; font-family:var(--M); font-size:11px; color:var(--dim); margin-top:auto; }
-.pread { color:var(--gold); }
-
-/* ── BLOG POST ARTICLE ───────────────────────────────────────── */
-.post-article { padding-top:100px; }
-.post-header { padding:60px 0 48px; border-bottom:1px solid var(--bdr); margin-bottom:64px; }
-.post-meta-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; }
-.back-link { font-family:var(--M); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .2s; }
-.back-link:hover { color:var(--gold); }
-.post-cat { font-family:var(--M); font-size:9.5px; color:var(--ember); letter-spacing:.18em; text-transform:uppercase; }
-.post-hl { font-family:var(--F); font-size:clamp(44px,7vw,88px); line-height:.95; letter-spacing:.01em; margin-bottom:24px; max-width:900px; }
-.post-deck { font-family:var(--S); font-size:18px; color:var(--slate); line-height:1.65; max-width:640px; margin-bottom:28px; }
-.post-byline { font-family:var(--M); font-size:10.5px; color:var(--dim); display:flex; align-items:center; gap:10px; letter-spacing:.08em; }
-.post-dot { color:var(--gold); }
-
-/* ── PROSE (article body) ────────────────────────────────────── */
-.prose { max-width:720px; margin:0 auto; padding-bottom:80px; }
-.prose h2 { font-family:var(--F); font-size:32px; letter-spacing:.02em; margin:56px 0 20px; color:var(--text); }
-.prose h3 { font-family:var(--F); font-size:22px; letter-spacing:.02em; margin:40px 0 16px; color:var(--gold); }
-.prose p { font-size:17px; line-height:1.8; color:var(--slate); margin-bottom:24px; }
-.prose strong { color:var(--text); font-weight:600; }
-.prose em { color:var(--gold); font-style:italic; }
-.prose ul, .prose ol { padding-left:24px; margin-bottom:24px; }
-.prose li { font-size:16px; line-height:1.75; color:var(--slate); margin-bottom:8px; }
-.prose blockquote { border-left:2px solid var(--gold); padding-left:24px; margin:32px 0; }
-.prose blockquote p { color:var(--muted); font-style:italic; }
-.prose hr { border:none; border-top:1px solid var(--bdr); margin:48px 0; }
-.prose a { color:var(--gold); text-decoration:underline; text-underline-offset:3px; transition:color .2s; }
-.prose a:hover { color:var(--gold-hi); }
-.prose code { font-family:var(--M); font-size:13px; background:var(--s2); border:1px solid var(--bdr); padding:2px 7px; border-radius:2px; color:var(--ember); }
-
-/* ── POST FOOTER CTA ─────────────────────────────────────────── */
-.post-footer { padding:64px 0 80px; border-top:1px solid var(--bdr); margin-top:0; }
-.post-cta-block { max-width:560px; margin:0 auto; text-align:center; padding:48px 40px; border:1px solid var(--bdr-hi); background:linear-gradient(140deg,rgba(245,166,35,.04),var(--s1)); }
-.post-cta-label { font-family:var(--M); font-size:10px; color:var(--ember); letter-spacing:.18em; text-transform:uppercase; margin-bottom:12px; }
-.post-cta-hl { font-family:var(--F); font-size:38px; letter-spacing:.02em; margin-bottom:16px; }
-.post-cta-body { font-family:var(--S); font-size:14px; color:var(--muted); line-height:1.75; margin-bottom:28px; }
-
-/* ── RESPONSIVE ──────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .inner { padding:0 24px; }
-  nav { padding:16px 24px; }
-  .n-links { display:none; }
-  footer { padding:32px 24px; flex-direction:column; gap:24px; }
-  .posts { grid-template-columns:1fr; }
-  .post.feat { grid-column:auto; }
-  .blog-grid { grid-template-columns:1fr; }
-  .post-hl { font-size:42px; }
-  .prose { padding:0 0 60px; }
+/* ── DW CAT ROW STAGGER ── */
+const dwCats=document.querySelector('.dw-cats');
+if(dwCats){
+  const dwo=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.dw-cat').forEach((row,i)=>{
+          row.style.cssText=`opacity:0;transform:translateX(-8px);transition:opacity .45s ease ${i*.04}s,transform .45s ease ${i*.04}s`;
+          requestAnimationFrame(()=>requestAnimationFrame(()=>{row.style.opacity='1';row.style.transform='translateX(0)';}));
+        });
+      }
+    });
+  },{threshold:.1});
+  dwo.observe(dwCats);
 }
+
+/* ── LAYER HOVER ── */
+document.querySelectorAll('.layer').forEach(layer=>{
+  const n=layer.querySelector('.layer-n');
+  layer.addEventListener('mouseenter',()=>{if(n)n.style.background='rgba(245,166,35,.08)';});
+  layer.addEventListener('mouseleave',()=>{if(n)n.style.background='';});
+});
