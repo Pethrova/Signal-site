@@ -192,4 +192,26 @@ function submitFinal(){
   document.getElementById('finalForm').style.display='none';
 
   document.getElementById('fSuccess').classList.add('on');
+
+  const scoreCard = document.querySelector('.score-card');
+let barsRan = false;
+
+if (scoreCard) {
+  const so = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !barsRan) {
+        barsRan = true;
+
+        document.querySelectorAll('.sc-cat-fill').forEach(fill => {
+          const pct = fill.getAttribute('data-pct');
+          setTimeout(() => {
+            fill.style.width = pct + '%';
+          }, 300);
+        });
+      }
+    });
+  }, { threshold: .4 });
+
+  so.observe(scoreCard);
+}
 }
