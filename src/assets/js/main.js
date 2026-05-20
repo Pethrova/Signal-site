@@ -196,24 +196,13 @@ function submitFinal(){
 }
 
 /* ── SCORE CARD BAR ANIMATION ── */
-const scoreCard = document.querySelector('.score-card');
-let barsRan = false;
+document.addEventListener('DOMContentLoaded', () => {
+  const fills = document.querySelectorAll('.sc-cat-fill');
 
-if (scoreCard) {
-  const so = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting && !barsRan) {
-        barsRan = true;
-
-        document.querySelectorAll('.sc-cat-fill').forEach(fill => {
-          const pct = fill.getAttribute('data-pct');
-          setTimeout(() => {
-            fill.style.width = pct + '%';
-          }, 300);
-        });
-      }
-    });
-  }, { threshold: .4 });
-
-  so.observe(scoreCard);
-}
+  fills.forEach(fill => {
+    const pct = fill.getAttribute('data-pct') || '0';
+    setTimeout(() => {
+      fill.style.width = pct + '%';
+    }, 500);
+  });
+});
