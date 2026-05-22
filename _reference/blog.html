@@ -4,213 +4,269 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Writing — Signal Resolution</title>
-<meta name="description" content="GTM intelligence, ICP methodology, and signal theory for B2B SaaS founders.">
-
-
-<link rel="canonical" href="https://signalresolution.com/blog/">
-
-
-<meta property="og:type"        content="website">
-<meta property="og:title"       content="Writing">
-<meta property="og:description" content="GTM intelligence, ICP methodology, and signal theory for B2B SaaS founders.">
-<meta property="og:url"         content="https://signalresolution.com/blog/">
-
-
-
-<meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="Writing">
-<meta name="twitter:description" content="GTM intelligence, ICP methodology, and signal theory for B2B SaaS founders.">
-
-
+<meta name="description" content="Authoritative signal intelligence writing for seed-stage B2B SaaS founders. Frameworks, field-tested theory, and opinionated GTM thinking from Signal Resolution.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-
-
-<link rel="stylesheet" href="/assets/css/global.css">
-
-
-
-
-
-
+<style>
+:root{--bg:#080706;--s1:#0f0e0c;--s2:#161410;--bdr:rgba(255,200,80,0.07);--bdr-hi:rgba(255,200,80,0.18);--gold:#f5a623;--gold-hi:#ffd166;--gold-dim:rgba(245,166,35,0.3);--ember:#ff6b35;--text:#ede8df;--slate:#c8c4bb;--muted:#6e6860;--dim:#3a3530;--F:'Bebas Neue',sans-serif;--S:'Fraunces',serif;--M:'IBM Plex Mono',monospace;--max:1200px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--S);overflow-x:hidden;cursor:none;}
+#cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;}
+#curR{position:fixed;width:32px;height:32px;border:1px solid var(--gold-dim);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .22s,height .22s;}
+#cur.h{width:16px;height:16px;}#curR.h{width:50px;height:50px;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:.5;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 52px;transition:background .3s,border-color .3s;}
+nav.stuck{background:rgba(8,7,6,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);}
+.n-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.n-sigil svg{animation:rot 20s linear infinite;}@keyframes rot{to{transform:rotate(360deg);}}
+.n-word{font-family:var(--F);font-size:18px;letter-spacing:.12em;color:var(--text);}
+.n-links{display:flex;gap:36px;list-style:none;}
+.n-links a{font-family:var(--M);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.n-links a:hover,.n-links a.active{color:var(--gold);}
+.n-cta{font-family:var(--M);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:10px 24px;border:1px solid var(--gold);color:var(--gold);text-decoration:none;position:relative;overflow:hidden;}
+.n-cta::before{content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-101%);transition:transform .25s ease;}
+.n-cta:hover::before{transform:translateX(0);}
+.n-cta span{position:relative;z-index:1;}.n-cta:hover span{color:var(--bg);}
+.page-header{padding:160px 52px 80px;background:var(--s1);border-bottom:1px solid var(--bdr);position:relative;overflow:hidden;}
+.page-header::before{content:'WRITING';position:absolute;right:-20px;bottom:-40px;font-family:var(--F);font-size:240px;color:rgba(245,166,35,.03);line-height:1;pointer-events:none;}
+.ph-inner{max-width:var(--max);margin:0 auto;position:relative;z-index:2;}
+.ph-ew{font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.ph-ew::before{content:'';width:24px;height:1px;background:var(--gold);}
+.ph-hl{font-family:var(--F);font-size:clamp(56px,7vw,100px);letter-spacing:.03em;line-height:.93;color:var(--text);margin-bottom:20px;}
+.ph-hl em{color:var(--gold);font-style:normal;}
+.ph-sub{font-family:var(--S);font-style:italic;font-size:18px;color:var(--slate);line-height:1.7;max-width:560px;}
+.filter-bar{background:var(--bg);border-bottom:1px solid var(--bdr);padding:18px 52px;position:sticky;top:68px;z-index:50;}
+.fb-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.fb-label{font-family:var(--M);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-right:4px;}
+.filter-btn{font-family:var(--M);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 16px;border:1px solid var(--bdr);color:var(--muted);background:transparent;cursor:pointer;transition:border-color .2s,color .2s,background .2s;}
+.filter-btn:hover{border-color:var(--bdr-hi);color:var(--slate);}
+.filter-btn.on{border-color:var(--gold);color:var(--gold);background:rgba(245,166,35,.05);}
+.search-wrap{margin-left:auto;position:relative;}
+.search-input{background:var(--s1);border:1px solid var(--bdr);padding:8px 36px 8px 14px;font-family:var(--M);font-size:11px;color:var(--text);outline:none;width:220px;transition:border-color .2s;}
+.search-input::placeholder{color:var(--dim);}.search-input:focus{border-color:rgba(245,166,35,.35);}
+.search-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:12px;pointer-events:none;}
+.blog-main{padding:60px 52px 100px;}
+.bm-inner{max-width:var(--max);margin:0 auto;}
+.featured-post{display:grid;grid-template-columns:1.6fr 1fr;gap:2px;margin-bottom:2px;}
+.fp-card{background:var(--s1);border:1px solid var(--bdr-hi);padding:44px 40px;position:relative;overflow:hidden;cursor:pointer;transition:border-color .3s;text-decoration:none;display:flex;flex-direction:column;}
+.fp-card:hover{border-color:rgba(245,166,35,.3);}
+.fp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--ember),transparent);}
+.fp-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--M);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.15);padding:4px 12px;margin-bottom:20px;width:fit-content;}
+.fp-badge-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:p 2s infinite;}@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+.fp-title{font-family:var(--F);font-size:clamp(24px,3vw,40px);letter-spacing:.03em;line-height:.97;color:var(--text);margin-bottom:16px;}
+.fp-excerpt{font-family:var(--S);font-style:italic;font-size:15px;color:var(--slate);line-height:1.75;flex:1;margin-bottom:24px;}
+.fp-meta{display:flex;align-items:center;justify-content:space-between;padding-top:18px;border-top:1px solid var(--bdr);font-family:var(--M);font-size:10px;color:var(--muted);}
+.fp-read{color:var(--gold);display:flex;align-items:center;gap:6px;transition:gap .2s;}
+.fp-card:hover .fp-read{gap:12px;}
+.fp-side{display:flex;flex-direction:column;gap:2px;}
+.fp-side-card{background:var(--s1);border:1px solid var(--bdr);padding:26px 28px;cursor:pointer;transition:border-color .3s;text-decoration:none;display:flex;flex-direction:column;flex:1;}
+.fp-side-card:hover{border-color:var(--bdr-hi);}
+.fsc-tag{font-family:var(--M);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.fsc-tag-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+.fsc-title{font-family:var(--F);font-size:19px;letter-spacing:.03em;color:var(--text);line-height:1.05;margin-bottom:8px;}
+.fsc-excerpt{font-family:var(--S);font-style:italic;font-size:13px;color:var(--slate);line-height:1.65;flex:1;margin-bottom:12px;}
+.fsc-meta{font-family:var(--M);font-size:10px;color:var(--dim);display:flex;justify-content:space-between;}
+.fsc-read{color:var(--gold);}
+.post-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:2px;}
+.post-card{background:var(--s1);border:1px solid var(--bdr);padding:30px 26px;cursor:pointer;transition:border-color .3s,background .3s;text-decoration:none;display:flex;flex-direction:column;}
+.post-card:hover{border-color:var(--bdr-hi);background:var(--s2);}
+.post-card.hidden,.fp-side-card.hidden{display:none;}
+.pc-tag{font-family:var(--M);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.pc-tag-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+.pc-title{font-family:var(--F);font-size:20px;letter-spacing:.03em;color:var(--text);line-height:1.0;margin-bottom:10px;}
+.pc-excerpt{font-family:var(--S);font-style:italic;font-size:13px;color:var(--slate);line-height:1.7;flex:1;margin-bottom:16px;}
+.pc-meta{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--bdr);font-family:var(--M);font-size:10px;color:var(--muted);margin-top:auto;}
+.pc-read{color:var(--gold);}
+.no-results{grid-column:1/-1;text-align:center;padding:60px 20px;font-family:var(--M);font-size:13px;color:var(--muted);display:none;}
+.no-results.show{display:block;}
+.bottom-layout{display:grid;grid-template-columns:1fr 280px;gap:2px;margin-top:2px;}
+.bottom-posts{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
+.sidebar-cta{background:var(--s2);border:1px solid var(--bdr-hi);padding:32px 28px;position:relative;overflow:hidden;}
+.sidebar-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--ember),transparent);}
+.sc-kicker{font-family:var(--M);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.sc-title{font-family:var(--F);font-size:22px;letter-spacing:.04em;color:var(--text);margin-bottom:8px;line-height:1.0;}
+.sc-body{font-family:var(--S);font-style:italic;font-size:13px;color:var(--slate);line-height:1.65;margin-bottom:18px;}
+.sc-btn{display:block;text-align:center;padding:12px;font-family:var(--M);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:var(--bg);text-decoration:none;transition:box-shadow .2s;}
+.sc-btn:hover{box-shadow:0 0 28px rgba(245,166,35,.35);}
+.sc-email-form{display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.sc-input{background:var(--bg);border:1px solid var(--bdr);padding:11px 14px;font-family:var(--M);font-size:11px;color:var(--text);outline:none;transition:border-color .2s;}
+.sc-input::placeholder{color:var(--dim);}.sc-input:focus{border-color:rgba(245,166,35,.35);}
+.sc-submit{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:11px;font-family:var(--M);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s;}
+.sc-submit:hover{background:var(--gold);color:var(--bg);}
+footer{border-top:1px solid var(--bdr);padding:44px 52px;background:var(--s1);display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;gap:24px;}
+.f-brand-name{font-family:var(--F);font-size:18px;letter-spacing:.1em;color:var(--muted);}
+.f-brand-tag{font-family:var(--M);font-size:11px;color:var(--dim);}
+.f-links{display:flex;gap:24px;justify-content:center;list-style:none;}
+.f-links a{font-family:var(--M);font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
+.f-links a:hover{color:var(--gold);}
+.f-copy{font-family:var(--M);font-size:11px;color:var(--dim);text-align:right;}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}.rv.in{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.06s;}.d2{transition-delay:.12s;}.d3{transition-delay:.18s;}
+@media(max-width:960px){nav{padding:18px 24px;}.n-links{display:none;}.page-header,.blog-main{padding-left:24px;padding-right:24px;}.filter-bar{padding:16px 24px;}.featured-post{grid-template-columns:1fr;}.post-grid{grid-template-columns:1fr 1fr;}.bottom-layout{grid-template-columns:1fr;}.bottom-posts{grid-template-columns:1fr;}footer{grid-template-columns:1fr;text-align:center;}.f-copy,.f-links{text-align:center;justify-content:center;}}
+@media(max-width:560px){.post-grid{grid-template-columns:1fr;}}
+</style>
 </head>
 <body>
-
-
-<div id="cur"></div>
-<div id="curR"></div>
-
-
-<nav id="mainNav">
-  <a href="/" class="n-logo">
-    <div class="n-sigil">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <circle cx="11" cy="11" r="10" stroke="#f5a623" stroke-width="1"/>
-        <circle cx="11" cy="11" r="6"  stroke="#f5a623" stroke-width=".5" stroke-dasharray="2 2"/>
-        <circle cx="11" cy="11" r="2"  fill="#f5a623"/>
-      </svg>
+<div id="cur"></div><div id="curR"></div>
+<nav id="nav">
+  <a href="index.html" class="n-logo">
+    <div style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><polygon points="16,2 30,26 2,26" stroke="#f5a623" stroke-width="1.5" fill="none"/><polygon points="16,8 25,24 7,24" stroke="#f5a623" stroke-width=".5" fill="none" opacity=".4"/></svg>
     </div>
-    <span class="n-word">SIGNAL RESOLUTION</span>
+    <span class="n-word">Signal Resolution</span>
   </a>
   <ul class="n-links">
-    <li><a href="/#pain">The Problem</a></li>
-    <li><a href="/#what-it-measures">Method</a></li>
-    <li><a href="/#diag">Diagnostic</a></li>
-    <li><a href="/blog/">Writing</a></li>
-    <li><a href="/#about">About</a></li>
+    <li><a href="index.html#methodology">Methodology</a></li>
+    <li><a href="diagnostic.html">Assessment</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="blog.html" class="active">Writing</a></li>
   </ul>
-  <a href="/assessment/" class="n-cta">Run Diagnostic →</a>
+  <a href="diagnostic.html" class="n-cta"><span>Take the Assessment →</span></a>
 </nav>
-
-
-
-<main>
-  
-
-
-<section class="page-header">
-  <div class="ph-inner inner">
-    <p class="ph-ew">Writing</p>
-    <h1 class="ph-hl">GTM intelligence and signal thinking for B2B SaaS.</h1>
-    <p class="ph-sub">Read practical essays on ICP clarity, buyer-state dynamics, and evidence-led GTM decisions.</p>
+<div class="page-header">
+  <div class="ph-inner">
+    <div class="ph-ew">Signal Resolution · Writing</div>
+    <h1 class="ph-hl">THINKING.<br>OUT <em>LOUD.</em></h1>
+    <p class="ph-sub">Authoritative frameworks, field-tested signal theory, and the unfiltered GTM thinking that most people aren't willing to publish. No content marketing. Just the ideas.</p>
   </div>
-</section>
-
-<section class="filter-bar">
-  <div class="fb-inner inner">
-    <div class="fb-label">Filter by category</div>
-    <div class="fb-actions">
-      <button class="filter-btn is-active" data-filter="all" onclick="filter('all', this)">All</button>
-      <button class="filter-btn" data-filter="ICP" onclick="filter('ICP', this)">ICP</button>
-      <button class="filter-btn" data-filter="Positioning" onclick="filter('Positioning', this)">Positioning</button>
-      <button class="filter-btn" data-filter="GTM" onclick="filter('GTM', this)">GTM</button>
-    </div>
-    <div class="search-wrap">
-      <input id="blogSearch" class="search-input" type="search" placeholder="Search posts" oninput="search(this.value)">
-      <span class="search-icon">⌕</span>
-    </div>
+</div>
+<div class="filter-bar">
+  <div class="fb-inner">
+    <span class="fb-label">Filter:</span>
+    <button class="filter-btn on" onclick="filter('all',this)">All</button>
+    <button class="filter-btn" onclick="filter('icp-methodology',this)">ICP Methodology</button>
+    <button class="filter-btn" onclick="filter('signal-theory',this)">Signal Theory</button>
+    <button class="filter-btn" onclick="filter('psychographics',this)">Psychographics</button>
+    <button class="filter-btn" onclick="filter('founder-gtm',this)">Founder GTM</button>
+    <button class="filter-btn" onclick="filter('data-layer',this)">Data Layer</button>
+    <div class="search-wrap"><input class="search-input" type="text" placeholder="Search posts..." oninput="search(this.value)"><span class="search-icon">⌕</span></div>
   </div>
-</section>
-
-<section class="blog-main">
-  <div class="bm-inner inner">
-    
-    <div class="featured-post" data-category="ICP Methodology">
-      <a class="fp-card" href="/blog/technographic-signals/">
-        <div class="fp-badge">Featured</div>
-        <h2 class="fp-title">Traditional Technographic Signals Are Broken. Here&#39;s What Replaced Them.</h2>
-        <p class="fp-excerpt">AI agents have abstracted away integration pain. Tool count no longer predicts buying urgency. The entire technographic signal layer needs to be rebuilt around stack velocity, adoption patterns, and migration sequences.</p>
-        <div class="fp-meta">Mar 2026 · 3 min</div>
+</div>
+<div class="blog-main">
+  <div class="bm-inner">
+    <div class="featured-post rv" id="featuredRow">
+      <a href="article.html" class="fp-card" data-cat="icp-methodology" data-title="Traditional technographic signals are broken. Here's what replaced them.">
+        <div class="fp-badge"><span class="fp-badge-dot"></span>Featured · ICP Methodology</div>
+        <div class="fp-title">Traditional Technographic Signals Are Broken. Here's What Replaced Them.</div>
+        <div class="fp-excerpt">AI agents have abstracted away integration pain. Tool count no longer predicts buying urgency. The entire technographic signal layer needs to be rebuilt around stack velocity, adoption patterns, and migration sequences — not static tool lists. Here's the new model.</div>
+        <div class="fp-meta"><span>Mar 2026 · 12 min read</span><span class="fp-read">Read the post →</span></div>
       </a>
       <div class="fp-side">
-        <div class="fp-side-card">
-          <strong>Want a custom diagnosis?</strong>
-          <p>Run the 9-question assessment and identify your primary GTM bottleneck.</p>
-          <a href="/assessment/">Run assessment →</a>
+        <a href="article.html" class="fp-side-card" data-cat="psychographics" data-title="The 5 AI-era buyer states — and why 2023 personas are obsolete">
+          <div class="fsc-tag"><span class="fsc-tag-dot"></span>Psychographics</div>
+          <div class="fsc-title">The 5 AI-Era Buyer States — And Why 2023 Personas Are Obsolete</div>
+          <div class="fsc-excerpt">Buyer personas were built for a world where pain was stable and describable. AI changed how companies experience and articulate their problems. Here are the 5 states that replaced the persona.</div>
+          <div class="fsc-meta"><span>Feb 2026 · 8 min</span><span class="fsc-read">Read →</span></div>
+        </a>
+        <a href="article.html" class="fp-side-card" data-cat="icp-methodology" data-title="Why your ICP document is a hypothesis, not a system">
+          <div class="fsc-tag"><span class="fsc-tag-dot"></span>ICP Methodology</div>
+          <div class="fsc-title">Why Your ICP Document Is a Hypothesis, Not a System</div>
+          <div class="fsc-excerpt">The difference between a document ICP and a signal ICP isn't format — it's falsifiability. One updates when your opinion changes. The other updates when the data does.</div>
+          <div class="fsc-meta"><span>Jan 2026 · 6 min</span><span class="fsc-read">Read →</span></div>
+        </a>
+      </div>
+    </div>
+    <div class="post-grid" id="postGrid">
+      <a href="article.html" class="post-card rv" data-cat="signal-theory" data-title="Timing is the most underrated GTM variable">
+        <div class="pc-tag"><span class="pc-tag-dot"></span>Signal Theory</div>
+        <div class="pc-title">Timing Is the Most Underrated GTM Variable</div>
+        <div class="pc-excerpt">Every outbound framework treats timing as an afterthought. That's the wrong frame. Timing is a signal layer, not a scheduling decision.</div>
+        <div class="pc-meta"><span>Jan 2026 · 7 min</span><span class="pc-read">Read →</span></div>
+      </a>
+      <a href="article.html" class="post-card rv d1" data-cat="founder-gtm" data-title="The problem with founder-led sales is founder-led ICP">
+        <div class="pc-tag"><span class="pc-tag-dot"></span>Founder GTM</div>
+        <div class="pc-title">The Problem With Founder-Led Sales Is Founder-Led ICP</div>
+        <div class="pc-excerpt">When the founder closes the first 10 deals, they carry the ICP in their head. At deal 11, it becomes the bottleneck — and it compounds.</div>
+        <div class="pc-meta"><span>Dec 2025 · 5 min</span><span class="pc-read">Read →</span></div>
+      </a>
+      <a href="article.html" class="post-card rv d2" data-cat="data-layer" data-title="Why intent data often measures curiosity, not intent">
+        <div class="pc-tag"><span class="pc-tag-dot"></span>Data Layer</div>
+        <div class="pc-title">Why Intent Data Often Measures Curiosity, Not Intent</div>
+        <div class="pc-excerpt">Page visits and content downloads are weak signals dressed as strong ones. Here's the structural distinction between curiosity and actual buying intent.</div>
+        <div class="pc-meta"><span>Dec 2025 · 9 min</span><span class="pc-read">Read →</span></div>
+      </a>
+      <a href="article.html" class="post-card rv" data-cat="signal-theory" data-title="Social media is a signal playground. Here's how to use it that way.">
+        <div class="pc-tag"><span class="pc-tag-dot"></span>Signal Theory</div>
+        <div class="pc-title">Social Media Is a Signal Playground. Here's How to Use It That Way.</div>
+        <div class="pc-excerpt">Most founders scroll LinkedIn looking for content ideas. This post teaches you to scroll it like an intelligence analyst — extracting buyer state and psychographic data from posts your competitors scroll past.</div>
+        <div class="pc-meta"><span>Nov 2025 · 10 min</span><span class="pc-read">Read →</span></div>
+      </a>
+      <a href="article.html" class="post-card rv d1" data-cat="founder-gtm" data-title="Rising CAC is a signal problem, not a spend problem">
+        <div class="pc-tag"><span class="pc-tag-dot"></span>Founder GTM</div>
+        <div class="pc-title">Rising CAC Is a Signal Problem, Not a Spend Problem</div>
+        <div class="pc-excerpt">Most founders respond to rising CAC by adjusting budget allocation. That's the wrong lever. CAC rises when you're targeting the wrong companies, in the wrong state, at the wrong time.</div>
+        <div class="pc-meta"><span>Nov 2025 · 6 min</span><span class="pc-read">Read →</span></div>
+      </a>
+      <a href="article.html" class="post-card rv d2" data-cat="psychographics" data-title="Psychographic mining from job descriptions">
+        <div class="pc-tag"><span class="pc-tag-dot"></span>Psychographics</div>
+        <div class="pc-title">Psychographic Mining From Job Descriptions — The Signal Source Nobody's Using</div>
+        <div class="pc-excerpt">A company's job postings reveal more about their internal pain and buying readiness than any intent platform. Here's the extraction framework — three data points from every posting.</div>
+        <div class="pc-meta"><span>Oct 2025 · 8 min</span><span class="pc-read">Read →</span></div>
+      </a>
+      <div class="no-results" id="noResults">No posts found. Try a different search or category.</div>
+    </div>
+    <div class="bottom-layout">
+      <div class="bottom-posts">
+        <a href="article.html" class="post-card rv" data-cat="signal-theory" data-title="The GTM playbook AI broke — and what comes next">
+          <div class="pc-tag"><span class="pc-tag-dot"></span>Signal Theory</div>
+          <div class="pc-title">The GTM Playbook AI Broke — And What Comes Next</div>
+          <div class="pc-excerpt">AI didn't just change execution speed. It changed the signal environment. The pain signals that predicted buying in 2022 are being abstracted away.</div>
+          <div class="pc-meta"><span>Oct 2025 · 11 min</span><span class="pc-read">Read →</span></div>
+        </a>
+        <a href="article.html" class="post-card rv d1" data-cat="icp-methodology" data-title="Pipeline compounding — why signal accuracy gets better the longer you run it">
+          <div class="pc-tag"><span class="pc-tag-dot"></span>ICP Methodology</div>
+          <div class="pc-title">Pipeline Compounding — Why Signal Accuracy Gets Better the Longer You Run It</div>
+          <div class="pc-excerpt">A static ICP doesn't improve. A signal system does. Every deal — won or lost — is a data point that refines your model.</div>
+          <div class="pc-meta"><span>Sep 2025 · 7 min</span><span class="pc-read">Read →</span></div>
+        </a>
+      </div>
+      <div class="rv d2" style="display:flex;flex-direction:column;gap:2px;">
+        <div class="sidebar-cta">
+          <div class="sc-kicker">Free Diagnostic</div>
+          <div class="sc-title">KNOW YOUR SIGNAL SCORE</div>
+          <div class="sc-body">Four minutes. Nine questions. A scored breakdown of your ICP across all four signal layers — plus your buyer state classification.</div>
+          <a href="diagnostic.html" class="sc-btn">Take the Free Assessment →</a>
+        </div>
+        <div class="sidebar-cta" style="background:var(--s1);">
+          <div class="sc-kicker">Free Ebook</div>
+          <div class="sc-title">THE ICP RESOLUTION METHOD</div>
+          <div class="sc-body">The complete framework for turning social listening into pipeline intelligence. 142 pages + 4 bonuses. Free.</div>
+          <div class="sc-email-form">
+            <input class="sc-input" type="email" placeholder="Your email" id="sidebarEmail">
+            <button class="sc-submit" onclick="submitSidebar()">Get the Free Ebook →</button>
+          </div>
         </div>
       </div>
     </div>
-    
-
-    <div class="post-grid" id="postGrid">
-      
-      
-        
-      
-        
-        
-        <a href="/blog/buyer-states/" class="post-card" data-title="the 5 ai-era buyer states — and why 2023 personas are obsolete" data-description="ai changed how companies experience and articulate their problems. here are the 5 states that replaced the persona." data-category="Psychographics">
-          <div class="fp-badge">Psychographics</div>
-          <h3>The 5 AI-Era Buyer States — And Why 2023 Personas Are Obsolete</h3>
-          <p>AI changed how companies experience and articulate their problems. Here are the 5 states that replaced the persona.</p>
-          <div class="fp-meta">Feb 2026 · 3 min</div>
-        </a>
-        
-      
-        
-        
-        <a href="/blog/timing-gtm/" class="post-card" data-title="timing is the most underrated gtm variable" data-description="every outbound framework treats timing as an afterthought. that&#39;s the wrong frame. timing is a signal layer, not a scheduling decision." data-category="Signal Theory">
-          <div class="fp-badge">Signal Theory</div>
-          <h3>Timing Is the Most Underrated GTM Variable</h3>
-          <p>Every outbound framework treats timing as an afterthought. That&#39;s the wrong frame. Timing is a signal layer, not a scheduling decision.</p>
-          <div class="fp-meta">Jan 2026 · 3 min</div>
-        </a>
-        
-      
-
-      
-      <article class="post-card placeholder" data-category="placeholder">
-        <div class="fp-badge">Coming next</div>
-        <h3>How to segment by buyer state</h3>
-        <p>A practical model for changing messaging as intent matures.</p>
-        <div class="fp-meta">Draft preview</div>
-      </article>
-      
-      
-      <article class="post-card placeholder" data-category="placeholder">
-        <div class="fp-badge">Coming next</div>
-        <h3>Signal quality in outbound systems</h3>
-        <p>Where targeting logic breaks before SDRs ever touch a lead.</p>
-        <div class="fp-meta">Draft preview</div>
-      </article>
-      
-    </div>
-
-    <div class="bottom-layout">
-      <div class="bottom-posts">
-        <h3>Continue reading</h3>
-        <ul>
-          
-          <li><a href="/blog/technographic-signals/">Traditional Technographic Signals Are Broken. Here&#39;s What Replaced Them.</a></li>
-          
-          <li><a href="/blog/buyer-states/">The 5 AI-Era Buyer States — And Why 2023 Personas Are Obsolete</a></li>
-          
-          <li><a href="/blog/timing-gtm/">Timing Is the Most Underrated GTM Variable</a></li>
-          
-          
-          <li><span>Diagnostic scoring methodology (placeholder)</span></li>
-          
-        </ul>
-      </div>
-
-      <aside class="sidebar-cta">
-        <p class="sc-kicker">Free diagnostic</p>
-        <h4 class="sc-title">Name the GTM bottleneck before your next sprint.</h4>
-        <p class="sc-body">Nine questions, four minutes, instant archetype + bottleneck output.</p>
-        <a class="sc-btn" href="/assessment/">Run the assessment</a>
-        <form class="sc-email-form" onsubmit="submitSidebar(event)">
-          <label for="sc-email">Get new essays</label>
-          <input id="sc-email" type="email" placeholder="you@company.com" required>
-          <button type="submit">Notify me</button>
-        </form>
-      </aside>
-    </div>
   </div>
-</section>
-
-</main>
-
-
+</div>
 <footer>
-  <div>
-    <div class="ft-brand">SIGNAL RESOLUTION</div>
-    <div class="ft-tag">signalresolution.com</div>
-  </div>
-  <ul class="ft-links">
-    <li><a href="/#pain">The Problem</a></li>
-    <li><a href="/#what-it-measures">What It Measures</a></li>
-    <li><a href="/#method">Method</a></li>
-    <li><a href="/#diag">Diagnostic</a></li>
-    <li><a href="/#about">About</a></li>
-    <li><a href="/blog/">Writing</a></li>
-    <li><a href="/ebook.html">Free Ebook</a></li>
-  </ul>
-  <div class="ft-copy">© 2026 Signal Resolution.<br>All rights reserved.</div>
+  <div><div class="f-brand-name">SIGNAL RESOLUTION</div><div class="f-brand-tag">signalresolution.com</div></div>
+  <ul class="f-links"><li><a href="index.html">Home</a></li><li><a href="diagnostic.html">Assessment</a></li><li><a href="blog.html">Writing</a></li><li><a href="diagnostic.html">Free Ebook</a></li></ul>
+  <div class="f-copy">© 2026 Signal Resolution.</div>
 </footer>
-
-
-
-<script src="/assets/js/main.js"></script>
-
+<script>
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function a(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(a);})();
+document.querySelectorAll('a,button,.post-card').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('h');curR.classList.add('h');});el.addEventListener('mouseleave',()=>{cur.classList.remove('h');curR.classList.remove('h');});});
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('stuck',scrollY>48));
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.05});
+document.querySelectorAll('.rv').forEach(r=>ro.observe(r));
+let currentCat='all';
+function filter(cat,btn){currentCat=cat;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');applyFilters(document.querySelector('.search-input').value);}
+function search(val){applyFilters(val);}
+function applyFilters(searchVal){
+  const q=searchVal.toLowerCase().trim();
+  const cards=document.querySelectorAll('.post-card,.fp-side-card');
+  let visible=0;
+  cards.forEach(c=>{const catMatch=currentCat==='all'||c.dataset.cat===currentCat;const titleMatch=!q||c.dataset.title.toLowerCase().includes(q);const show=catMatch&&titleMatch;c.classList.toggle('hidden',!show);if(show)visible++;});
+  const fp=document.querySelector('.fp-card');
+  if(fp){const catMatch=currentCat==='all'||fp.dataset.cat===currentCat;const titleMatch=!q||fp.dataset.title.toLowerCase().includes(q);document.getElementById('featuredRow').style.display=(catMatch&&titleMatch)?'grid':'none';}
+  document.getElementById('noResults').classList.toggle('show',visible===0);
+}
+function submitSidebar(){const email=document.getElementById('sidebarEmail').value.trim();if(!email){alert('Please enter your email.');return;}document.querySelector('.sc-email-form').innerHTML='<div style="font-family:var(--M);font-size:11px;color:var(--gold);padding:10px 0;">✓ On its way to your inbox.</div>';}
+</script>
 </body>
 </html>
