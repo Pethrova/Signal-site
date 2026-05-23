@@ -439,3 +439,67 @@ footer{padding:40px 56px;border-top:1px solid var(--bdr);display:flex;align-item
 .sc-btn{display:inline-block;margin:8px 0 12px;color:var(--gold)}
 .sc-email-form{display:grid;gap:8px}.sc-email-form input,.sc-email-form button{padding:9px;border:1px solid var(--bdr);background:var(--s2);color:var(--slate)}
 @media (max-width:920px){.featured-post,.bottom-layout{grid-template-columns:1fr}.fb-inner{grid-template-columns:1fr}.post-grid{grid-template-columns:1fr}}
+
+/* Blog parity — ported from reference */
+.fp-side{display:flex;flex-direction:column;gap:2px;}
+.fp-read{color:var(--gold);display:flex;align-items:center;gap:6px;transition:gap .2s;}
+.fp-card:hover .fp-read{gap:12px;}
+.fp-badge-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:p 2s infinite;}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+.fsc-tag{font-family:var(--M);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.fsc-tag-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+.fsc-title{font-family:var(--F);font-size:19px;letter-spacing:.03em;color:var(--text);line-height:1.05;margin-bottom:8px;}
+.fsc-excerpt{font-family:var(--S);font-style:italic;font-size:13px;color:var(--slate);line-height:1.65;flex:1;margin-bottom:12px;}
+.fsc-meta{font-family:var(--M);font-size:10px;color:var(--dim);display:flex;justify-content:space-between;}
+.fsc-read{color:var(--gold);}
+.pc-tag{font-family:var(--M);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.pc-tag-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+.pc-title{font-family:var(--F);font-size:20px;letter-spacing:.03em;color:var(--text);line-height:1.0;margin-bottom:10px;}
+.pc-excerpt{font-family:var(--S);font-style:italic;font-size:13px;color:var(--slate);line-height:1.7;flex:1;margin-bottom:16px;}
+.pc-meta{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--bdr);font-family:var(--M);font-size:10px;color:var(--muted);margin-top:auto;}
+.pc-read{color:var(--gold);}
+.no-results{grid-column:1/-1;text-align:center;padding:60px 20px;font-family:var(--M);font-size:13px;color:var(--muted);display:none;}
+.no-results.show{display:block;}
+.filter-btn.on{border-color:var(--gold);color:var(--gold);background:rgba(245,166,35,.05);}
+.sc-input{background:var(--bg);border:1px solid var(--bdr);padding:11px 14px;font-family:var(--M);font-size:11px;color:var(--text);outline:none;transition:border-color .2s;}
+.sc-input::placeholder{color:var(--dim);}
+.sc-input:focus{border-color:rgba(245,166,35,.35);}
+.sc-submit{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:11px;font-family:var(--M);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s;}
+.sc-submit:hover{background:var(--gold);color:var(--bg);}
+.f-brand-name{font-family:var(--F);font-size:18px;letter-spacing:.1em;color:var(--muted);}
+.f-brand-tag{font-family:var(--M);font-size:11px;color:var(--dim);}
+.f-links{display:flex;gap:24px;justify-content:center;list-style:none;}
+.f-links a{font-family:var(--M);font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
+.f-links a:hover{color:var(--gold);}
+
+/* Blog parity — ported from reference */
+.fp-side{display:flex;flex-direction:column;gap:2px;}
+.fp-read{color:var(--gold);display:flex;align-items:center;gap:6px;transition:gap .2s;}
+.fp-card:hover .fp-read{gap:12px;}
+.fp-badge-dot{width:5px;height:5px;background:var(--gold);border-radius:50%;animation:p 2s infinite;}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+.fsc-tag{font-family:var(--M);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.fsc-tag-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+.fsc-title{font-family:var(--F);font-size:19px;letter-spacing:.03em;color:var(--text);line-height:1.05;margin-bottom:8px;}
+.fsc-excerpt{font-family:var(--S);font-style:italic;font-size:13px;color:var(--slate);line-height:1.65;flex:1;margin-bottom:12px;}
+.fsc-meta{font-family:var(--M);font-size:10px;color:var(--dim);display:flex;justify-content:space-between;}
+.fsc-read{color:var(--gold);}
+.pc-tag{font-family:var(--M);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.pc-tag-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;}
+.pc-title{font-family:var(--F);font-size:20px;letter-spacing:.03em;color:var(--text);line-height:1.0;margin-bottom:10px;}
+.pc-excerpt{font-family:var(--S);font-style:italic;font-size:13px;color:var(--slate);line-height:1.7;flex:1;margin-bottom:16px;}
+.pc-meta{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--bdr);font-family:var(--M);font-size:10px;color:var(--muted);margin-top:auto;}
+.pc-read{color:var(--gold);}
+.no-results{grid-column:1/-1;text-align:center;padding:60px 20px;font-family:var(--M);font-size:13px;color:var(--muted);display:none;}
+.no-results.show{display:block;}
+.filter-btn.on{border-color:var(--gold);color:var(--gold);background:rgba(245,166,35,.05);}
+.sc-input{background:var(--bg);border:1px solid var(--bdr);padding:11px 14px;font-family:var(--M);font-size:11px;color:var(--text);outline:none;transition:border-color .2s;}
+.sc-input::placeholder{color:var(--dim);}
+.sc-input:focus{border-color:rgba(245,166,35,.35);}
+.sc-submit{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:11px;font-family:var(--M);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s;}
+.sc-submit:hover{background:var(--gold);color:var(--bg);}
+.f-brand-name{font-family:var(--F);font-size:18px;letter-spacing:.1em;color:var(--muted);}
+.f-brand-tag{font-family:var(--M);font-size:11px;color:var(--dim);}
+.f-links{display:flex;gap:24px;justify-content:center;list-style:none;}
+.f-links a{font-family:var(--M);font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
+.f-links a:hover{color:var(--gold);}
