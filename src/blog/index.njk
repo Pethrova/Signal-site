@@ -51,7 +51,7 @@ permalink: /blog/
           <div class="fsc-tag"><span class="fsc-tag-dot"></span>{{ sidePost1.data.category }}</div>
           <div class="fsc-title">{{ sidePost1.data.title }}</div>
           <div class="fsc-excerpt">{{ sidePost1.data.description }}</div>
-          <div class="fsc-meta"><span>{{ sidePost1.data.date }} · {{ sidePost1.data.readTime }}</span><span class="fsc-read">Read &#8594;</span></div>
+          <div class="fsc-meta"><span>{{ sidePost1.date | postDate }} · {{ sidePost1.data.readTime }}</span><span class="fsc-read">Read &#8594;</span></div>
         </a>
         {% endif %}
         {% if sidePost2 %}
@@ -59,7 +59,7 @@ permalink: /blog/
           <div class="fsc-tag"><span class="fsc-tag-dot"></span>{{ sidePost2.data.category }}</div>
           <div class="fsc-title">{{ sidePost2.data.title }}</div>
           <div class="fsc-excerpt">{{ sidePost2.data.description }}</div>
-          <div class="fsc-meta"><span>{{ sidePost2.data.date }} · {{ sidePost2.data.readTime }}</span><span class="fsc-read">Read &#8594;</span></div>
+          <div class="fsc-meta"><span>{{ sidePost2.date | postDate }} · {{ sidePost2.data.readTime }}</span><span class="fsc-read">Read &#8594;</span></div>
         </a>
         {% endif %}
       </div>
@@ -75,7 +75,7 @@ permalink: /blog/
           <div class="pc-tag"><span class="pc-tag-dot"></span>{{ post.data.category or 'GTM' }}</div>
           <div class="pc-title">{{ post.data.title }}</div>
           <div class="pc-excerpt">{{ post.data.description }}</div>
-          <div class="pc-meta"><span>{{ post.data.date }} · {{ post.data.readTime }}</span><span class="pc-read">Read &#8594;</span></div>
+          <div class="pc-meta"><span>{{ post.date | postDate }} · {{ post.data.readTime }}</span><span class="pc-read">Read &#8594;</span></div>
         </a>
         {% endif %}
       {% endfor %}
@@ -105,7 +105,7 @@ permalink: /blog/
           <div class="pc-tag"><span class="pc-tag-dot"></span>{{ post.data.category or 'GTM' }}</div>
           <div class="pc-title">{{ post.data.title }}</div>
           <div class="pc-excerpt">{{ post.data.description }}</div>
-          <div class="pc-meta"><span>{{ post.data.date }} · {{ post.data.readTime }}</span><span class="pc-read">Read &#8594;</span></div>
+          <div class="pc-meta"><span>{{ post.date | postDate }} · {{ post.data.readTime }}</span><span class="pc-read">Read &#8594;</span></div>
         </a>
         {% endfor %}
         {% if collections.posts | length < 4 %}
