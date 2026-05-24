@@ -503,3 +503,9 @@ footer{padding:40px 56px;border-top:1px solid var(--bdr);display:flex;align-item
 .f-links{display:flex;gap:24px;justify-content:center;list-style:none;}
 .f-links a{font-family:var(--M);font-size:11px;color:var(--dim);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
 .f-links a:hover{color:var(--gold);}
+
+/* Card link-color reset */
+.fp-card,.fp-side-card,.post-card{color:var(--text);}
+.fp-card *,.fp-side-card *,.post-card *{color:inherit;}
+.fp-title,.pc-title,.fsc-title{color:var(--text);}
+.fp-badge,.pc-tag,.fsc-tag,.fp-read,.pc-read,.fsc-read{color:var(--gold);}
