@@ -1,6 +1,6 @@
 const N8N_BASE = 'https://data009.app.n8n.cloud/webhook';
 const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': 'https://signalresolution.com',
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Accept',
   'Access-Control-Max-Age': '86400',
