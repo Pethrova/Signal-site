@@ -8,8 +8,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/admin");
   eleventyConfig.addPassthroughCopy("src/diagnostic.html");
   eleventyConfig.ignores.add("src/diagnostic.html");
-  eleventyConfig.addPassthroughCopy("src/_worker.js");
-  eleventyConfig.ignores.add("src/_worker.js");
+
 
   // ── FILTERS ────────────────────────────────────────────────────────────────
   // Format dates for display e.g. "Mar 2026"
