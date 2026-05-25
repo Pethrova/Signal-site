@@ -20,6 +20,8 @@ src/assets/css/global.css   — all styles (single file)
 src/assets/js/main.js       — cursor, nav, filter JS
 _data/site.json             — global metadata
 _reference/blog.html        — canonical blog reference (do not edit)
+src/diagnostic.html         — standalone diagnostic app (passthrough, not processed by Eleventy)
+src/assessment.njk          — diagnostic landing/explanation page at /assessment/
 
 ## CSS rules
 Blog CSS lives at bottom of global.css — lines 415+.
@@ -40,8 +42,9 @@ Never edit _site/ directly.
 Never commit node_modules.
 
 ## Known remaining work
-- Assessment page is a stub — /assessment/ is primary CTA
-- Homepage Writing section uses hardcoded cards (not template-driven)
-- No RSS feed or sitemap.xml yet
+- First real article links: blog index side cards and post-grid still link to article.html placeholder — need to point to real post URLs via {{ post.url }}
+- Tripwire checkout URLs in diagnostic.html are placeholders (console.log only) — need real URLs when checkout is live
 - OG images not set on posts
 - No favicon
+- No RSS feed or sitemap.xml
+- Tier 1 checkout URL in diagnostic.html is an alert placeholder
