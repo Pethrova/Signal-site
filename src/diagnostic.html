@@ -884,11 +884,15 @@ function renderError(msg, retry) {
 
 async function apiCall(url, body) {
   var res = await fetch(url, {
-  method: 'POST',
-  mode: 'cors',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(body)
-});
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'omit',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
   if (!res.ok) throw new Error('API error: ' + res.status);
   return res.json();
 }
