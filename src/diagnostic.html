@@ -218,11 +218,11 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 // ═══════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════
-const API_BASE = 'https://data009.app.n8n.cloud/webhook';
+const API_BASE = 'https://signalresolution.com/api/diagnostic';
 const ENDPOINTS = {
-  startSession: API_BASE + '/diagnostic-session-start',
-  completeSession: API_BASE + '/diagnostic-session-complete',
-  leadCapture: API_BASE + '/diagnostic-lead-capture',
+  startSession: API_BASE + '/start',
+  completeSession: API_BASE + '/complete',
+  leadCapture: API_BASE + '/lead',
 };
 
 const MATURITY = ['Ad Hoc', 'Emerging', 'Operational', 'Evidence-Led'];
