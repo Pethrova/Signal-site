@@ -349,7 +349,12 @@ async function handleFrameSelect(frameId) {
       config: { categories: ['icp','positioning','activation','conversion','pricing','dark_funnel','strategy','onboarding','offer'], difficulty: 'Starter', questionCount: 9, entryFrameId: frameId, entryFrameSource: 'explicit_selection', entryFrameConfidence: 'high' },
       context: { attribution: {} },
     });
+    console.log('Raw data:', JSON.stringify(data).slice(0,500));
+    console.log('data.data:', data.data);
+    console.log('questions:', data.questions || (data.data && data.data.questions));
     var d = data.data || data;
+    console.log('d.session:', d.session);
+    console.log('d.questions:', d.questions);
     state.session = d.session;
     state.questions = d.questions;
     state.questionAssignments = d.questionAssignments || [];
