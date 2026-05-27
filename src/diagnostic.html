@@ -626,7 +626,15 @@ function showLeadCapture() {
 async function submitLead() {
   var email = document.getElementById('lead-email').value.trim();
   var name = document.getElementById('lead-name').value.trim();
-  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+  if (!email || !email.includes('@')) {
+    var emailInput = document.getElementById('lead-email');
+    if (emailInput) {
+      emailInput.style.borderColor = 'var(--ember)';
+      emailInput.placeholder = 'Please enter a valid email';
+      emailInput.focus();
+    }
+    return;
+  }
   state.leadEmail = email;
   renderLoading();
   try {
