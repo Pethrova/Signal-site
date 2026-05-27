@@ -364,6 +364,8 @@ async function handleFrameSelect(frameId) {
     state.qStartTime = Date.now();
     console.log('About to renderQuestion, questions count:', state.questions.length);
     setTimeout(function() {
+      console.log('screen-game display:', document.getElementById('screen-game') ? window.getComputedStyle(document.getElementById('screen-game')).display : 'element not found');
+      console.log('question-card exists:', !!document.getElementById('question-card'));
       try {
         renderQuestion();
         console.log('renderQuestion done');
