@@ -683,6 +683,7 @@ function renderFullReport() {
     cta_book_conversion_lab_strategy_session: { title: 'SEE THE FULL SYSTEM', sub: 'Your score indicates readiness for the full ICP Intelligence System. Transparent pricing, no call required to evaluate.', primary: 'See the full system →', action: 'system', guarantee: '' },
     cta_view_pathway_brief: { title: 'SEE THE FULL SYSTEM', sub: 'Your score shows a strong foundation. The full system adds a live intelligence layer that updates weekly.', primary: 'See the full system →', action: 'system', guarantee: '' },
   };
+  console.log('ctaId from result:', ctaId, 'primaryCtaId:', r.primaryCtaId);
   var cta = ctaMap[ctaId] || ctaMap['cta_get_icp_clarity_plan'];
 
   var container = document.getElementById('report-content');
