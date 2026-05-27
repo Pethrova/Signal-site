@@ -215,6 +215,20 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 </div>
 
 <script>
+// Document context safety
+var _root = (typeof document !== 'undefined') ? document : null;
+function $id(id) {
+  var el = _root ? _root.getElementById(id) : null;
+  if (!el) {
+    // Try querying from body directly
+    el = _root ? _root.body.querySelector('#' + id) : null;
+  }
+  return el;
+}
+console.log('Document ready, body exists:', !!document.body);
+console.log('question-card via querySelector:', !!document.querySelector('#question-card'));
+console.log('question-card via getElementById:', !!document.getElementById('question-card'));
+
 // ═══════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════
