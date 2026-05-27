@@ -363,14 +363,16 @@ async function handleFrameSelect(frameId) {
     state.startTime = Date.now();
     state.qStartTime = Date.now();
     console.log('About to renderQuestion, questions count:', state.questions.length);
-    try {
-      renderQuestion();
-      console.log('renderQuestion done');
-      startTimer();
-      console.log('startTimer done');
-    } catch(renderErr) {
-      console.error('Render failed:', renderErr.message, renderErr.stack);
-    }
+    setTimeout(function() {
+      try {
+        renderQuestion();
+        console.log('renderQuestion done');
+        startTimer();
+        console.log('startTimer done');
+      } catch(renderErr) {
+        console.error('Render failed:', renderErr.message, renderErr.stack);
+      }
+    }, 50);
   } catch(err) {
     renderError('Could not start diagnostic. Please try again.', function() { handleFrameSelect(frameId); });
   }
