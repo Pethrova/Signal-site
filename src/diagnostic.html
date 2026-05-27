@@ -789,17 +789,13 @@ function showResultsDirect() {
 function handlePrimaryCta(action) {
   if (action === 'system') { buildSystemPage(); showScreen('system'); }
   else {
-    var bid = state.result ? (state.result.primaryBottleneckId || '') : '';
-    var urls = {
-      bottleneck_icp_clarity: 'https://signalresolution.com/checkout/icp-clarity-resolver',
-      bottleneck_positioning_narrative: 'https://signalresolution.com/checkout/messaging-audit',
-      bottleneck_activation_onboarding: 'https://signalresolution.com/checkout/activation-kit',
-      bottleneck_conversion_flow: 'https://signalresolution.com/checkout/conversion-repair',
-    };
-    var url = urls[bid] || 'https://signalresolution.com/checkout/icp-clarity-resolver';
-    // Replace with window.location.href = url when checkout is live
-    console.log('Tripwire URL:', url);
-    alert('Tripwire checkout — update URL in URLS map when live.');
+    var CHECKOUT_URL = 'https://signalresolution.lemonsqueezy.com/checkout/buy/c5437578-c42b-4831-aad0-2f1ca1d7985d';
+    var checkoutUrl = CHECKOUT_URL +
+      '?checkout[custom][session_id]=' + (state.session ? state.session.id : '') +
+      '&checkout[custom][archetype]=' + encodeURIComponent(state.result ? (state.result.buyerStateLabel || '') : '') +
+      '&checkout[custom][bottleneck]=' + encodeURIComponent(state.result ? (state.result.primaryBottleneckId || '') : '') +
+      '&checkout[email]=' + encodeURIComponent(state.leadEmail || '');
+    window.location.href = checkoutUrl;
   }
 }
 
