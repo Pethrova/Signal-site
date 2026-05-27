@@ -102,7 +102,8 @@ const bottleneckLabel = BOTTLENECK_LABELS[bottleneck] || 'ICP Clarity';
 const CHECKOUT = 'https://signalresolution.lemonsqueezy.com/checkout/buy/c5437578-c42b-4831-aad0-2f1ca1d7985d';
 function goToCheckout() {
   window.location.href = CHECKOUT +
-    '?checkout[custom][archetype]=' + encodeURIComponent(archetype) +
+    '?checkout[custom][session_id]=' + encodeURIComponent(params.get('session_id') || '') +
+    '&checkout[custom][archetype]=' + encodeURIComponent(archetype) +
     '&checkout[custom][bottleneck]=' + encodeURIComponent(bottleneck) +
     '&checkout[email]=' + encodeURIComponent(params.get('email') || '');
 }

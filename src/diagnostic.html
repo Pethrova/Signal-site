@@ -789,13 +789,13 @@ function showResultsDirect() {
 function handlePrimaryCta(action) {
   if (action === 'system') { buildSystemPage(); showScreen('system'); }
   else {
-    var CHECKOUT_URL = 'https://signalresolution.lemonsqueezy.com/checkout/buy/c5437578-c42b-4831-aad0-2f1ca1d7985d';
-    var checkoutUrl = CHECKOUT_URL +
-      '?checkout[custom][session_id]=' + (state.session ? state.session.id : '') +
-      '&checkout[custom][archetype]=' + encodeURIComponent(state.result ? (state.result.buyerStateLabel || '') : '') +
-      '&checkout[custom][bottleneck]=' + encodeURIComponent(state.result ? (state.result.primaryBottleneckId || '') : '') +
-      '&checkout[email]=' + encodeURIComponent(state.leadEmail || '');
-    window.location.href = checkoutUrl;
+    var tripwireUrl = '/tripwire.html' +
+      '?archetype=' + encodeURIComponent(state.result ? (state.result.buyerStateLabel || '') : '') +
+      '&bottleneck=' + encodeURIComponent(state.result ? (state.result.primaryBottleneckId || '') : '') +
+      '&score=' + encodeURIComponent(state.result ? (state.result.percentage || state.result.totalScore || 0) : 0) +
+      '&session_id=' + encodeURIComponent(state.session ? state.session.id : '') +
+      '&email=' + encodeURIComponent(state.leadEmail || '');
+    window.location.href = tripwireUrl;
   }
 }
 
