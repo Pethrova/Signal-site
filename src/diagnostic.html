@@ -372,7 +372,7 @@ async function handleFrameSelect(frameId) {
       } catch(renderErr) {
         console.error('Render failed:', renderErr.message, renderErr.stack);
       }
-    }, 50);
+    }, 150);
   } catch(err) {
     renderError('Could not start diagnostic. Please try again.', function() { handleFrameSelect(frameId); });
   }
@@ -405,10 +405,11 @@ function renderQuestion() {
   if (counter) counter.textContent = 'Question ' + (state.currentIdx + 1) + ' of ' + state.questions.length;
 
   var pb = document.getElementById('progress-bar');
-  if (!pb) return;
-  pb.innerHTML = state.questions.map(function(_, i) {
-    return '<div class="pip ' + (i < state.currentIdx ? 'done' : i === state.currentIdx ? 'current' : '') + '"></div>';
-  }).join('');
+  if (pb) {
+    pb.innerHTML = state.questions.map(function(_, i) {
+      return '<div class="pip ' + (i < state.currentIdx ? 'done' : i === state.currentIdx ? 'current' : '') + '"></div>';
+    }).join('');
+  }
 
   var cat = q.category || CAT_LABELS[q.categoryId] || q.categoryId || '';
   var qText = q.question || q.questionText || '';
