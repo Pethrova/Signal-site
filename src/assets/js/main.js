@@ -54,6 +54,19 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 });
 
+/* ── HAMBURGER ── */
+(function(){
+  var burger = document.getElementById('navBurger');
+  var nav    = document.getElementById('mainNav');
+  if(!burger || !nav) return;
+  burger.addEventListener('click', function(){
+    nav.classList.toggle('open');
+  });
+  nav.querySelectorAll('.n-links a').forEach(function(a){
+    a.addEventListener('click', function(){ nav.classList.remove('open'); });
+  });
+})();
+
 /* Blog template interactions */
 (function(){
   const blogMain=document.querySelector('.blog-main');

@@ -71,11 +71,22 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .obj-row:last-child{border-bottom:none;padding-bottom:0;}
 .obj-q{font-family:var(--M);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
 
+/* Nav */
+@keyframes spin{to{transform:rotate(360deg)}}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;background:rgba(8,7,6,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd);}
+.nav-logo{font-family:var(--F);font-size:18px;letter-spacing:.12em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo .sigil{display:flex;align-items:center;}
+.nav-logo .sigil svg{animation:spin 28s linear infinite;}
+.nav-right{font-family:var(--M);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
+
 /* Responsive */
 @media(max-width:640px){
-  .section{padding:60px 24px;}
+  .nav{padding:16px 20px;}
+  .section{padding:60px 16px;}
   .hook-inner{flex-direction:column !important;gap:24px !important;}
   .fit-grid{grid-template-columns:1fr !important;}
+  .btn-fire,.btn-line{width:100%;display:block;text-align:center;}
+  input{font-size:16px;}
 }
 </style>
 </head>
@@ -129,6 +140,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- ══════════════════════════════
      SECTION 1 — HOOK (above fold)
 ══════════════════════════════ -->
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo"><span class="sigil"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#f5a623" stroke-width="1"/><circle cx="11" cy="11" r="6" stroke="#f5a623" stroke-width=".5" stroke-dasharray="2 2"/><circle cx="11" cy="11" r="2" fill="#f5a623"/></svg></span> SIGNAL RESOLUTION</a>
+  <span class="nav-right">SIGNAL CORRECTION</span>
+</nav>
+
 <section style="position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:center;padding:80px 24px;">
   <div class="orb-a"></div>
   <div class="orb-b"></div>
