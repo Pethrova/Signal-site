@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Signal Gap — Free Framework | Signal Resolution</title>
+  <meta name="description" content="Why your best-fit buyers cannot find you. A free framework that maps exactly what your diagnostic revealed.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,wght@0,400;0,600;1,400;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#080706;--sf:#0f0e0c;--sf2:#161410;--sf3:#1d1a15;
+      --brd:rgba(255,200,80,0.07);--brdH:rgba(255,200,80,0.18);
+      --gold:#f5a623;--goldH:#ffd166;--goldD:rgba(245,166,35,0.35);
+      --ember:#ff6b35;--slate:#c8c4bb;--muted:#6e6860;--dim:#3a3530;
+      --text:#ede8df;--white:#f7f3ec;
+      --F:'Bebas Neue',sans-serif;
+      --S:'Fraunces',serif;
+      --M:'IBM Plex Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:var(--S);overflow-x:hidden;min-height:100vh;}
+
+    .section{padding:80px 24px;}
+    .container{max-width:640px;margin:0 auto;}
+    .divider{height:1px;background:var(--brd);}
+
+    /* Typography */
+    .kicker{font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+    .body-text{font-family:var(--S);font-style:italic;font-size:16px;color:var(--slate);line-height:1.7;}
+
+    /* Form elements */
+    input[type="email"]{
+      font-family:var(--M);background:var(--sf2);border:1px solid var(--brd);
+      color:var(--white);padding:16px 18px;width:100%;font-size:13px;
+      letter-spacing:.04em;outline:none;transition:border-color .2s;display:block;
+    }
+    input[type="email"]:focus{border-color:var(--gold);}
+    input[type="email"]::placeholder{color:var(--muted);}
+    .btn-fire{
+      display:block;width:100%;background:var(--gold);color:#000;
+      font-family:var(--M);font-size:12px;font-weight:600;letter-spacing:.12em;
+      text-transform:uppercase;padding:18px 32px;border:none;cursor:pointer;
+      transition:background .2s;margin-top:12px;
+    }
+    .btn-fire:hover{background:var(--goldH);}
+    .btn-fire:disabled{opacity:.6;cursor:not-allowed;}
+    .form-error{font-family:var(--M);font-size:11px;color:var(--ember);margin-top:8px;display:none;}
+
+    /* CSS Book mockup */
+    .book-scene{perspective:800px;display:flex;justify-content:center;margin:48px 0 8px;}
+    .book-wrap{position:relative;}
+    .book{
+      width:200px;height:280px;
+      background:linear-gradient(160deg,var(--sf3) 0%,var(--sf2) 100%);
+      border:1px solid var(--brdH);border-left:6px solid var(--gold);
+      transform:rotateY(-8deg);
+      box-shadow:
+        -6px 6px 0 rgba(245,166,35,0.18),
+        -12px 12px 0 rgba(245,166,35,0.09),
+        -20px 20px 0 rgba(245,166,35,0.04),
+        0 40px 80px rgba(0,0,0,0.85),
+        0 0 80px rgba(245,166,35,0.06);
+      display:flex;flex-direction:column;justify-content:space-between;
+      padding:28px 20px 16px;position:relative;overflow:hidden;
+    }
+    .book::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(245,166,35,0.05) 0%,transparent 55%);
+      pointer-events:none;
+    }
+    .book-title{font-family:var(--F);font-size:40px;letter-spacing:.04em;color:var(--white);line-height:.88;}
+    .book-subtitle{font-family:var(--S);font-style:italic;font-size:11px;color:var(--gold);line-height:1.45;margin-top:10px;}
+    .book-footer{font-family:var(--M);font-size:8px;letter-spacing:.18em;color:var(--muted);border-top:1px solid var(--brd);padding-top:10px;}
+    .book-glow{
+      position:absolute;bottom:-24px;left:50%;transform:translateX(-60%);
+      width:180px;height:24px;
+      background:radial-gradient(ellipse,rgba(245,166,35,0.28) 0%,transparent 70%);
+      filter:blur(10px);
+    }
+
+    /* What's inside bullets */
+    .bullet{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--brd);}
+    .bullet:last-child{border-bottom:none;}
+    .bullet-num{font-family:var(--M);font-size:10px;color:var(--gold);flex-shrink:0;padding-top:3px;letter-spacing:.06em;}
+    .bullet-text{font-family:var(--S);font-style:italic;font-size:16px;color:var(--slate);line-height:1.6;}
+
+    /* Social proof */
+    .quote-card{background:var(--sf);border:1px solid var(--brd);padding:28px;margin-bottom:2px;}
+    .stars{color:var(--gold);font-size:13px;letter-spacing:3px;margin-bottom:14px;}
+    .quote-text{font-family:var(--S);font-style:italic;font-size:17px;color:var(--white);line-height:1.65;margin-bottom:16px;}
+    .quote-attr{font-family:var(--M);font-size:10px;color:var(--muted);letter-spacing:.1em;}
+
+    /* Hero */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 24px;}
+
+    /* Animations */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+    .fade-up{animation:fadeUp .6s ease both;}
+  </style>
+</head>
+<body>
+
+<!-- SECTION 1 — Above the fold -->
+<section class="hero">
+  <div class="container" style="text-align:center;">
+
+    <!-- Thank-you state -->
+    <div id="thankyou-state" style="display:none;" class="fade-up">
+      <div style="font-family:var(--M);font-size:10px;letter-spacing:.2em;color:var(--gold);margin-bottom:28px;">✓ SENT</div>
+      <div style="font-family:var(--F);font-size:clamp(40px,7vw,80px);color:var(--white);line-height:.92;letter-spacing:.02em;margin-bottom:28px;">CHECK YOUR INBOX —<br>THE SIGNAL GAP<br>IS ON ITS WAY.</div>
+      <p class="body-text" style="max-width:480px;margin:0 auto;">Check your spam folder if it doesn't arrive in the next few minutes.</p>
+    </div>
+
+    <!-- Form state -->
+    <div id="form-state">
+      <div class="kicker fade-up" id="hero-kicker">FREE FRAMEWORK FOR FOUNDERS</div>
+      <div style="font-family:var(--F);font-size:clamp(38px,6.5vw,76px);color:var(--white);line-height:.92;letter-spacing:.02em;margin-bottom:28px;" class="fade-up" style="animation-delay:.08s;">
+        YOUR BEST-FIT BUYERS ARE ALREADY TELLING YOU<br>
+        THEY ARE READY.<br>
+        <span style="color:var(--gold);">YOU JUST DON'T KNOW HOW TO LISTEN.</span>
+      </div>
+      <p class="body-text fade-up" style="max-width:520px;margin:0 auto 0;animation-delay:.14s;">
+        The Signal Gap maps exactly why your pipeline feels inconsistent — and what to fix first.
+      </p>
+
+      <!-- CSS book mockup -->
+      <div class="book-scene fade-up" style="animation-delay:.2s;">
+        <div class="book-wrap">
+          <div class="book">
+            <div>
+              <div class="book-title">THE<br>SIGNAL<br>GAP</div>
+              <div class="book-subtitle">Why Your Best-Fit Buyers<br>Cannot Find You</div>
+            </div>
+            <div class="book-footer">SIGNAL RESOLUTION</div>
+          </div>
+          <div class="book-glow"></div>
+        </div>
+      </div>
+
+      <!-- Opt-in form -->
+      <div style="max-width:440px;margin:0 auto;" class="fade-up" style="animation-delay:.26s;">
+        <div style="text-align:left;">
+          <input type="email" id="hero-email" placeholder="your@email.com" autocomplete="email">
+          <button class="btn-fire" id="hero-btn" onclick="submitForm('hero')">SEND ME THE FREE FRAMEWORK →</button>
+          <div class="form-error" id="hero-error"></div>
+        </div>
+        <p style="font-family:var(--M);font-size:9px;color:var(--muted);text-align:center;margin-top:14px;letter-spacing:.08em;">Delivered instantly. No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 2 — What's inside -->
+<section class="section" style="background:var(--sf);">
+  <div class="container">
+    <div class="kicker" style="margin-bottom:32px;">WHAT YOU WILL FIND INSIDE</div>
+    <div class="bullet">
+      <div class="bullet-num">01</div>
+      <div class="bullet-text">The one signal most founders mistake for a positioning problem — and why fixing your copy makes it worse.</div>
+    </div>
+    <div class="bullet">
+      <div class="bullet-num">02</div>
+      <div class="bullet-text">Why your ICP document is probably accurate and completely useless at the same time.</div>
+    </div>
+    <div class="bullet">
+      <div class="bullet-num">03</div>
+      <div class="bullet-text">The buyer state your CRM cannot capture — and how it accounts for 60% of dark funnel pipeline.</div>
+    </div>
+    <div class="bullet">
+      <div class="bullet-num">04</div>
+      <div class="bullet-text">A four-layer framework your diagnostic just scored you against — and what each layer reveals about your GTM maturity.</div>
+    </div>
+    <div class="bullet">
+      <div class="bullet-num">05</div>
+      <div class="bullet-text">The difference between a founder who converts at 40% and one who converts at 12% — it is not the product, the price, or the pitch.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 3 — Social proof -->
+<section class="section">
+  <div class="container">
+    <div class="kicker" style="margin-bottom:32px;">WHAT FOUNDERS ARE SAYING</div>
+    <div class="quote-card">
+      <div class="stars">★★★★★</div>
+      <div class="quote-text">"The buyer state chapter alone changed how our whole team writes outreach. I cannot believe this is free."</div>
+      <div class="quote-attr">MARCUS K. · FOUNDER · $1.4M ARR</div>
+    </div>
+    <div class="quote-card">
+      <div class="stars">★★★★★</div>
+      <div class="quote-text">"Downloaded on a Thursday. By Monday we had rebuilt our ICP definition and rewritten our top-of-funnel sequences."</div>
+      <div class="quote-attr">DAVID P. · CO-FOUNDER · $800K ARR</div>
+    </div>
+    <div class="quote-card">
+      <div class="stars">★★★★★</div>
+      <div class="quote-text">"The most original GTM thinking I have read in two years. The whole framework shifts your mental model."</div>
+      <div class="quote-attr">SIMONE L. · HEAD OF REVENUE · SERIES A</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 4 — Second opt-in -->
+<section class="section" style="background:var(--sf);">
+  <div class="container" style="text-align:center;">
+    <div class="kicker" style="margin-bottom:16px;">STILL READING?</div>
+    <div style="font-family:var(--F);font-size:clamp(32px,5vw,60px);color:var(--white);line-height:.92;letter-spacing:.02em;margin-bottom:24px;">YOU KNOW SOMETHING IS OFF.</div>
+    <p class="body-text" style="max-width:480px;margin:0 auto 36px;">Get the framework that maps exactly what your diagnostic just revealed.</p>
+
+    <div id="bottom-form" style="max-width:440px;margin:0 auto;text-align:left;">
+      <input type="email" id="bottom-email" placeholder="your@email.com" autocomplete="email">
+      <button class="btn-fire" id="bottom-btn" onclick="submitForm('bottom')">SEND ME THE FREE FRAMEWORK →</button>
+      <div class="form-error" id="bottom-error"></div>
+      <p style="font-family:var(--M);font-size:9px;color:var(--muted);text-align:center;margin-top:14px;letter-spacing:.08em;">Delivered instantly. No spam. Unsubscribe anytime.</p>
+    </div>
+    <div id="bottom-success" style="display:none;">
+      <div style="font-family:var(--M);font-size:10px;letter-spacing:.2em;color:var(--gold);margin-bottom:16px;">✓ SENT</div>
+      <div style="font-family:var(--S);font-style:italic;font-size:18px;color:var(--slate);">Check your inbox — The Signal Gap is on its way.</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  var params = new URLSearchParams(window.location.search);
+  var archetype = params.get('archetype') || 'Signal-Blind Founder';
+  var bottleneck = params.get('bottleneck') || 'bottleneck_icp_clarity';
+
+  var kickerEl = document.getElementById('hero-kicker');
+  if (kickerEl) kickerEl.textContent = 'FREE FRAMEWORK FOR ' + archetype.toUpperCase() + ' FOUNDERS';
+
+  async function submitForm(source) {
+    var emailId = source === 'hero' ? 'hero-email' : 'bottom-email';
+    var btnId   = source === 'hero' ? 'hero-btn'   : 'bottom-btn';
+    var errorId = source === 'hero' ? 'hero-error' : 'bottom-error';
+
+    var emailEl = document.getElementById(emailId);
+    var btnEl   = document.getElementById(btnId);
+    var errorEl = document.getElementById(errorId);
+    var email   = emailEl.value.trim();
+
+    errorEl.style.display = 'none';
+    emailEl.style.borderColor = '';
+
+    if (!email || !email.includes('@')) {
+      errorEl.textContent = 'Please enter a valid email address.';
+      errorEl.style.display = 'block';
+      emailEl.style.borderColor = 'var(--ember)';
+      emailEl.focus();
+      return;
+    }
+
+    btnEl.textContent = 'SENDING...';
+    btnEl.disabled = true;
+
+    try {
+      var resp = await fetch('/api/diagnostic/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: 'godfather-' + Date.now(),
+          lead: { email: email, name: '' },
+          marketingContext: {
+            emailSegmentId: 'seg_pathway_nurture_fallback',
+            emailSequenceId: 'seq_diagnostic_fallback',
+            pathwayId: 'pathway_nurture_fallback',
+            source: 'godfather_lp'
+          }
+        })
+      });
+      if (!resp.ok) throw new Error('API error ' + resp.status);
+
+      if (source === 'hero') {
+        document.getElementById('form-state').style.display = 'none';
+        document.getElementById('thankyou-state').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.getElementById('bottom-form').style.display = 'none';
+        document.getElementById('bottom-success').style.display = 'block';
+      }
+    } catch(err) {
+      btnEl.textContent = 'SEND ME THE FREE FRAMEWORK →';
+      btnEl.disabled = false;
+      errorEl.textContent = 'Something went wrong. Please try again.';
+      errorEl.style.display = 'block';
+    }
+  }
+</script>
+</body>
+</html>
