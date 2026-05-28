@@ -221,5 +221,13 @@
   </div>
 </section>
 
+<script>
+  var params = new URLSearchParams(window.location.search);
+  var archetype = params.get('archetype') || '';
+  var kickerEl = document.querySelector('.kicker');
+  if (kickerEl && archetype) {
+    kickerEl.textContent = 'FREE FRAMEWORK FOR ' + archetype.toUpperCase() + ' FOUNDERS';
+  }
+</script>
 </body>
 </html>
