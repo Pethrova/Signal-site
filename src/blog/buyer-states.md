@@ -7,6 +7,7 @@ category: Psychographics
 featured: false
 readTime: "8 min"
 permalink: /blog/buyer-states/
+ogImage: /assets/og/buyer-states.svg
 ---
 
 A persona tells you who someone is. A buyer state tells you what they're experiencing — and experiencing is what drives buying decisions.

@@ -7,6 +7,7 @@ category: Signal Theory
 featured: false
 readTime: "7 min"
 permalink: /blog/timing-gtm/
+ogImage: /assets/og/timing-gtm.svg
 ---
 
 Every outbound playbook has a timing section. It tells you to send emails Tuesday through Thursday, 9–11am in the prospect's timezone. Follow up after three days. Run a six-touch sequence over four weeks.

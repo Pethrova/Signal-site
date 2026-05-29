@@ -14,15 +14,16 @@
 <meta property="og:title"       content="{{ title or 'Signal Resolution' }}">
 <meta property="og:description" content="{{ description or 'GTM diagnostic for B2B SaaS founders.' }}">
 <meta property="og:url"         content="https://signalresolution.com{{ page.url }}">
-{% if ogImage %}
-<meta property="og:image" content="https://signalresolution.com{{ ogImage }}">
-{% endif %}
+<meta property="og:image" content="https://signalresolution.com{% if ogImage %}{{ ogImage }}{% else %}/assets/og/default.svg{% endif %}">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 
 {# ── Twitter/X card ── #}
 <meta name="twitter:card"        content="summary_large_image">
 <meta name="twitter:title"       content="{{ title or 'Signal Resolution' }}">
 <meta name="twitter:description" content="{{ description or 'GTM diagnostic for B2B SaaS founders.' }}">
+<meta name="twitter:image"       content="https://signalresolution.com{% if ogImage %}{{ ogImage }}{% else %}/assets/og/default.svg{% endif %}">
 
 {# ── Fonts ── #}
 <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -7,6 +7,7 @@ category: ICP Methodology
 featured: true
 readTime: "12 min"
 permalink: /blog/technographic-signals/
+ogImage: /assets/og/technographic-signals.svg
 ---
 
 For the last decade, technographic data meant one thing: what tools does this company use? The assumption was linear — if they use Salesforce, they're enterprise-grade. If they use HubSpot, they're mid-market. If they're on spreadsheets, they're early-stage. Tool count predicted sophistication. Stack complexity predicted buying urgency.
