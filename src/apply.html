@@ -245,8 +245,6 @@ textarea{resize:vertical;min-height:80px;}
 <script>
 (function() {
 
-  var BREVO_API_KEY = '';
-
   var form     = document.getElementById('apply-form');
   var submitBtn = document.getElementById('submit-btn');
 
@@ -284,31 +282,30 @@ textarea{resize:vertical;min-height:80px;}
     submitBtn.textContent = 'SUBMITTING...';
     submitBtn.disabled = true;
 
-    var payload = {
-      email: val('f-email'),
-      attributes: {
-        FIRSTNAME:          val('f-name'),
-        COMPANY:            val('f-company'),
-        ARR_RANGE:          val('f-arr'),
-        BOTTLENECK_NOTES:   val('f-bottleneck'),
-        APPLICATION_STATUS: 'pending'
-      },
-      listIds: [12],
-      updateEnabled: true
-    };
+    var nameVal       = val('f-name');
+    var emailVal      = val('f-email');
+    var companyVal    = val('f-company');
+    var arrVal        = val('f-arr');
+    var bottleneckVal = val('f-bottleneck');
+    var whatTriedVal  = val('f-tried');
+    var whyNowVal     = val('f-whynow');
 
     try {
-      var resp = await fetch('https://api.brevo.com/v3/contacts', {
+      var resp = await fetch('/api/apply', {
         method: 'POST',
-        headers: {
-          'api-key': BREVO_API_KEY,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(payload)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:       nameVal,
+          email:      emailVal,
+          company:    companyVal,
+          arr:        arrVal,
+          bottleneck: bottleneckVal,
+          whyNow:     whyNowVal,
+          whatTried:  whatTriedVal
+        })
       });
 
-      if (!resp.ok && resp.status !== 204) {
+      if (!resp.ok) {
         var err = await resp.json().catch(function() { return {}; });
         throw new Error(err.message || 'API error ' + resp.status);
       }
