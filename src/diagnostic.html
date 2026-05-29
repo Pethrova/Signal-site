@@ -369,6 +369,7 @@ function renderLanding() {
 // ═══════════════════════════════════════
 async function handleFrameSelect(frameId) {
   state.frameId = frameId;
+  localStorage.setItem('sr_last_diagnostic', Date.now().toString());
   showScreen('game');
   renderLoading();
   try {
@@ -827,6 +828,7 @@ function handlePrimaryCta(action) {
       '&score=' + encodeURIComponent(state.result ? (state.result.percentage || state.result.totalScore || 0) : 0) +
       '&session_id=' + encodeURIComponent(state.session ? state.session.id : '') +
       '&email=' + encodeURIComponent(state.leadEmail || '');
+    localStorage.setItem('sr_converted', '1');
     window.location.href = tripwireUrl;
   }
 }
@@ -985,6 +987,97 @@ async function apiCall(url, body) {
 // START
 // ═══════════════════════════════════════
 init();
+
+// ═══════════════════════════════════════
+// DAY 14 RE-QUALIFICATION LOGIC
+// ═══════════════════════════════════════
+(function() {
+  var REQUALIFY_DAYS = 14;
+  var STORAGE_KEY = 'sr_last_diagnostic';
+  var CONVERTED_KEY = 'sr_converted';
+
+  // Check if already converted — skip if so
+  if (localStorage.getItem(CONVERTED_KEY)) return;
+
+  // Check if they have a previous session
+  var lastRun = localStorage.getItem(STORAGE_KEY);
+  if (!lastRun) return;
+
+  var daysSince = (Date.now() - parseInt(lastRun)) /
+    (1000 * 60 * 60 * 24);
+  if (daysSince < REQUALIFY_DAYS) return;
+
+  // 14+ days since last diagnostic — show banner
+  var banner = document.createElement('div');
+  banner.id = 'requalify-banner';
+  banner.style.cssText = [
+    'position:fixed',
+    'top:0',
+    'left:0',
+    'right:0',
+    'background:linear-gradient(135deg,#0f0e0c,#1a1814)',
+    'border-bottom:2px solid var(--gold)',
+    'padding:16px 24px',
+    'display:flex',
+    'align-items:center',
+    'justify-content:space-between',
+    'z-index:9999',
+    'gap:16px',
+    'flex-wrap:wrap'
+  ].join(';');
+
+  banner.innerHTML = [
+    '<div>',
+      '<div style="font-family:var(--M);font-size:9px;',
+        'letter-spacing:.14em;color:var(--gold);',
+        'margin-bottom:4px;">',
+        'SIGNAL CHECK — 14 DAYS LATER',
+      '</div>',
+      '<div style="font-family:var(--F);font-size:16px;',
+        'color:var(--white);line-height:1.2;">',
+        'Your GTM signal layer has had 14 days to shift.',
+        ' Your bottleneck may have changed.',
+      '</div>',
+    '</div>',
+    '<div style="display:flex;gap:12px;flex-shrink:0;">',
+      '<button onclick="dismissRequalBanner()" ',
+        'style="background:none;border:1px solid var(--brd);',
+        'color:var(--muted);padding:8px 16px;',
+        'font-family:var(--M);font-size:9px;',
+        'letter-spacing:.08em;cursor:pointer;">',
+        'DISMISS',
+      '</button>',
+      '<button onclick="startRequalification()" ',
+        'style="background:var(--gold);color:#000;',
+        'padding:8px 20px;font-family:var(--M);',
+        'font-size:9px;letter-spacing:.1em;',
+        'font-weight:600;border:none;cursor:pointer;">',
+        'RETAKE DIAGNOSTIC →',
+      '</button>',
+    '</div>'
+  ].join('');
+
+  document.body.appendChild(banner);
+
+  function dismissRequalBanner() {
+    var el = document.getElementById('requalify-banner');
+    if (el) el.remove();
+    // Reset the timer so it shows again in 14 days
+    localStorage.setItem(STORAGE_KEY, Date.now().toString());
+  }
+
+  function startRequalification() {
+    var el = document.getElementById('requalify-banner');
+    if (el) el.remove();
+    localStorage.setItem(STORAGE_KEY, Date.now().toString());
+    // Reset to landing screen
+    showScreen('landing');
+    renderLanding();
+  }
+
+  window.dismissRequalBanner = dismissRequalBanner;
+  window.startRequalification = startRequalification;
+})();
 </script>
 </body>
 </html>
