@@ -12,7 +12,9 @@
     "luxon": "^3.4.4",
     "markdown-it": "^14.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@11ty/eleventy-plugin-rss": "^1.2.0"
+  },
   "engines": {
     "node": ">=18.0.0"
   }

@@ -1,0 +1,26 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Signal Resolution</title>
+  <subtitle>GTM intelligence for seed-stage B2B SaaS founders</subtitle>
+  <link href="https://signalresolution.com/feed.xml" rel="self"/>
+  <link href="https://signalresolution.com/"/>
+  <updated>{{ collections.posts | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
+  <id>https://signalresolution.com/</id>
+  <author>
+    <name>Rome</name>
+    <email>rome@signalresolution.com</email>
+  </author>
+  {%- for post in collections.posts | reverse %}
+  <entry>
+    <title>{{ post.data.title }}</title>
+    <link href="https://signalresolution.com{{ post.url }}"/>
+    <updated>{{ post.date | dateToRfc3339 }}</updated>
+    <id>https://signalresolution.com{{ post.url }}</id>
+    <content type="html">{{ post.templateContent | htmlToAbsoluteUrls("https://signalresolution.com") }}</content>
+  </entry>
+  {%- endfor %}
+</feed>

@@ -1,6 +1,8 @@
 const { DateTime } = require("luxon");
+const pluginRss = require("@11ty/eleventy-plugin-rss");
 
 module.exports = function(eleventyConfig) {
+  eleventyConfig.addPlugin(pluginRss);
 
   // ── PASSTHROUGH COPIES ──────────────────────────────────────────────────────
   // These folders go to output as-is (CSS, JS, fonts, images)
