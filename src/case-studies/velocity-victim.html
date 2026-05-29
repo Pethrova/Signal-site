@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study: The Close Rate Was Fine. The Buyers Were Wrong. — Signal Resolution</title>
+<meta name="description" content="How a Velocity Victim at $680K ARR discovered his pipeline problem was a signal problem — not a sales problem.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080706;--sf:#0f0e0c;--sf2:#161410;--sf3:#1d1a15;
+  --brd:rgba(255,200,80,0.07);--brdH:rgba(255,200,80,0.18);
+  --gold:#f5a623;--goldH:#ffd166;--goldD:rgba(245,166,35,0.35);
+  --ember:#ff6b35;--slate:#c8c4bb;--muted:#6e6860;--dim:#3a3530;
+  --text:#ede8df;--white:#f7f3ec;
+  --F:'Bebas Neue',sans-serif;
+  --S:'Fraunces',serif;
+  --M:'IBM Plex Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--S);overflow-x:hidden;min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+
+/* Grain */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.035'/%3E%3C/svg%3E");}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fade-up{animation:fadeUp .5s ease both;}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;background:rgba(8,7,6,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd);}
+.nav-logo{font-family:var(--F);font-size:18px;letter-spacing:.12em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:10px;}
+.nav-logo .sigil svg{animation:spin 28s linear infinite;}
+.nav-right{font-family:var(--M);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+/* Layout */
+.section{padding:80px 24px;}
+.container{max-width:720px;margin:0 auto;}
+.divider{height:1px;background:var(--brd);}
+.gold-bar{height:3px;background:linear-gradient(90deg,var(--gold),var(--ember),transparent);}
+
+/* Typography */
+.kicker{font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.section-heading{font-family:var(--F);font-size:clamp(28px,4vw,42px);color:var(--white);letter-spacing:.04em;margin-bottom:28px;}
+.body-text{font-family:var(--S);font-style:italic;font-size:16px;color:var(--slate);line-height:1.8;}
+
+/* Profile card */
+.profile-card{background:var(--sf);border:1px solid var(--brd);border-left:3px solid var(--gold);padding:24px 28px;margin-top:32px;}
+.profile-row{display:flex;gap:16px;padding:10px 0;border-bottom:1px solid var(--brd);}
+.profile-row:last-child{border-bottom:none;}
+.profile-label{font-family:var(--M);font-size:9px;letter-spacing:.18em;color:var(--muted);flex-shrink:0;width:180px;}
+.profile-value{font-family:var(--M);font-size:10px;letter-spacing:.08em;color:var(--white);}
+
+/* Quote callout */
+.quote-callout{background:var(--sf2);border:1px solid var(--brd);border-left:3px solid var(--gold);padding:24px 28px;margin:28px 0;}
+.quote-callout p{font-family:var(--S);font-style:italic;font-size:17px;color:var(--white);line-height:1.7;margin-bottom:12px;}
+.quote-callout .attr{font-family:var(--M);font-size:9px;letter-spacing:.14em;color:var(--gold);}
+
+/* Full gold callout */
+.gold-callout{background:rgba(245,166,35,.05);border:1px solid var(--brdH);padding:36px 32px;}
+.gold-callout p{font-family:var(--S);font-style:italic;font-size:20px;color:var(--white);line-height:1.65;margin-bottom:16px;}
+.gold-callout .attr{font-family:var(--M);font-size:9px;letter-spacing:.16em;color:var(--gold);}
+
+/* Numbered findings */
+.finding{display:flex;gap:20px;padding:28px 0;border-bottom:1px solid var(--brd);}
+.finding:last-child{border-bottom:none;}
+.finding-num{font-family:var(--F);font-size:40px;color:var(--goldD);line-height:1;flex-shrink:0;width:48px;}
+.finding-body .finding-label{font-family:var(--M);font-size:10px;letter-spacing:.14em;color:var(--gold);margin-bottom:10px;}
+.finding-body p{font-family:var(--S);font-style:italic;font-size:15px;color:var(--slate);line-height:1.7;}
+
+/* Week cards */
+.week-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.week-card{background:var(--sf);border:1px solid var(--brd);overflow:hidden;}
+.week-card-bar{height:3px;background:linear-gradient(90deg,var(--gold),var(--ember),transparent);}
+.week-card-inner{padding:24px 20px;}
+.week-label{font-family:var(--F);font-size:22px;letter-spacing:.06em;color:var(--white);margin-bottom:12px;}
+.week-card p{font-family:var(--S);font-style:italic;font-size:13px;color:var(--slate);line-height:1.7;}
+
+/* Stat grid — 5 stats in 2+2+1 layout */
+.stat-pair{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:2px;}
+.stat-single{margin-bottom:40px;}
+.stat-card{background:var(--sf);border:1px solid var(--brd);padding:28px 24px;text-align:center;}
+.stat-card.highlighted{background:rgba(245,166,35,.04);border-color:var(--brdH);}
+.stat-number{font-family:var(--F);font-size:clamp(44px,5.5vw,64px);color:var(--gold);line-height:.9;letter-spacing:.02em;margin-bottom:10px;}
+.stat-label{font-family:var(--M);font-size:9px;letter-spacing:.14em;color:var(--muted);line-height:1.6;}
+.stat-pair-label{font-family:var(--M);font-size:8px;letter-spacing:.2em;color:var(--dim);text-align:center;padding:12px 0 4px;text-transform:uppercase;}
+
+/* Buttons */
+.btn-gold{display:inline-flex;align-items:center;justify-content:center;background:var(--gold);color:#000;font-family:var(--M);font-size:12px;font-weight:500;letter-spacing:.1em;padding:16px 36px;border:none;text-decoration:none;transition:all .25s;}
+.btn-gold:hover{box-shadow:0 0 40px rgba(245,166,35,.35);transform:translateY(-2px);}
+.btn-outline{display:inline-flex;align-items:center;justify-content:center;background:transparent;color:var(--gold);font-family:var(--M);font-size:12px;font-weight:500;letter-spacing:.1em;padding:15px 36px;border:1px solid rgba(245,166,35,.35);text-decoration:none;transition:all .25s;}
+.btn-outline:hover{border-color:var(--gold);background:rgba(245,166,35,.06);transform:translateY(-2px);}
+
+/* Ambient */
+.orb-a{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.07),transparent 70%);top:-80px;right:-100px;filter:blur(40px);pointer-events:none;}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(245,166,35,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,.025) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 70% 80% at 50% 40%,black,transparent);pointer-events:none;}
+
+@media(max-width:768px){
+  .nav{padding:16px 20px;}
+  .week-grid{grid-template-columns:1fr;}
+  .stat-pair{grid-template-columns:1fr;}
+  .profile-label{width:140px;}
+}
+@media(max-width:640px){
+  .section{padding:60px 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-logo">
+    <span class="sigil"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#f5a623" stroke-width="1"/><circle cx="11" cy="11" r="6" stroke="#f5a623" stroke-width=".5" stroke-dasharray="2 2"/><circle cx="11" cy="11" r="2" fill="#f5a623"/></svg></span>
+    SIGNAL RESOLUTION
+  </a>
+  <span class="nav-right">CASE STUDY</span>
+</nav>
+
+<!-- ═══════════════════════════════════
+     SECTION 1 — HEADER
+═══════════════════════════════════ -->
+<section style="position:relative;overflow:hidden;padding:140px 24px 80px;">
+  <div class="orb-a"></div>
+  <div class="grid-bg"></div>
+  <div class="container" style="position:relative;z-index:2;">
+
+    <div class="kicker fade-up">CLIENT CASE STUDY — ANONYMIZED</div>
+    <h1 class="fade-up" style="font-family:var(--F);font-size:clamp(40px,6.5vw,80px);color:var(--white);line-height:.92;letter-spacing:.02em;margin-bottom:20px;animation-delay:.08s;">
+      THE CLOSE RATE WAS FINE.<br>THE BUYERS WERE WRONG.
+    </h1>
+    <p class="fade-up" style="font-family:var(--S);font-style:italic;font-size:clamp(16px,1.8vw,20px);color:var(--slate);line-height:1.6;max-width:560px;animation-delay:.16s;">
+      How a Velocity Victim at $680K ARR discovered his pipeline problem was a signal problem — not a sales problem.
+    </p>
+
+    <div class="profile-card fade-up" style="animation-delay:.24s;">
+      <div class="profile-row">
+        <span class="profile-label">ARCHETYPE</span>
+        <span class="profile-value">Velocity Victim</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">ARR AT INTAKE</span>
+        <span class="profile-value">$680K</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">PRIMARY BOTTLENECK</span>
+        <span class="profile-value">ICP Clarity</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">READINESS STAGE</span>
+        <span class="profile-value">Builder Stage</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     SECTION 2 — THE SITUATION
+═══════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-heading">THE SITUATION</div>
+
+    <p class="body-text" style="margin-bottom:20px;">
+      M.K. had momentum. At $680K ARR his conversion rates were well above benchmark. He closed one in four discovery calls. His team could move a deal from first contact to signed in fourteen days. By every internal metric his sales motion was working.
+    </p>
+    <p class="body-text" style="margin-bottom:20px;">
+      The problem revealed itself in the quarter after close. Churn was running at 22% in the first ninety days. Not because the product was failing. Not because onboarding was broken. Because the buyers he was closing were the wrong buyers at the wrong stage of their problem. He had optimized for velocity. What he had not built was a signal filter.
+    </p>
+    <p class="body-text" style="margin-bottom:28px;">
+      His ICP document qualified by role, company size, and tech stack. None of those criteria indicated whether the buyer was actively experiencing the problem his product solved — only that they matched the profile of buyers who sometimes experience it. The funnel was admitting browsers and buyers at the same rate. The sales motion could not tell the difference.
+    </p>
+
+    <div class="quote-callout">
+      <p>His conversion category scored 75. His ICP clarity category scored 25. He was not closing badly. He was closing the wrong buyers at speed.</p>
+    </div>
+
+    <p class="body-text">
+      When M.K. completed the diagnostic he scored 62. Builder Stage. His strongest category was Conversion. His weakest was ICP Clarity by a margin of fifty points. The diagnostic named the problem he had not been able to see because his pipeline was always full and his close rate was always healthy. Both were true. Both were masking the real constraint.
+    </p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     SECTION 3 — WHAT THE DIAGNOSTIC FOUND
+═══════════════════════════════════ -->
+<section class="section" style="background:var(--sf);">
+  <div class="container">
+    <div class="section-heading">WHAT THE DIAGNOSTIC FOUND</div>
+
+    <div class="finding">
+      <div class="finding-num">01</div>
+      <div class="finding-body">
+        <div class="finding-label">VELOCITY MASKING AN ICP PROBLEM</div>
+        <p>High close rates and short sales cycles were generating a false positive signal that the GTM motion was working. The real constraint was upstream — which buyers were entering the pipeline in the first place. A fast funnel that closes wrong-fit buyers faster is not a functioning GTM motion. It is an accelerated churn engine.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-num">02</div>
+      <div class="finding-body">
+        <div class="finding-label">BUYER STATE INVISIBLE TO THE FUNNEL</div>
+        <p>M.K.'s qualification criteria identified buyers who fit the profile of someone who might eventually have the problem. None of it detected buyers who were actively experiencing the problem right now. The gap between those two groups explains the entire churn pattern. Buyers in active pain close and stay. Buyers who match a profile but are not yet in pain close, try the product, and leave when the problem does not feel urgent enough to change behavior around.</p>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="finding-num">03</div>
+      <div class="finding-body">
+        <div class="finding-label">CHURN TRACING DIRECTLY TO SIGNAL MISMATCH</div>
+        <p>Post-close analysis of the churned cohort showed a consistent pattern: every churned client had entered the pipeline through a fit-based trigger. Every retained client had entered through referral, content, or a channel that implicitly filtered for active problem state before the sales conversation began. The funnel was not broken. The entry criteria were wrong.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     SECTION 4 — THE INTERVENTION
+═══════════════════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="section-heading">THE INTERVENTION</div>
+    <div class="week-grid">
+
+      <div class="week-card">
+        <div class="week-card-bar"></div>
+        <div class="week-card-inner">
+          <div class="week-label">WEEK 1</div>
+          <p>Signal architecture audit against M.K.'s existing ICP definition. The six-database Notion workspace deployed with the Signal Collection Layer configured around ICP Clarity signals — specifically buyer state indicators: active problem language, competitor frustration signals, and status quo dissatisfaction. The workspace was not replacing M.K.'s tools. It was giving them a common output language for the first time.</p>
+        </div>
+      </div>
+
+      <div class="week-card">
+        <div class="week-card-bar"></div>
+        <div class="week-card-inner">
+          <div class="week-label">WEEK 2</div>
+          <p>First signal pipeline run against M.K.'s exact market. Thirty-four classified signals retrieved. The Language Mirror populated with verbatim buyer language around the specific frustrated state his product addressed. Comparison of that language against M.K.'s actual outreach copy revealed a significant gap — his messaging described a problem his buyers had not yet started articulating publicly. He was writing for a problem they would eventually feel, not for the one they were feeling now.</p>
+        </div>
+      </div>
+
+      <div class="week-card">
+        <div class="week-card-bar"></div>
+        <div class="week-card-inner">
+          <div class="week-label">WEEK 3</div>
+          <p>A parallel account list built using signal-flagged accounts only. Twenty-eight accounts selected not by firmographic match but by detected buyer state — accounts where the signal pipeline had surfaced active problem language in the prior 30 days. First outreach sent using language mined directly from the Language Mirror. No mention of product features. No positioning statement. Only a direct reference to the specific frustration his buyers had expressed in their own words.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     SECTION 5 — THE RESULT
+═══════════════════════════════════ -->
+<section class="section" style="background:var(--sf);">
+  <div class="container">
+    <div class="section-heading">THE RESULT</div>
+
+    <!-- Response rate pair -->
+    <div class="stat-pair-label">RESPONSE RATE — SAME PERIOD</div>
+    <div class="stat-pair">
+      <div class="stat-card highlighted">
+        <div class="stat-number">26%</div>
+        <div class="stat-label">RESPONSE RATE<br>SIGNAL-FLAGGED ACCOUNTS</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">6.5%</div>
+        <div class="stat-label">RESPONSE RATE<br>STANDARD ICP (SAME PERIOD)</div>
+      </div>
+    </div>
+
+    <!-- Churn pair -->
+    <div class="stat-pair-label" style="margin-top:2px;">90-DAY CHURN — SAME COHORT WINDOW</div>
+    <div class="stat-pair" style="margin-bottom:2px;">
+      <div class="stat-card highlighted">
+        <div class="stat-number">0%</div>
+        <div class="stat-label">CHURN<br>SIGNAL-FLAGGED CLIENTS AT 90 DAYS</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">22%</div>
+        <div class="stat-label">CHURN<br>STANDARD ICP CLIENTS SAME PERIOD</div>
+      </div>
+    </div>
+
+    <!-- Standalone -->
+    <div class="stat-single">
+      <div class="stat-card" style="max-width:340px;margin:2px auto 40px;">
+        <div class="stat-number">45</div>
+        <div class="stat-label">DAYS TO FIRST CLOSE<br>FROM SIGNAL-FLAGGED LIST</div>
+      </div>
+    </div>
+
+    <div class="gold-callout">
+      <div class="gold-bar" style="margin:-36px -32px 32px;width:calc(100% + 64px);"></div>
+      <p>"I thought I had a sales problem. I had a signal problem. Those are not the same thing and the fix is completely different."</p>
+      <div class="attr">— M.K., FOUNDER · $680K ARR · VELOCITY VICTIM · TIER 1 CLIENT</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════
+     SECTION 6 — CTA
+═══════════════════════════════════ -->
+<section class="section">
+  <div class="container" style="text-align:center;">
+    <div class="kicker" style="margin-bottom:24px;">THE NEXT STEP IS YOURS</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+      <a href="/apply.html" class="btn-gold">APPLY FOR TIER 2 →</a>
+      <a href="/diagnostic.html" class="btn-outline">TAKE THE DIAGNOSTIC FIRST →</a>
+    </div>
+    <p style="font-family:var(--M);font-size:9px;letter-spacing:.14em;color:var(--dim);">
+      12 CLIENT CAP. ROME REVIEWS EVERY APPLICATION WITHIN 48 HOURS.
+    </p>
+  </div>
+</section>
+
+</body>
+</html>
