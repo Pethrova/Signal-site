@@ -3,6 +3,8 @@ layout: base
 ogType: article
 ---
 
+<div class="read-progress" id="readProgress"></div>
+
 <article class="post-article">
 
   {# ── Article header ── #}
@@ -18,26 +20,109 @@ ogType: article
     <div class="post-byline">
       <time datetime="{{ date | htmlDate }}">{{ date | postDate }}</time>
       <span class="post-dot">·</span>
-      <span>{{ content | readingTime }}</span>
+      <span>{{ readTime if readTime else (content | readingTime) }}</span>
     </div>
   </header>
 
-  {# ── Article body (your Markdown renders here) ── #}
-  <div class="post-body inner prose">
-    {{ content | safe }}
+  {# ── Two-column body: prose + sidebar ── #}
+  <div class="post-body inner">
+
+    <div class="prose" id="articleBody">
+      {{ content | safe }}
+
+      {# ── Author bio ── #}
+      <div class="author-bio">
+        <div class="ab-avatar">SR</div>
+        <div>
+          <div class="ab-name">SIGNAL RESOLUTION</div>
+          <div class="ab-role">Signal Intelligence · ICP Architecture</div>
+          <div class="ab-bio">Signal Resolution publishes the ICP Resolution Framework and signal intelligence methodology for seed-stage B2B SaaS founders. The writing here is the public layer of the methodology — built to be challenged, stress-tested, and improved through real use.</div>
+        </div>
+      </div>
+
+      {# ── Related posts (other posts, up to 2) ── #}
+      <div class="related">
+        <div class="related-label">Related Posts</div>
+        <div class="related-grid">
+          {% for post in collections.posts %}
+            {% if post.url != page.url %}
+            <a href="{{ post.url }}" class="related-card">
+              <div class="rc-tag">{{ post.data.category }}</div>
+              <div class="rc-title">{{ post.data.title }}</div>
+              <div class="rc-read">{{ post.data.readTime }} →</div>
+            </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    {# ── Sidebar ── #}
+    <aside class="post-sidebar" id="postSidebar">
+      <div class="toc" id="tocContainer">
+        <div class="toc-label">In This Post</div>
+        <div class="toc-links" id="tocLinks"></div>
+      </div>
+      <div class="sidebar-widget">
+        <div class="sw-label">Free Diagnostic</div>
+        <div class="sw-title">SCORE YOUR SIGNAL</div>
+        <div class="sw-body">Find out exactly where your GTM motion is breaking — bottleneck named, pathway identified, next move specific. 4 minutes, free, instant results.</div>
+        <a href="/diagnostic.html" class="sw-btn">Run the Diagnostic →</a>
+      </div>
+    </aside>
+
   </div>
 
-  {# ── Article footer: CTA back to diagnostic ── #}
+  {# ── Post footer CTA ── #}
   <footer class="post-footer inner">
     <div class="post-cta-block">
       <div class="post-cta-label">Before you run another GTM motion —</div>
       <h3 class="post-cta-hl">NAME YOUR PRIMARY BOTTLENECK.</h3>
       <p class="post-cta-body">Nine questions. Four minutes. Your GTM score, your archetype, and the one constraint breaking your pipeline — identified specifically.</p>
-      <a href="/assessment/" class="btn"><span>Run the Diagnostic — Free →</span></a>
+      <a href="/diagnostic.html" class="btn"><span>Run the Diagnostic — Free →</span></a>
     </div>
-
-    {# ── Back to blog ── #}
-    <a href="/blog/" class="back-link" style="margin-top: 48px; display:inline-block;">← Back to all writing</a>
+    <a href="/blog/" class="back-link" style="margin-top:48px;display:inline-block;">← Back to all writing</a>
   </footer>
 
 </article>
+
+<script>
+(function(){
+  /* Read progress bar */
+  var bar = document.getElementById('readProgress');
+  var body = document.getElementById('articleBody');
+  window.addEventListener('scroll', function(){
+    if(!body||!bar) return;
+    var rect = body.getBoundingClientRect();
+    var total = body.offsetHeight - window.innerHeight;
+    var scrolled = Math.max(0, -rect.top);
+    bar.style.width = Math.min(100, (scrolled/total)*100) + '%';
+  });
+
+  /* Auto-build TOC from prose h2 and h3 headings */
+  var container = document.getElementById('tocLinks');
+  var headings = body ? body.querySelectorAll('h2,h3') : [];
+  headings.forEach(function(h, i){
+    if(!h.id) h.id = 'section-' + i;
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.className = 'toc-link' + (i===0?' active':'');
+    a.style.paddingLeft = h.tagName==='H3' ? '16px' : '0';
+    a.textContent = h.textContent;
+    if(container) container.appendChild(a);
+  });
+
+  /* Active TOC link on scroll */
+  headings.forEach(function(s){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          document.querySelectorAll('.toc-link').forEach(function(l){ l.classList.remove('active'); });
+          var active = document.querySelector('.toc-link[href="#'+s.id+'"]');
+          if(active) active.classList.add('active');
+        }
+      });
+    },{rootMargin:'-20% 0px -60% 0px'}).observe(s);
+  });
+}());
+</script>
