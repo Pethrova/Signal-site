@@ -749,3 +749,107 @@ permalink: /
     </div>
   </div>
 </section>
+
+<script>
+(function () {
+  var card = document.querySelector('.score-card');
+  if (!card) return;
+
+  var triggered = false;
+
+  /* approximates cubic-bezier(0.25, 0.46, 0.45, 0.94) */
+  function ease(t) { return 1 - Math.pow(1 - t, 2.8); }
+
+  function runAnimation() {
+    var SCORE_TARGET      = 65;
+    var SCORE_DUR         = 1800;
+    var CIRCUMFERENCE     = 276;
+    var RING_OFFSET_START = 276;
+    var RING_OFFSET_END   = 96;
+
+    var BAR_DUR     = 900;
+    var BAR_STAGGER = 120;
+
+    var DEL_START   = 600;
+    var DEL_STAGGER = 80;
+    var DEL_DUR     = 400;
+
+    var ringEl  = card.querySelector('.sc-ring circle:nth-child(2)');
+    var scoreEl = card.querySelector('.sc-ring-val');
+    var barRows = card.querySelectorAll('.sc-cat');
+    var delEls  = card.querySelectorAll('.sc-deliver');
+
+    /* initialise ring to empty */
+    if (ringEl) ringEl.style.strokeDashoffset = RING_OFFSET_START;
+    if (scoreEl) scoreEl.textContent = '0';
+
+    /* initialise bars: disable CSS transition, set width to 0 */
+    barRows.forEach(function (row) {
+      var fill = row.querySelector('.sc-cat-fill');
+      if (fill) { fill.style.transition = 'none'; fill.style.width = '0'; }
+    });
+
+    /* initialise deliver lines */
+    delEls.forEach(function (el) {
+      el.style.transition = 'none';
+      el.style.opacity    = '0';
+      el.style.transform  = 'translateY(16px)';
+    });
+
+    var start = null;
+
+    function tick(ts) {
+      if (!start) start = ts;
+      var e = ts - start;
+
+      /* ── score ring + counter ── */
+      var sp = Math.min(e / SCORE_DUR, 1);
+      var se = ease(sp);
+      if (ringEl) ringEl.style.strokeDashoffset = RING_OFFSET_START - se * (RING_OFFSET_START - RING_OFFSET_END);
+      if (scoreEl) scoreEl.textContent = Math.round(se * SCORE_TARGET);
+
+      /* ── category bars + pct counters, staggered ── */
+      barRows.forEach(function (row, i) {
+        var delay = i * BAR_STAGGER;
+        if (e < delay) return;
+        var bp     = Math.min((e - delay) / BAR_DUR, 1);
+        var be     = ease(bp);
+        var fill   = row.querySelector('.sc-cat-fill');
+        var pctEl  = row.querySelector('.sc-cat-pct');
+        var target = fill ? (parseInt(fill.getAttribute('data-pct'), 10) || 0) : 0;
+        var isWeak = row.classList.contains('weak');
+        if (fill)  fill.style.width = (be * target) + '%';
+        if (pctEl) pctEl.textContent = Math.round(be * target) + '%' + (isWeak ? ' ↓' : '');
+      });
+
+      /* ── deliverable lines fade up ── */
+      delEls.forEach(function (el, i) {
+        var delay = DEL_START + i * DEL_STAGGER;
+        if (e < delay) return;
+        var dp = Math.min((e - delay) / DEL_DUR, 1);
+        var de = ease(dp);
+        el.style.opacity   = de;
+        el.style.transform = 'translateY(' + (16 * (1 - de)) + 'px)';
+      });
+
+      var lastBar     = (barRows.length - 1) * BAR_STAGGER + BAR_DUR;
+      var lastDeliver = DEL_START + (delEls.length - 1) * DEL_STAGGER + DEL_DUR;
+      if (e < Math.max(SCORE_DUR, lastBar, lastDeliver)) {
+        requestAnimationFrame(tick);
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting && !triggered) {
+      triggered = true;
+      io.disconnect();
+      runAnimation();
+    }
+  }, { threshold: 0.3 });
+
+  io.observe(card);
+}());
+</script>
