@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Signal Resolution</title>
+  <meta name="description" content="Rome is a system builder, signal analyst, and infrastructure thinker based in Montego Bay, Jamaica." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --obsidian: #0a0a0a;
+      --obsidian-mid: #111111;
+      --obsidian-light: #1a1a1a;
+      --obsidian-border: #242424;
+      --gold: #c9a84c;
+      --gold-dim: #a8883a;
+      --gold-faint: rgba(201,168,76,0.08);
+      --ember: #ff6b35;
+      --ash: #5a5a5a;
+      --ash-light: #7a7a7a;
+      --white: #f4f1ec;
+      --white-dim: #b0aca6;
+      --white-faint: rgba(244,241,236,0.04);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--obsidian);
+      color: var(--white);
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.6;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--obsidian-border);
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.08em; color: var(--gold); text-decoration: none; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ash-light); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .about-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 88vh; align-items: center; }
+    .hero-left { padding: 100px 64px 100px 80px; border-right: 1px solid var(--obsidian-border); position: relative; }
+    .hero-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: var(--ember); text-transform: uppercase; margin-bottom: 28px; display: flex; align-items: center; gap: 12px; }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--ember); }
+    .hero-name { font-family: 'Bebas Neue', sans-serif; font-size: clamp(72px, 9vw, 120px); letter-spacing: 0.03em; color: var(--white); line-height: 0.9; margin-bottom: 8px; }
+    .hero-name span { color: var(--gold); display: block; }
+    .hero-role { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--ash-light); letter-spacing: 0.08em; margin-bottom: 48px; margin-top: 20px; }
+    .hero-statement { font-size: 20px; line-height: 1.65; color: var(--white-dim); max-width: 480px; font-style: italic; font-weight: 300; border-left: 2px solid var(--gold); padding-left: 24px; }
+    .hero-statement strong { color: var(--white); font-style: normal; font-weight: 400; }
+    .hero-right { padding: 80px 80px 80px 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; background: var(--obsidian-mid); min-height: 88vh; }
+    .photo-frame { position: relative; width: 320px; height: 400px; }
+    .photo-frame::before { content: ''; position: absolute; inset: -8px; border: 1px solid var(--gold-dim); opacity: 0.4; z-index: 0; }
+    .photo-frame::after { content: ''; position: absolute; bottom: -16px; right: -16px; width: 100%; height: 100%; border: 1px solid var(--obsidian-border); z-index: -1; }
+    .photo-placeholder { width: 100%; height: 100%; background: var(--obsidian-light); border: 1px solid var(--obsidian-border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; position: relative; z-index: 1; overflow: hidden; }
+    .photo-placeholder::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--gold-faint) 0%, transparent 60%); }
+    .photo-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--obsidian-border); display: flex; align-items: center; justify-content: center; position: relative; }
+    .photo-icon svg { width: 32px; height: 32px; fill: var(--ash); }
+    .photo-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ash); letter-spacing: 0.1em; text-align: center; line-height: 1.6; }
+    .photo-label strong { display: block; color: var(--gold-dim); margin-bottom: 4px; }
+    .photo-location { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ash); letter-spacing: 0.1em; display: flex; align-items: center; gap: 8px; }
+    .photo-location::before { content: '◎'; color: var(--gold); font-size: 10px; }
+    .section { padding: 96px 80px; border-top: 1px solid var(--obsidian-border); max-width: 1200px; margin: 0 auto; }
+    .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: var(--gold); text-transform: uppercase; margin-bottom: 48px; display: flex; align-items: center; gap: 16px; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--obsidian-border); max-width: 80px; }
+    .belief-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--obsidian-border); }
+    .belief-card { background: var(--obsidian); padding: 40px; position: relative; overflow: hidden; transition: background 0.3s; }
+    .belief-card:hover { background: var(--obsidian-mid); }
+    .belief-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.3s; transform-origin: left; }
+    .belief-card:hover::before { transform: scaleX(1); }
+    .belief-index { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ash); letter-spacing: 0.12em; margin-bottom: 16px; }
+    .belief-headline { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.05em; color: var(--white); margin-bottom: 16px; line-height: 1.1; }
+    .belief-body { font-size: 15px; color: var(--white-dim); line-height: 1.7; }
+    .background-section { padding: 96px 80px; border-top: 1px solid var(--obsidian-border); background: var(--obsidian-mid); }
+    .background-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start; }
+    .bg-copy h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 4vw, 56px); letter-spacing: 0.04em; color: var(--white); line-height: 1; margin-bottom: 32px; }
+    .bg-copy p { color: var(--white-dim); margin-bottom: 20px; font-size: 16px; line-height: 1.8; }
+    .bg-copy p strong { color: var(--white); font-weight: 400; }
+    .bg-stats { display: flex; flex-direction: column; gap: 2px; }
+    .stat-row { background: var(--obsidian); border: 1px solid var(--obsidian-border); padding: 28px 32px; display: flex; align-items: flex-start; gap: 24px; transition: border-color 0.2s; }
+    .stat-row:hover { border-color: var(--gold-dim); }
+    .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: 0.04em; color: var(--gold); line-height: 1; min-width: 80px; }
+    .stat-label { padding-top: 4px; }
+    .stat-label strong { display: block; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--white); letter-spacing: 0.06em; margin-bottom: 4px; font-weight: 500; }
+    .stat-label span { font-size: 14px; color: var(--white-dim); font-family: 'Fraunces', serif; }
+    .philosophy-strip { border-top: 1px solid var(--obsidian-border); padding: 64px 80px; overflow: hidden; }
+    .philosophy-inner { max-width: 1200px; margin: 0 auto; }
+    .principles { display: flex; flex-direction: column; gap: 1px; background: var(--obsidian-border); }
+    .principle { background: var(--obsidian); padding: 28px 40px; display: flex; align-items: center; gap: 40px; transition: background 0.2s; }
+    .principle:hover { background: var(--gold-faint); }
+    .principle-arrow { font-family: 'IBM Plex Mono', monospace; font-size: 18px; color: var(--gold); flex-shrink: 0; }
+    .principle-text { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.06em; color: var(--white); }
+    .principle-sub { margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ash); letter-spacing: 0.08em; text-align: right; flex-shrink: 0; }
+    .about-cta { border-top: 1px solid var(--obsidian-border); padding: 96px 80px; background: var(--obsidian-mid); }
+    .cta-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 48px; }
+    .cta-copy h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 4vw, 56px); letter-spacing: 0.04em; color: var(--white); line-height: 1; margin-bottom: 16px; }
+    .cta-copy p { color: var(--white-dim); font-size: 16px; max-width: 480px; }
+    .cta-actions { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+    .btn-primary { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--obsidian); background: var(--gold); padding: 16px 32px; text-decoration: none; transition: background 0.2s, transform 0.2s; font-weight: 500; text-align: center; }
+    .btn-primary:hover { background: var(--white); transform: translateY(-2px); }
+    .btn-secondary { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold-dim); padding: 16px 32px; text-decoration: none; transition: border-color 0.2s, color 0.2s, transform 0.2s; text-align: center; }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--white); transform: translateY(-2px); }
+    footer { border-top: 1px solid var(--obsidian-border); padding: 40px 80px; display: flex; align-items: center; justify-content: space-between; }
+    .ft-logo { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.08em; color: var(--gold); text-decoration: none; }
+    .ft-links { display: flex; gap: 28px; list-style: none; }
+    .ft-links a { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ash); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
+    .ft-links a:hover { color: var(--gold); }
+    .ft-copy { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ash); letter-spacing: 0.05em; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+    .hero-name    { animation: fadeUp 0.6s ease 0.1s both; }
+    .hero-role    { animation: fadeUp 0.6s ease 0.2s both; }
+    .hero-statement { animation: fadeUp 0.6s ease 0.3s both; }
+    .photo-frame  { animation: fadeUp 0.6s ease 0.2s both; }
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .about-hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 64px 24px 48px; border-right: none; border-bottom: 1px solid var(--obsidian-border); }
+      .hero-right { padding: 48px 24px; min-height: auto; }
+      .photo-frame { width: 260px; height: 320px; }
+      .belief-grid { grid-template-columns: 1fr; }
+      .section { padding: 64px 24px; }
+      .background-section { padding: 64px 24px; }
+      .background-inner { grid-template-columns: 1fr; gap: 48px; }
+      .philosophy-strip { padding: 64px 24px; }
+      .principle { flex-wrap: wrap; gap: 16px; padding: 20px 24px; }
+      .principle-sub { margin-left: 0; text-align: left; }
+      .about-cta { padding: 64px 24px; }
+      .cta-inner { flex-direction: column; align-items: flex-start; }
+      footer { padding: 32px 24px; flex-direction: column; gap: 20px; text-align: center; }
+      .ft-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-logo">Signal Resolution</a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/diagnostic.html">Diagnostic</a></li>
+      <li><a href="/blog/">Writing</a></li>
+      <li><a href="/about" class="active">About</a></li>
+    </ul>
+  </nav>
+
+  <section class="about-hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">The Person Behind The System</div>
+      <h1 class="hero-name">
+        Signal<br/>
+        <span>Builder.</span>
+      </h1>
+      <div class="hero-role">Rome &nbsp;·&nbsp; Montego Bay, Jamaica &nbsp;·&nbsp; Signal Resolution</div>
+      <p class="hero-statement">
+        I don't build tools, dashboards, or content.<br/>
+        I build <strong>intelligence systems</strong> — decision engines that turn raw market signal into commercial clarity for B2B founders who are moving fast and selling wrong.
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="photo-frame">
+        <div class="photo-placeholder">
+          <div class="photo-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+            </svg>
+          </div>
+          <div class="photo-label">
+            <strong>[ Your Photo Here ]</strong>
+            Replace with: src/images/rome.jpg<br/>
+            Recommended: 640×800px
+          </div>
+        </div>
+      </div>
+      <div class="photo-location">Montego Bay, Saint James, Jamaica</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">What I Believe</div>
+    <div class="belief-grid">
+      <div class="belief-card">
+        <div class="belief-index">01 —</div>
+        <div class="belief-headline">Resolution Over Description</div>
+        <p class="belief-body">Most GTM advice describes the problem. Description is not resolution. A founder who can name their ICP but still misses 60% of qualified pipeline doesn't need better language — they need a different diagnostic lens.</p>
+      </div>
+      <div class="belief-card">
+        <div class="belief-index">02 —</div>
+        <div class="belief-headline">Signal Over Noise</div>
+        <p class="belief-body">Markets generate infinite data. Most of it is noise dressed as insight. The job isn't to collect more — it's to extract the signal that predicts buying behavior before it becomes obvious to everyone else.</p>
+      </div>
+      <div class="belief-card">
+        <div class="belief-index">03 —</div>
+        <div class="belief-headline">Markets Don't Buy. States Buy.</div>
+        <p class="belief-body">The same company at two different moments in time will buy or not buy based on internal state — not features, not price, not your messaging. Identifying buyer state is the intelligence problem that makes everything else easier.</p>
+      </div>
+      <div class="belief-card">
+        <div class="belief-index">04 —</div>
+        <div class="belief-headline">Structure Over Randomness</div>
+        <p class="belief-body">Most founder-led sales motion is smart effort applied randomly. The moment you build deterministic structure — a diagnostic engine, a signal pipeline, a routing system — the results stop being random too.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="background-section">
+    <div class="background-inner">
+      <div class="bg-copy">
+        <div class="section-label">Background</div>
+        <h2>Built From The Ground Up</h2>
+        <p>I started in social media management and SMMA — working with coaches and consultants, learning what actually moves people to buy versus what sounds convincing in a deck. That foundation shaped everything.</p>
+        <p>From there: marketing consulting, HubSpot certification, co-operating an SMMA. Each layer added a sharper view of where <strong>most B2B marketing fails</strong> — not in execution, but in signal. Founders were running toward the wrong people at the wrong time with the wrong message, and calling it a channel problem.</p>
+        <p>Signal Resolution is the infrastructure I wish had existed. A diagnostic-first intelligence system that identifies where your GTM motion is breaking — and routes you toward the correction, not just the awareness of the problem.</p>
+        <p>I build and operate this entirely solo, from Montego Bay, Jamaica. No team. No agency overhead. Just system thinking applied to a specific, hard problem.</p>
+      </div>
+      <div class="bg-stats">
+        <div class="stat-row">
+          <div class="stat-number">4</div>
+          <div class="stat-label">
+            <strong>Layer ICP Framework</strong>
+            <span>Firmographic Gate → Technographic Context → Psychographic Resolve → Behavioral Timing</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-number">5</div>
+          <div class="stat-label">
+            <strong>Canonical Buyer States</strong>
+            <span>CS · TB · VV · OF · SO — the intelligence model that drives all routing and sequencing</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-number">9</div>
+          <div class="stat-label">
+            <strong>Question Diagnostic Engine</strong>
+            <span>Scored, routed, and connected to a live automation backend via n8n and Neon</span>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-number">1</div>
+          <div class="stat-label">
+            <strong>Solo Operator, Jamaica</strong>
+            <span>Built, maintained, and operated entirely from Montego Bay — infrastructure thinking at founder scale</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="philosophy-strip">
+    <div class="philosophy-inner">
+      <div class="section-label">Operating Principles</div>
+      <div class="principles">
+        <div class="principle">
+          <span class="principle-arrow">→</span>
+          <span class="principle-text">If it does not increase clarity, it is noise</span>
+          <span class="principle-sub">Signal Filter</span>
+        </div>
+        <div class="principle">
+          <span class="principle-arrow">→</span>
+          <span class="principle-text">Evidence over opinion. Structure over randomness.</span>
+          <span class="principle-sub">Decision Model</span>
+        </div>
+        <div class="principle">
+          <span class="principle-arrow">→</span>
+          <span class="principle-text">Most SaaS companies have signal problems, not traffic problems</span>
+          <span class="principle-sub">Core Diagnosis</span>
+        </div>
+        <div class="principle">
+          <span class="principle-arrow">→</span>
+          <span class="principle-text">Bad ICP is hidden revenue decay — it compounds silently</span>
+          <span class="principle-sub">Risk Frame</span>
+        </div>
+        <div class="principle">
+          <span class="principle-arrow">→</span>
+          <span class="principle-text">Your AI executes 10x faster. Make sure it's executing on the right strategy.</span>
+          <span class="principle-sub">2026 Positioning</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-cta">
+    <div class="cta-inner">
+      <div class="cta-copy">
+        <h2>Start With The Diagnostic</h2>
+        <p>Nine questions. A scored result. A specific commercial pathway based on where your GTM motion is actually breaking — not where you think it is.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="/diagnostic.html" class="btn-primary">Run The Diagnostic</a>
+        <a href="/#about" class="btn-secondary">Learn How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <a href="/" class="ft-logo">Signal Resolution</a>
+    <ul class="ft-links">
+      <li><a href="/diagnostic.html">Diagnostic</a></li>
+      <li><a href="/blog/">Writing</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/privacy">Privacy Policy</a></li>
+      <li><a href="/terms">Terms of Service</a></li>
+      <li><a href="/refund">Refund Policy</a></li>
+    </ul>
+    <div class="ft-copy">© 2026 Signal Resolution</div>
+  </footer>
+
+</body>
+</html>
