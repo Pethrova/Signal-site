@@ -553,9 +553,15 @@ async function handleNext() {
     var d = data.data || data;
     state.result = d.result || d;
     var pathway = state.result.commercialPathwayId || '';
+    var readiness = state.result.readinessId || '';
+    var isPathAComplete = (pathway === 'pathway_nurture_fallback')
+      || (pathway === 'pathway_icp_clarity' && readiness === 'readiness_exploratory');
+
     if (pathway === 'pathway_scale_operator') {
       buildSystemPage();
       showScreen('system');
+    } else if (isPathAComplete) {
+      showLeadCapture();
     } else {
       showScreen('results');
       renderResultsGated();
@@ -769,8 +775,17 @@ async function submitLead() {
     questions: state.questions,
     answers: state.answers,
   }));
-  showScreen('report');
-  renderFullReport();
+  var pathwayCheck = state.result ? state.result.commercialPathwayId : '';
+  var readinessCheck = state.result ? state.result.readinessId : '';
+  var isPathAComplete = (pathwayCheck === 'pathway_nurture_fallback')
+    || (pathwayCheck === 'pathway_icp_clarity' && readinessCheck === 'readiness_exploratory');
+  if (isPathAComplete) {
+    showScreen('results');
+    renderResultsGated();
+  } else {
+    showScreen('report');
+    renderFullReport();
+  }
 }
 
 // ═══════════════════════════════════════
@@ -1068,7 +1083,7 @@ async function apiCall(url, body) {
 // ═══════════════════════════════════════
 function handlePathAEbookClaim() {
   var r = state.result || {};
-  var email = (state.lead && state.lead.email) || r.email || '';
+  var email = state.leadEmail || (state.lead && state.lead.email) || r.email || '';
   if (!email) {
     console.warn('[path-a-ebook] no email in state — redirecting to godfather only');
     window.location.href = '/godfather.html?archetype='
