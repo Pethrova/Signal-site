@@ -235,9 +235,10 @@ function $id(id) {
 // ═══════════════════════════════════════
 const API_BASE = 'https://data009.app.n8n.cloud/webhook';
 const ENDPOINTS = {
-  startSession: API_BASE + '/diag-start',
+  startSession:    API_BASE + '/diag-start',
   completeSession: API_BASE + '/diag-complete',
-  leadCapture: API_BASE + '/diag-lead',
+  leadCapture:     API_BASE + '/diag-lead',
+  pathAEbook:      API_BASE + '/path-a-ebook-delivery',
 };
 
 const MATURITY = ['Ad Hoc', 'Emerging', 'Operational', 'Evidence-Led'];
@@ -605,18 +606,96 @@ function renderResultsGated() {
     + '<div style="font-family:var(--F);font-size:18px;color:var(--gold);text-transform:capitalize;">' + esc(pathwayLabel || 'ICP Clarity') + '</div></div>'
     + '</div>'
     + (isPathA
-      ? '<div style="margin-top:48px;padding:32px;background:var(--sf);border:1px solid var(--brd);border-left:4px solid var(--gold);">'
-        + '<div style="font-family:var(--M);font-size:10px;letter-spacing:.14em;color:var(--gold);margin-bottom:12px;">SIGNAL INSIGHT</div>'
-        + '<div style="font-family:var(--F);font-size:clamp(20px,3vw,26px);color:var(--white);margin-bottom:16px;line-height:1.1;">YOUR ' + (archLabel || 'SIGNAL') + ' PROFILE REVEALS A FOUNDATION GAP.</div>'
-        + '<p style="font-family:var(--S);font-style:italic;font-size:16px;color:var(--slate);line-height:1.7;margin-bottom:24px;">Most founders at your score range have the motion right but the signal layer missing. Before the system can help you, you need to understand what the signal gap actually is.</p>'
-        + '<div style="margin-bottom:24px;padding:20px;background:var(--sf2);border:1px solid var(--brd);">'
-        + '<div style="font-family:var(--M);font-size:9px;letter-spacing:.14em;color:var(--muted);margin-bottom:8px;">PRESCRIBED NEXT STEP</div>'
-        + '<div style="font-family:var(--F);font-size:18px;color:var(--white);margin-bottom:8px;">READ: THE SIGNAL GAP</div>'
-        + '<div style="font-family:var(--S);font-size:14px;color:var(--slate);">Why Your Best-Fit Buyers Cannot Find You — a free framework that maps exactly what your diagnostic revealed.</div>'
-        + '</div>'
-        + '<a href="/godfather.html?archetype=' + encodeURIComponent(archLabel || '') + '&bottleneck=' + encodeURIComponent(bid || '') + '" style="display:block;background:var(--gold);color:#000;text-align:center;padding:16px 24px;font-family:var(--M);font-size:11px;letter-spacing:.12em;font-weight:600;text-decoration:none;">GET THE FREE FRAMEWORK →</a>'
-        + '<p style="font-family:var(--M);font-size:9px;color:var(--muted);text-align:center;margin-top:12px;letter-spacing:.08em;">FREE. NO CREDIT CARD. DELIVERED INSTANTLY.</p>'
-        + '</div>'
+      ? (function() {
+          var stateKey = (r.buyerStateId || r.archetypeId || '').toString();
+          var stateCopy = {
+            'bs_velocity_victim': {
+              eyebrow: 'VV — VELOCITY OUTPACED SIGNAL',
+              headline: 'Your motion is ahead of your signal layer.',
+              body: 'You shipped faster than your buyer intelligence kept up. The system feels broken because the moves you are making are not being calibrated against current buyer state. This is not a strategy problem. It is a sequence problem.'
+            },
+            'bs_chaos_scaler': {
+              eyebrow: 'CS — TOOLING DRIFT',
+              headline: 'More tools will not fix this.',
+              body: 'You are running three or more tools that each tell you something different about your buyer. That is not an integration problem. It is a signal problem. Tools fragment when the underlying signal layer is incoherent.'
+            },
+            'bs_timing_blind': {
+              eyebrow: 'TB — TIMING WINDOW MISALIGNED',
+              headline: 'Your offer might be right. Your timing is wrong.',
+              body: 'The moves that worked six months ago are not landing now. You do not have a positioning problem. You have a window problem. Buyer state shifts faster than messaging cycles.'
+            },
+            'bs_overwhelmed_founder': {
+              eyebrow: 'OF — SEQUENCE GAP',
+              headline: 'You have the answers. You need the sequence.',
+              body: 'You can see what is broken. What you cannot see is the order in which to fix it. Most founders at your stage default to fixing the most visible thing first. That is almost always the wrong move.'
+            },
+            'bs_skeptic_optimizer': {
+              eyebrow: 'SO — OPTIMIZING THE WRONG LAYER',
+              headline: 'You are optimizing what is downstream of the real constraint.',
+              body: 'The conversion levers you are pulling sit downstream of an ICP layer that has not been resolved yet. You are skeptical of new methods because the methods you have were supposed to work. They will — once the upstream gap is closed.'
+            }
+          };
+          var normalized = stateKey.toLowerCase();
+          var copy = stateCopy[normalized] || {
+            eyebrow: 'YOUR SIGNAL PROFILE',
+            headline: 'You have signal. You need structure.',
+            body: 'Your diagnostic surfaced a foundation gap. Before the system can compound, that gap needs to be named, framed, and closed in the right order.'
+          };
+          var bottleneckLabels = {
+            'bottleneck_icp_clarity': 'ICP CLARITY',
+            'bottleneck_positioning_narrative': 'POSITIONING NARRATIVE',
+            'bottleneck_activation_onboarding': 'ACTIVATION & ONBOARDING',
+            'bottleneck_conversion_flow': 'CONVERSION FLOW',
+            'bottleneck_pricing_packaging': 'PRICING & PACKAGING',
+            'bottleneck_cac_efficiency': 'CAC EFFICIENCY',
+            'bottleneck_dark_funnel_capture': 'DARK FUNNEL CAPTURE',
+            'bottleneck_system_fragmentation': 'SYSTEM FRAGMENTATION'
+          };
+          var bLabel = bottleneckLabels[bid] || 'GTM SIGNAL';
+          var barsHTML = cats.map(function(c) {
+            var pctVal = c.pct || c.percentage || 0;
+            var barColor = pctVal >= 60 ? 'var(--gold)' : (pctVal >= 40 ? 'var(--goldD)' : 'var(--ember)');
+            var label = (typeof CAT_LABELS !== 'undefined' && CAT_LABELS[c.id]) || c.label || c.id;
+            return '<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--brd);background:var(--sf);margin-bottom:2px;">'
+              + '<span class="mono" style="font-weight:500;width:40px;text-align:right;color:var(--white);">' + pctVal + '%</span>'
+              + '<div style="flex:1;">'
+              + '<span class="mono" style="color:var(--white);font-size:12px;letter-spacing:.06em;">' + label + '</span>'
+              + '<div class="cat-bar" style="margin-top:6px;height:4px;background:var(--brd);">'
+              + '<div class="cat-bar-fill" style="width:' + pctVal + '%;background:' + barColor + ';height:100%;"></div>'
+              + '</div>'
+              + '</div>'
+              + '</div>';
+          }).join('');
+          return ''
+            + '<div style="margin-top:48px;">'
+            + '<div class="fade-up" style="margin-bottom:24px;">'
+            + '<div class="mono" style="font-size:10px;letter-spacing:.14em;color:var(--gold);margin-bottom:8px;">YOUR DIAGNOSTIC RECEIPT</div>'
+            + '<div style="font-family:var(--F);font-size:clamp(24px,4vw,32px);color:var(--white);line-height:1.1;margin-bottom:12px;">' + (archLabel || 'YOUR SIGNAL PROFILE').toUpperCase() + '</div>'
+            + '<div class="mono" style="font-size:11px;letter-spacing:.08em;color:var(--slate);">SCORE: ' + pct + ' / 100 — FOUNDATION STAGE</div>'
+            + '</div>'
+            + '<div class="fade-up" style="margin-bottom:32px;animation-delay:.1s;">'
+            + '<div class="mono" style="font-size:9px;letter-spacing:.14em;color:var(--muted);margin-bottom:12px;">CATEGORY BREAKDOWN</div>'
+            + barsHTML
+            + '</div>'
+            + '<div class="fade-up" style="margin-bottom:32px;padding:20px 24px;background:var(--sf2);border-left:3px solid var(--ember);animation-delay:.2s;">'
+            + '<div class="mono" style="font-size:9px;letter-spacing:.14em;color:var(--ember);margin-bottom:6px;">PRIMARY BOTTLENECK</div>'
+            + '<div style="font-family:var(--F);font-size:18px;color:var(--white);">' + bLabel + '</div>'
+            + '</div>'
+            + '<div class="fade-up" style="margin-top:48px;padding:36px 32px;background:var(--sf);border:1px solid var(--brd);border-left:4px solid var(--gold);animation-delay:.3s;">'
+            + '<div class="mono" style="font-size:10px;letter-spacing:.14em;color:var(--gold);margin-bottom:14px;">' + copy.eyebrow + '</div>'
+            + '<div style="font-family:var(--F);font-size:clamp(22px,3vw,28px);color:var(--white);margin-bottom:18px;line-height:1.15;">' + copy.headline + '</div>'
+            + '<p style="font-family:var(--S);font-size:16px;color:var(--slate);line-height:1.7;margin-bottom:0;">' + copy.body + '</p>'
+            + '</div>'
+            + '<div class="fade-up" style="margin-top:32px;padding:32px;background:linear-gradient(135deg,rgba(201,168,76,.06),var(--sf));border:1px solid var(--brdH);animation-delay:.4s;">'
+            + '<div class="mono" style="font-size:9px;letter-spacing:.14em;color:var(--muted);margin-bottom:10px;">PRESCRIBED NEXT STEP</div>'
+            + '<div style="font-family:var(--F);font-size:22px;color:var(--white);margin-bottom:8px;">READ: THE SIGNAL GAP</div>'
+            + '<p style="font-family:var(--S);font-size:14px;color:var(--slate);margin-bottom:24px;line-height:1.6;">Why your best-fit buyers cannot find you, and the five diagnostic triggers that close it. Personalized to your ' + bLabel.toLowerCase() + ' bottleneck.</p>'
+            + '<button onclick="handlePathAEbookClaim()" style="display:block;width:100%;background:var(--gold);color:#000;text-align:center;padding:18px 24px;font-family:var(--M);font-size:11px;letter-spacing:.14em;font-weight:600;border:none;cursor:pointer;text-transform:uppercase;">Send me the Signal Gap framework</button>'
+            + '<p class="mono" style="font-size:9px;color:var(--muted);text-align:center;margin-top:14px;letter-spacing:.08em;">FREE. DELIVERED IN UNDER 2 MINUTES.</p>'
+            + '</div>'
+            + '<div style="text-align:center;margin-top:32px;"><button class="btn-line" onclick="handleRestart()">RETAKE DIAGNOSTIC</button></div>'
+            + '</div>';
+        })()
       : '<div style="position:relative;margin-bottom:2px;" class="fade-up" style="animation-delay:.2s;">'
         + '<div style="filter:blur(5px);pointer-events:none;user-select:none;opacity:.45;">'
         + cats.slice(0,5).map(function(c) {
@@ -982,6 +1061,58 @@ async function apiCall(url, body) {
   });
   if (!res.ok) throw new Error('API error: ' + res.status);
   return res.json();
+}
+
+// ═══════════════════════════════════════
+// PATH A — EBOOK CLAIM + WEBHOOK FIRE
+// ═══════════════════════════════════════
+function handlePathAEbookClaim() {
+  var r = state.result || {};
+  var email = (state.lead && state.lead.email) || r.email || '';
+  if (!email) {
+    console.warn('[path-a-ebook] no email in state — redirecting to godfather only');
+    window.location.href = '/godfather.html?archetype='
+      + encodeURIComponent(r.buyerStateLabel || r.archetype || '')
+      + '&bottleneck=' + encodeURIComponent(r.primaryBottleneckId || '');
+    return;
+  }
+  var payload = {
+    email: email,
+    buyerStateLabel: r.buyerStateLabel || r.archetype || 'Signal Profile',
+    primaryBottleneckLabel: r.primaryBottleneckId || '',
+    primaryBottleneckId: r.primaryBottleneckId || 'bottleneck_icp_clarity',
+    diagnosticScore: r.percentage || r.totalScore || 0,
+    sessionId: r.sessionId || state.sessionId || ''
+  };
+  try {
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+      navigator.sendBeacon(ENDPOINTS.pathAEbook, blob);
+    } else {
+      fetch(ENDPOINTS.pathAEbook, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(function() {});
+    }
+  } catch(e) {
+    console.warn('[path-a-ebook] webhook fire failed', e);
+  }
+  window.location.href = '/godfather.html?archetype='
+    + encodeURIComponent(payload.buyerStateLabel)
+    + '&bottleneck=' + encodeURIComponent(payload.primaryBottleneckId)
+    + '&claimed=1';
+}
+
+function handleRestart() {
+  state.result = null;
+  state.answers = [];
+  state.questions = [];
+  state.sessionId = null;
+  state.lead = null;
+  showScreen('entry');
 }
 
 // ═══════════════════════════════════════
