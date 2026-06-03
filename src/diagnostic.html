@@ -655,7 +655,7 @@ function renderResultsGated() {
           var barsHTML = cats.map(function(c) {
             var pctVal = c.pct || c.percentage || 0;
             var barColor = pctVal >= 60 ? 'var(--gold)' : (pctVal >= 40 ? 'var(--goldD)' : 'var(--ember)');
-            var label = (window.CAT_LABELS && window.CAT_LABELS[c.id]) || c.label || c.id;
+            var label = (typeof CAT_LABELS !== 'undefined' && CAT_LABELS[c.id]) || c.label || c.id;
             return '<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--brd);background:var(--sf);margin-bottom:2px;">'
               + '<span class="mono" style="font-weight:500;width:40px;text-align:right;color:var(--white);">' + pctVal + '%</span>'
               + '<div style="flex:1;">'
