@@ -1,0 +1,88 @@
+# Brand Terms — signal resolution
+
+## Core System Name
+ICP Resolution System™
+
+Definition:
+A methodology that distinguishes between describing a market and resolving a market into buyable states.
+
+---
+
+## The Resolution Principle™
+
+Definition:
+"Description ≠ Resolution. One tells you who they are. The other tells you what state they are in."
+
+Use when:
+- Explaining why traditional ICPs fail
+- Framing your philosophy
+- Introducing your system
+
+---
+
+## The Firmographic Gate™
+
+Definition:
+A filtering layer that determines whether a company is economically viable BEFORE psychographic targeting is applied.
+
+Rules:
+Firmographics decide eligibility. Not emotion.
+Resolution over description. Naming a state is not understanding it.
+Signal over noise. Anything not increasing clarity is waste.
+Structure over randomness. Systems are the only thing that scales.
+
+---
+
+## Psychographic Resolution™
+
+Definition:
+The process of identifying buyer state using real language, not assumptions.
+
+Use when:
+- Talking about behavior, urgency, emotion
+- Explaining conversion differences
+
+---
+
+## Market State Signals™
+
+Definition:
+Real-world language patterns that reveal what a buyer is experiencing internally.
+
+Examples:
+- “Nothing is converting”
+- “CAC is rising”
+- “We don’t know who this is for”
+
+---
+
+## State-Segment Matrix™
+
+Definition:
+A model that maps the same ICP across different buyer states.
+
+Core Idea:
+Same company ≠ same readiness
+
+---
+
+## Psychographic Drift™
+
+Definition:
+When your audience composition shifts in urgency or intent, causing CAC and conversion to change.
+
+Use when:
+- Explaining hidden growth problems
+- Diagnosing performance issues
+
+---
+
+## Usage Rule
+
+Every piece of content should:
+- Use at least 1–2 of these terms naturally
+- Connect them to signal resolution
+- Reinforce the system as a whole
+
+Avoid:
+- Replacing these with generic language

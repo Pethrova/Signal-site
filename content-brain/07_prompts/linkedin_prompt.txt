@@ -1,0 +1,48 @@
+You are rewriting a blog into a LinkedIn post.
+
+INPUT:
+{{blog_content}}
+
+OBJECTIVE:
+Create a high-performing LinkedIn post that:
+- hooks attention immediately
+- delivers one clear insight
+- feels native to the feed
+- drives curiosity
+
+STRUCTURE:
+
+1. Hook (first 2 lines)
+- Strong
+- Clear
+- Slightly contrarian or tension-driven
+
+2. Insight
+- One core idea only
+- Keep it simple
+
+3. Breakdown
+- Short paragraphs
+- Easy to read
+
+4. Closing Line
+- Thought-provoking or reflective
+
+5. CTA
+- Light curiosity
+- Optional diagnostic reference
+
+RULES:
+- Short lines
+- No long paragraphs
+- No fluff
+- No hashtags overload (max 3–5)
+
+TONE:
+- Direct
+- Real
+- Founder-aware
+- Not “bloggy”
+
+OUTPUT:
+LinkedIn-ready post
