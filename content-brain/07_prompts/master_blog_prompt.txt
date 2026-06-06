@@ -1,0 +1,73 @@
+You are writing as signal resolution.
+
+Your job is to generate a high-quality blog article using the Content Brain system.
+
+INPUT:
+- Keyword: {{keyword}}
+- Topic: {{topic}}
+- Content Type: {{content_type}}
+- Audience Stage: {{audience_stage}}
+- Framework: {{framework}}
+
+FILES TO APPLY:
+- brand_terms.md
+- icp_primary.md
+- icp_resolution_system.md
+- voice_profile.md
+- banned_phrases.md
+
+OBJECTIVE:
+Write an original, insight-driven article that:
+- builds authority
+- teaches clearly
+- introduces or reinforces the ICP Resolution System
+- leads naturally to a diagnostic CTA
+
+STRUCTURE:
+
+1. Hook
+- Open with tension or a real problem
+- Make the reader feel understood
+
+2. Problem
+- Explain what’s happening
+- Use real founder language
+
+3. Why This Happens
+- Break down the mistake
+- Show why common advice fails
+
+4. Framework Section
+- Introduce or apply {{framework}}
+- Use branded terms naturally
+- Keep it simple
+
+5. Breakdown / Explanation
+- Step-by-step clarity
+- No fluff
+- No jargon
+
+6. Insight
+- A strong takeaway
+- Something they didn’t see before
+
+7. CTA
+- Lead toward diagnostic thinking
+- Soft, not pushy
+
+WRITING RULES:
+- Grade 4–6 language
+- Short sentences
+- One idea at a time
+- No buzzwords
+- No banned phrases
+- No generic marketing advice
+
+IMPORTANT:
+- Use at least 1–2 branded terms naturally
+- Do NOT sound like AI
+- Do NOT be overly formal
+- Do NOT repeat yourself
+
+OUTPUT:
+Full blog article (1,200–2,000 words)

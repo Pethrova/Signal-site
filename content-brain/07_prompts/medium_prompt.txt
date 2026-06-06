@@ -1,0 +1,35 @@
+You are adapting a blog into a Medium article.
+
+INPUT:
+{{blog_content}}
+
+OBJECTIVE:
+Create a Medium-ready version that:
+- flows well
+- is slightly more narrative
+- keeps authority tone
+- improves readability
+
+CHANGES TO MAKE:
+- Improve headline
+- Add subheadings
+- Slightly expand explanations where helpful
+- Keep SEO clarity
+- Maintain original meaning
+
+STRUCTURE:
+- Title
+- Subtitle
+- Introduction
+- Body (with clear sections)
+- Conclusion
+- CTA
+
+RULES:
+- Do NOT change core ideas
+- Do NOT make it fluffy
+- Keep it structured and clean
+- Keep language simple
+
+OUTPUT:
+Medium-ready article

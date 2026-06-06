@@ -48,3 +48,24 @@ Never commit node_modules.
 - No favicon
 - RSS feed at /feed.xml and sitemap at /sitemap.xml — live
 - Tier 1 checkout URL in diagnostic.html is an alert placeholder
+
+## Blog automation system
+Full context in CLAUDE_BLOG_SYSTEM.md — read alongside this file for blog work.
+
+### Quick reference
+- Blog posts: src/blog/
+- Content Brain: content-brain/ (47 files across 14 folders)
+- Scripts: scripts/
+- Prompts: prompts/
+- Routing: routing/
+- n8n content workflow: WF3 v2 (iZVWzVhHjZ3dae17)
+- Notion Blog DB: SR Blog Editor (create in Archer workspace)
+
+### Content brain location
+content-brain/ is in Signal-site root.
+n8n reads these files via GitHub API.
+Never delete or move this folder.
+
+### Blog frontmatter required fields
+layout, title, description, date, category, buyer_state, tier,
+content_type, featured, permalink, readTime, cta_type, canonical_url, og_image
