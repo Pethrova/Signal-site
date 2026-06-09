@@ -31,12 +31,11 @@ export async function onRequestPost(context) {
     email: email,
     attributes: {
       FIRSTNAME:          body.name      || "",
-      LASTNAME:           "",
       COMPANY:            body.company   || "",
       ARR_RANGE:          body.arr       || "",
       BOTTLENECK_NOTES:   body.bottleneck || "",
-      TRIED_BEFORE:       body.tried     || "",
-      RIGHT_MOMENT:       body.moment    || "",
+      TRIED_BEFORE:       body.whatTried || "",
+      RIGHT_MOMENT:       body.whyNow    || "",
       APPLICATION_STATUS: "pending"
     },
     listIds: [17],
