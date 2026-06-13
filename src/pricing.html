@@ -55,7 +55,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .btn-outline:hover{border-color:var(--gold);background:rgba(245,166,35,.06);transform:translateY(-2px);}
 
 /* Tier cards */
-.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;align-items:start;}
+.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;align-items:stretch;}
 .tier-card{background:var(--sf);border:1px solid var(--brd);padding:0;position:relative;overflow:hidden;display:flex;flex-direction:column;}
 .tier-card.featured{border-color:var(--brdH);background:var(--sf2);}
 .tier-card-bar{height:3px;width:100%;background:linear-gradient(90deg,var(--gold),var(--ember),transparent);}
@@ -66,10 +66,10 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .price-period{font-family:var(--M);font-size:10px;color:var(--muted);letter-spacing:.12em;margin-top:6px;}
 .price-label{font-family:var(--M);font-size:9px;color:var(--dim);letter-spacing:.15em;margin-top:4px;text-transform:uppercase;}
 .feature-list{list-style:none;margin:0 0 28px;padding:0;flex:1;}
-.feature-list li{display:flex;align-items:flex-start;gap:10px;font-family:var(--M);font-size:10px;color:var(--slate);letter-spacing:.05em;padding:8px 0;border-bottom:1px solid var(--brd);}
+.feature-list li{display:flex;align-items:flex-start;gap:10px;font-family:var(--M);font-size:11px;color:var(--text);letter-spacing:.05em;padding:11px 0;border-bottom:1px solid var(--brd);line-height:1.55;}
 .feature-list li:last-child{border-bottom:none;}
 .feature-list li span.check{color:var(--gold);flex-shrink:0;}
-.guarantee{font-family:var(--M);font-size:8px;color:var(--dim);letter-spacing:.1em;text-align:center;margin-top:16px;line-height:1.6;}
+.guarantee{font-family:var(--M);font-size:10px;color:var(--slate);letter-spacing:.08em;text-align:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--brd);line-height:1.65;}
 
 /* FAQ */
 .faq-item{padding:28px 0;border-bottom:1px solid var(--brd);}
@@ -147,7 +147,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
             <div class="price-period">/MONTH</div>
             <div class="price-label">UNLIMITED DIAGNOSTIC RUNS</div>
           </div>
-          <p style="font-family:var(--S);font-style:italic;font-size:13px;line-height:1.5;color:var(--slate);margin:0 0 18px;">Stop scaling channels that hide which buyers are actually ready. Name the mismatch first.</p>
+          <p style="font-family:var(--S);font-style:italic;font-size:15px;line-height:1.55;color:var(--text);margin:0 0 22px;padding:12px 0 12px 16px;border-left:2px solid var(--gold);">Stop scaling channels that hide which buyers are actually ready. Name the mismatch first.</p>
           <ul class="feature-list">
             <li><span class="check">✓</span>The 9-question diagnostic that names the exact buyer-state your pipeline is failing in one sitting</li>
             <li><span class="check">✓</span>The buyer-state resolution map — which of the 5 archetypes is in your pipeline pretending to be ready</li>
@@ -175,7 +175,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
             <div class="price-period">/MONTH</div>
             <div class="price-label">CAP OF 12 CLIENTS</div>
           </div>
-          <p style="font-style:italic;font-size:13px;line-height:1.5;color:var(--slate);margin:0 0 18px;font-family:var(--S);">We build the buyer-state operating system underneath your growth — so every decision is run against signal, not opinion.</p>
+          <p style="font-style:italic;font-size:15px;line-height:1.55;color:var(--text);margin:0 0 22px;font-family:var(--S);padding:12px 0 12px 16px;border-left:2px solid var(--gold);">We build the buyer-state operating system underneath your growth — so every decision is run against signal, not opinion.</p>
           <ul class="feature-list">
             <li><span class="check">✓</span>Everything in Tier 1 — plus we run it for you</li>
             <li><span class="check">✓</span>Three buyer avatars built from your diagnostic data — the ones you'll actually be selling to next quarter, not generic personas</li>
@@ -205,7 +205,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
             <div class="price-period">/MONTH</div>
             <div class="price-label">CAP OF 8 CLIENTS</div>
           </div>
-          <p style="font-style:italic;font-size:13px;line-height:1.5;color:var(--slate);margin:0 0 18px;font-family:var(--S);">We install the signal layer that produces buyer intelligence on its own — embedded inside your GTM, owned by you.</p>
+          <p style="font-style:italic;font-size:15px;line-height:1.55;color:var(--text);margin:0 0 22px;font-family:var(--S);padding:12px 0 12px 16px;border-left:2px solid var(--gold);">We install the signal layer that produces buyer intelligence on its own — embedded inside your GTM, owned by you.</p>
           <ul class="feature-list">
             <li><span class="check">✓</span>Everything in Tier 2 — plus we build the layer that produces signal on its own</li>
             <li><span class="check">✓</span>Your operational signal layer, designed and built by Rome — not handed to a junior, not templated, not outsourced</li>
