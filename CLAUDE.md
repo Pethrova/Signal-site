@@ -69,3 +69,57 @@ Never delete or move this folder.
 ### Blog frontmatter required fields
 layout, title, description, date, category, buyer_state, tier,
 content_type, featured, permalink, readTime, cta_type, canonical_url, og_image
+Current Workstream — Offer Positioning Rebuild (June 2026)
+
+Driven by OFFER DRIVEN $450k chat audit. Offer positioning graded at
+35–40% — the lowest-scoring element in commercial architecture. This
+workstream raises it to 75%+ by designing the fixes the audit only graded.
+
+Sequenced phases:
+
+Phase 1 ✓ pricing.html rebuild — competitor anchor, identity tags,
+outcome-tied guarantees, benefits-driven bullets, design polish
+(commits 6a075d1, c0ac7b9, f35b382)
+Phase 2 — result page split-CTA by score band (0–3/4–6/7–10) +
+downloadable PDF (HIGHEST LEVERAGE — every diagnostic-taker hits it)
+Phase 3 — tripwire page rewrite + tripwire output content
+(rename from "report" framing to "completed output" framing)
+Phase 4 — ebook page rewrite + ebook content upgrade
+(Path A descension, currently spec-heavy not benefits-driven)
+Phase 5 — voice alignment across apply.html / thank-you.html /
+refund.html so the funnel doesn't fracture between pages
+
+Voice rule across the commercial layer: benefits-driven
+Fladlien/Platten/Suby. Every bullet states mechanism + transformation,
+not feature labels. Strategic outcome lines do fear-layer work
+(currently 35% effectiveness). No spec-sheet language. Mirror buyer
+language, not system labels.
+
+Guarantees stay outcome-tied across all surfaces:
+
+
+T1 = 30-day, 15 deployable avatar-matched signals, refund
+T2 = 90-day, 3 validated avatars + 50 deployable signals, extension
+T3 = 120-day, operational signal layer, extension
+No "money back" language on T2 or T3 — extension only
+
+
+Active operational notes:
+
+
+T1 CTA points at /apply.html as interim — swap to Whop checkout
+URL once Whop integration completes
+Tripwire CHECKOUT const same interim — swap to Whop in same push
+LemonSqueezy URLs are dead; do not restore them anywhere
+
+
+Workflow pattern that works for this site:
+
+
+Architect prompt-block built in Claude.ai chat
+Drop self-contained script + prompt into funnel_push/ folder
+One Claude Code session: read CLAUDE.md, run script, verify, push
+Script edits use exact-string find/replace with strict guards
+(bails on zero or multiple matches) — never freehand find/replace
+Whole-file overwrites for substantive rewrites
+One commit per logical push, push to main, Cloudflare auto-deploys
