@@ -105,14 +105,14 @@ textarea{resize:vertical;min-height:80px;}
   <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(245,166,35,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,.02) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 70% 80% at 50% 40%,black,transparent);pointer-events:none;"></div>
 
   <div style="position:relative;z-index:2;max-width:680px;margin:0 auto;">
-    <div class="kicker fade-up">TIER 2 — DONE WITH YOU</div>
+    <div class="kicker fade-up" id="apply-tier-kicker">TIER 2 — DONE WITH YOU</div>
     <h1 style="font-family:var(--F);font-size:clamp(36px,6vw,80px);line-height:.92;letter-spacing:.02em;color:var(--white);margin-bottom:24px;" class="fade-up" style="animation-delay:.1s;">
       THE ICP INTELLIGENCE SYSTEM<br><span style="color:var(--gold);">APPLICATION</span>
     </h1>
-    <p style="font-family:var(--S);font-style:italic;font-size:clamp(15px,1.6vw,18px);color:var(--slate);line-height:1.7;max-width:480px;margin:0 auto;" class="fade-up" style="animation-delay:.2s;">
+    <p style="font-family:var(--S);font-style:italic;font-size:clamp(15px,1.6vw,18px);color:var(--slate);line-height:1.7;max-width:480px;margin:0 auto;" class="fade-up" style="animation-delay:.2s;" id="apply-tier-subhead">
       12 client cap. $2,997/month. Rome reviews every application personally within 48 hours.
     </p>
-    <div style="margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <div id="apply-tier-casestudies" style="margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
       <a href="/case-studies/skeptic-optimizer.html" style="font-family:var(--M);font-size:10px;letter-spacing:.1em;color:var(--gold);text-decoration:none;">CASE STUDY: SKEPTIC/OPTIMIZER →</a>
       <span style="color:var(--dim);font-family:var(--M);font-size:10px;">|</span>
       <a href="/case-studies/velocity-victim.html" style="font-family:var(--M);font-size:10px;letter-spacing:.1em;color:var(--gold);text-decoration:none;">CASE STUDY: VELOCITY VICTIM →</a>
@@ -205,9 +205,9 @@ textarea{resize:vertical;min-height:80px;}
 <section style="padding:0 24px 80px;">
   <div style="max-width:840px;margin:0 auto;">
 
-    <div class="kicker" style="text-align:center;margin-bottom:28px;">WHAT YOU GET AT TIER 2</div>
+    <div class="kicker" style="text-align:center;margin-bottom:28px;" id="apply-tier-section-title">WHAT YOU GET AT TIER 2</div>
 
-    <div class="feat-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
+    <div class="feat-grid" id="apply-tier-features" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
 
       <div class="feat-card">
         <div style="width:32px;height:32px;border:1px solid var(--brdH);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
@@ -243,7 +243,7 @@ textarea{resize:vertical;min-height:80px;}
 <section style="padding:0 24px 100px;text-align:center;">
   <div style="max-width:640px;margin:0 auto;border-top:1px solid var(--brd);padding-top:40px;">
     <span style="font-family:var(--M);font-size:10px;color:var(--dim);line-height:1.8;display:block;letter-spacing:.12em;">
-      90-DAY GUARANTEE — 3 VALIDATED AVATARS AND 50 DEPLOYABLE SIGNALS MAPPED TO YOUR BUYER STATES IN 90 DAYS OR YOUR ENGAGEMENT IS EXTENDED AT NO CHARGE.
+      <span id="apply-tier-guarantee">90-DAY GUARANTEE — 3 VALIDATED AVATARS AND 50 DEPLOYABLE SIGNALS MAPPED TO YOUR BUYER STATES IN 90 DAYS OR YOUR ENGAGEMENT IS EXTENDED AT NO CHARGE.</span>
     </span>
   </div>
 </section>
@@ -333,5 +333,99 @@ textarea{resize:vertical;min-height:80px;}
 })();
 </script>
 
+
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var recTier = parseInt(params.get('recTier') || '2', 10);
+  if (recTier < 1 || recTier > 3) recTier = 2;
+
+  // Carry context into form submission
+  var form = document.getElementById('apply-form');
+  if (form) {
+    var hidden = document.createElement('input');
+    hidden.type = 'hidden';
+    hidden.name = 'recTier';
+    hidden.id = 'f-recTier';
+    hidden.value = String(recTier);
+    form.appendChild(hidden);
+
+    // Also pass archetype, pathway, score for backend routing
+    ['archetype','archetypeId','pathway','readiness','score','bottleneck','from'].forEach(function(k){
+      var v = params.get(k);
+      if (v) {
+        var h = document.createElement('input');
+        h.type = 'hidden'; h.name = k; h.value = v;
+        form.appendChild(h);
+      }
+    });
+  }
+
+  // Default (T2) content matches current page state — no override needed.
+  if (recTier === 2) return;
+
+  var TIER_CONTENT = {
+    1: {
+      kicker: 'TIER 1 — SELF-DIRECTED',
+      subhead: 'Unlimited diagnostic runs. $497/month. Self-serve setup. Cancel anytime.',
+      sectionTitle: 'WHAT YOU GET AT TIER 1',
+      casestudies: '',
+      features: [
+        { icon: '◈', title: 'FULL DIAGNOSTIC ENGINE', desc: 'The 9-question diagnostic that names the exact buyer-state your pipeline is failing — run it on yourself or your team in one sitting.' },
+        { icon: '⟐', title: '6-DATABASE WORKSPACE', desc: 'Pre-populated from your diagnostic result on day one. Your team starts with signal, not a blank canvas.' },
+        { icon: '◎', title: 'WEEKLY SIGNAL PIPELINE', desc: '88-source retrieval surfaces buyer-ready accounts every 7 days. Self-serve. Cancel anytime — but most don\'t.' }
+      ],
+      guarantee: '30-DAY GUARANTEE — 15 DEPLOYABLE, AVATAR-MATCHED SIGNALS SURFACED IN 30 DAYS OR WE REFUND.'
+    },
+    3: {
+      kicker: 'TIER 3 — DONE FOR YOU',
+      subhead: 'Cap of 8. $5,997/month + $500 refundable deposit. Rome reviews every application personally within 48 hours. T3 fit typically means $1M+ ARR with a dedicated GTM team.',
+      sectionTitle: 'WHAT YOU GET AT TIER 3',
+      casestudies: '',
+      features: [
+        { icon: '◈', title: 'FULL SIGNAL LAYER BUILD', desc: 'Rome designs and builds your operational signal layer — not handed to a junior, not templated, not outsourced.' },
+        { icon: '⟐', title: 'CUSTOM ICP ARCHITECTURE', desc: 'Engineered to your buyer math — your CAC, your sales cycle, your gross margin. Custom resolution per session.' },
+        { icon: '◎', title: 'MONTHLY RECALIBRATION', desc: 'Rome runs monthly signal recalibration + strategy session. What was true about your buyers in Q1 will not be true in Q3.' }
+      ],
+      guarantee: '120-DAY GUARANTEE — YOUR SIGNAL LAYER OPERATIONAL AND PRODUCING SIGNALS IN 120 DAYS OR YOUR ENGAGEMENT IS EXTENDED AT NO CHARGE.'
+    }
+  };
+
+  var content = TIER_CONTENT[recTier];
+  if (!content) return;
+
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+  function setHTML(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = value;
+  }
+
+  setText('apply-tier-kicker', content.kicker);
+  setText('apply-tier-subhead', content.subhead);
+  setText('apply-tier-section-title', content.sectionTitle);
+  setText('apply-tier-guarantee', content.guarantee);
+
+  // Hide case studies block (T2-specific content)
+  var cs = document.getElementById('apply-tier-casestudies');
+  if (cs) cs.style.display = 'none';
+
+  // Rebuild feature cards
+  var featContainer = document.getElementById('apply-tier-features');
+  if (featContainer && content.features) {
+    var iconBox = 'width:32px;height:32px;border:1px solid var(--brdH);display:flex;align-items:center;justify-content:center;margin-bottom:16px;';
+    var html = content.features.map(function(f){
+      return '<div class="feat-card">' +
+        '<div style="' + iconBox + '"><span style="font-family:var(--F);font-size:18px;color:var(--gold);">' + f.icon + '</span></div>' +
+        '<div class="kicker">' + f.title + '</div>' +
+        '<p style="font-family:var(--S);font-style:italic;font-size:14px;color:var(--slate);line-height:1.65;">' + f.desc + '</p>' +
+        '</div>';
+    }).join('');
+    featContainer.innerHTML = html;
+  }
+})();
+</script>
 </body>
 </html>
