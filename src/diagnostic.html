@@ -940,7 +940,7 @@ function buildSystemPage() {
   var proof = PROOF_MAP[archLabel] || PROOF_MAP['Signal-Blind Founder'];
 
   var recTier = score >= 60 ? 2 : 1;
-  if (score >= 75) recTier = 2;
+  if (score >= 85) recTier = 3;
 
   var tiers = [
     { n:1, name:'TIER 1', price:'$497', period:'/mo', type:'DIY · Unlimited seats',
@@ -986,7 +986,8 @@ function buildSystemPage() {
           + '<ul style="list-style:none;margin-bottom:16px;">'
           + t.features.map(function(f) { return '<li style="font-family:var(--M);font-size:10px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--brd);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span><span>' + esc(f) + '</span></li>'; }).join('')
           + '</ul>'
-          + '<button class="' + (isRec ? 'btn-fire' : 'btn-line') + ' full" onclick="tierAction(\'' + t.action + '\')" style="padding:12px;">' + esc(t.cta) + ' →</button>'
+          + (t.n === 3 ? '<div style="font-family:var(--M);font-size:9px;color:var(--muted);line-height:1.6;padding:0 0 12px;font-style:italic;">Application + review required. T3 fit typically means $1M+ ARR with a dedicated GTM team.</div>' : '')
+            + '<button class="' + (isRec ? 'btn-fire' : 'btn-line') + ' full" onclick="tierAction(\'' + t.action + '\')" style="padding:12px;">' + esc(t.cta) + ' →</button>'
           + '</div>';
       }).join('')
     + '</div>'
@@ -994,9 +995,18 @@ function buildSystemPage() {
 }
 
 function tierAction(action) {
-  if (action === 'checkout1') { window.location.href = '/pricing.html'; }
-  else if (action === 'apply2') { window.location.href = '/apply.html'; }
-  else if (action === 'apply3') { window.location.href = '/pricing.html'; }
+  var r = state.result || {};
+  var tier = action === 'checkout1' ? 1 : action === 'apply2' ? 2 : 3;
+  var ctx = '?from=diagnostic&recTier=' + tier
+    + '&archetype=' + encodeURIComponent(r.buyerStateLabel || r.archetype || '')
+    + '&archetypeId=' + encodeURIComponent(r.archetypeId || '')
+    + '&pathway=' + encodeURIComponent(r.commercialPathwayId || '')
+    + '&readiness=' + encodeURIComponent(r.readinessId || '')
+    + '&score=' + encodeURIComponent(r.percentage || r.totalScore || 0)
+    + '&bottleneck=' + encodeURIComponent(r.primaryBottleneckId || '');
+  if (action === 'checkout1') { window.location.href = '/pricing.html' + ctx; }
+  else if (action === 'apply2') { window.location.href = '/apply.html' + ctx; }
+  else if (action === 'apply3') { window.location.href = '/apply.html' + ctx; }
 }
 
 // ═══════════════════════════════════════
