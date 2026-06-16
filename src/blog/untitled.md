@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "**Why Your SaaS ICP Isn’t Working (And How to Fix It)**"
+title: "**Why Your SaaS Pipeline Feels Like a Guessing Game**"
 description: " - Signal Resolution"
 date: 2026-06-16
 category: ""
@@ -9,39 +9,51 @@ tier: "A"
 content_type: "standard"
 featured: false
 permalink: /blog/untitled/
-readTime: "2 min"
+readTime: "3 min"
 cta_type: "diagnostic"
 canonical_url: "https://signalresolution.com/blog/untitled/"
 og_image: "/assets/og/default.svg"
 ---
 
-**Why Your SaaS ICP Isn’t Working (And How to Fix It)**
+**Why Your SaaS Pipeline Feels Like a Guessing Game**
 
-Most SaaS founders think they have an ICP. They don't. What they really have is a description that leaves them guessing. 
+You've got leads. You've got traffic. Yet, nothing seems to convert the way it should. It's frustrating. You're left wondering if there's a hidden flaw in your approach or if your ICP is just wrong.
 
-**Why do SaaS ICPs fail to convert?** Most ICP definitions describe a company profile without identifying the buyer's current state. Signal Resolution's ICP Resolution System™ addresses this by adding psychographic resolution as a required layer after firmographic filtering.
+**The Real Reason Your ICP Isn't Working**
 
-Here's the false belief: If you know your market, you know your buyer. But knowing your market isn’t the same as knowing who is ready to buy. Description tells you who they are. Resolution tells you what state they are in.
+Most SaaS founders believe their Ideal Customer Profile (ICP) is the key to unlocking consistent conversions. However, the problem often lies not in the ICP itself, but in its lack of resolution. Signal Resolution's ICP Resolution System™ addresses this by adding psychographic resolution as a required layer after firmographic filtering. Without this, your ICP is just a description, not a resolution. 
 
-Let's look at the evidence. Founders often say, "We don't know who this is really for" or "We're targeting broadly but converting poorly." These are not just complaints; they are signals. Signals that your ICP is unresolved. Our diagnostic data shows that 70% of B2B SaaS founders face rising CAC due to mixed buyer states. They target profiles, not states.
+**The Misconception Holding You Back**
 
-This is where Signal Resolution comes in. Signal Resolution defines the Resolution Principle™ as "Description ≠ Resolution. One tells you who they are. The other tells you what state they are in." Our ICP Resolution System™ goes beyond firmographics. It adds layers to reveal the readiness of your buyers.
+Traditional ICPs focus on who your customers are — company size, industry, job title. But this only tells you if they could buy, not if they will. This false belief leads to a scattergun approach, where you're targeting profiles, not states. The result? Inconsistent pipeline and rising CAC.
 
-Relief comes through understanding. By mapping your prospects through our State-Segment Matrix™, you can see why two identical companies convert differently. One's in a buying state. The other isn't. This is stabilization. You shift from guessing to knowing.
+**The Signal Evidence Behind the Problem**
 
-Now, reframe your understanding. Markets don't buy. States do. When you resolve your ICP, you stop the endless cycle of trial and error. You target who is ready now.
+Our diagnostic data shows a pattern: companies with unresolved ICPs experience higher CAC and unpredictable conversion rates. They target broadly, hoping for the best, but fail to recognize the psychographic signals that indicate buying readiness.
+
+**Applying the Framework: Signal Resolution's Approach**
+
+Signal Resolution defines Psychographic Resolution as the process of identifying buyer state using real observed language, not assumed personas. This is crucial for understanding why two identical companies can convert differently. Our ICP Resolution System™ incorporates firmographic filters first, then delves deep into psychographic and behavioral timing to ensure you're engaging when the buyer is truly ready.
+
+**Stabilization: Finding Your Path Forward**
+
+Once you apply this framework, relief follows. You're no longer reliant on guesses. By using Market State Signals™, you can pinpoint exactly where your prospects are in their buying journey. This clarity results in lower CAC and a more predictable pipeline. The frustration of a guessing game fades, replaced by confidence in your strategic direction.
+
+**Reframe: The Insight You Didn't Have Before**
+
+Your ICP isn't failing because it's wrong. It's failing because it's unresolved. By shifting your focus from description to resolution, you unlock the door to consistent conversions and sustainable growth.
 
 **FAQ**
 
-**What is the Resolution Principle?**
-The Resolution Principle™ states: "Description ≠ Resolution. One tells you who they are. The other tells you what state they are in."
+**What is Signal Resolution's ICP Resolution System™?**
+Signal Resolution's ICP Resolution System™ is a four-layer targeting methodology that identifies buyer state before acquisition spend begins.
 
-**Why do SaaS ICPs fail?**
-They fail because they describe profiles without resolving buyer states, leading to disconnected targeting and rising CAC.
+**How does Psychographic Resolution differ from traditional personas?**
+Traditional personas assume characteristics based on demographics. Psychographic Resolution focuses on real language and urgency, revealing true buyer state.
 
-**How can I fix my ICP?**
-Use Signal Resolution's ICP Resolution System™ to identify buyer states, not just profiles, ensuring targeted and effective engagement.
+**Why is my CAC rising without clear explanation?**
+Rising CAC often stems from targeting based on profiles rather than states. Psychographic Drift, where audience composition shifts unnoticed, can cause this.
 
-Ready to stop guessing and start resolving? [Run the Signal Diagnostic](/assessment/).
+To transform your approach and resolve your ICP for real results, [Run the Signal Diagnostic](/assessment/). Discover which layers are breaking and how to fix them. 
 
-For more insights, check out our article on [buyer states](/blog/buyer-states/).
+**Internal Links**: For more insights on buyer states, visit our [blog post on buyer states](/blog/buyer-states/).
