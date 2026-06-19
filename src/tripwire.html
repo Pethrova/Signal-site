@@ -112,14 +112,48 @@ const BOTTLENECK_LABELS = {
 };
 const bottleneckLabel = BOTTLENECK_LABELS[bottleneck] || 'ICP Clarity';
 
-const CHECKOUT = '/apply.html';
-function goToCheckout() {
-  window.location.href = CHECKOUT +
-    '?checkout[custom][session_id]=' + encodeURIComponent(params.get('session_id') || '') +
-    '&checkout[custom][archetype]=' + encodeURIComponent(archetype) +
-    '&checkout[custom][bottleneck]=' + encodeURIComponent(bottleneck) +
-    '&checkout[email]=' + encodeURIComponent(params.get('email') || '') +
-    '&checkout[redirect_url]=' + encodeURIComponent('https://signalresolution.com/thank-you.html');
+// Phase: Whop checkout wiring.
+// Mints a per-session Whop checkout via /api/whop-checkout so
+// session_id/archetype/pathway/score carry through to the
+// payment.succeeded webhook. Replaces the old static-link /
+// /apply.html interim bridge used while Whop was being set up.
+async function goToCheckout() {
+  var btns = document.querySelectorAll('.btn-fire');
+  btns.forEach(function (b) { b.disabled = true; b.textContent = 'Loading checkout...'; });
+
+  try {
+    var res = await fetch('/api/whop-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        session_id:   params.get('session_id') || '',
+        archetype:    archetype || '',
+        archetype_id: params.get('archetypeId') || '',
+        pathway_id:   params.get('pathway') || '',
+        readiness:    params.get('readiness') || '',
+        score:        params.get('score') || '',
+        bottleneck:   bottleneck || '',
+        email_segment: params.get('emailSegment') || '',
+        from:         'tripwire',
+        redirect_url: 'https://signalresolution.com/thank-you.html',
+        source_url:   window.location.href
+      })
+    });
+
+    var data = await res.json();
+
+    if (data.ok && data.url) {
+      window.location.href = data.url;
+    } else {
+      console.error('Whop checkout error:', data.error);
+      btns.forEach(function (b) { b.disabled = false; b.textContent = 'Get My Report — $29'; });
+      alert('Something went wrong starting checkout. Please try again, or email rome@signalresolution.com if this persists.');
+    }
+  } catch (err) {
+    console.error('Whop checkout request failed:', err);
+    btns.forEach(function (b) { b.disabled = false; b.textContent = 'Get My Report — $29'; });
+    alert('Something went wrong starting checkout. Please try again, or email rome@signalresolution.com if this persists.');
+  }
 }
 
 // Inject dynamic text once DOM is ready
