@@ -298,18 +298,43 @@ textarea{resize:vertical;min-height:80px;}
     var whatTriedVal  = val('f-tried');
     var whyNowVal     = val('f-whynow');
 
+    // Phase 2C.2 — read diagnostic context from hidden inputs
+    // injected by Phase 2C.1. These carry the buyer's diagnostic
+    // result through to the backend so tier routing, archetype
+    // segmentation, and notification context all work correctly.
+    function hiddenVal(name) {
+      var el = document.querySelector('input[name="' + name + '"]');
+      return el ? el.value : '';
+    }
+    var recTierVal      = hiddenVal('recTier');
+    var archetypeVal    = hiddenVal('archetype');
+    var archetypeIdVal  = hiddenVal('archetypeId');
+    var pathwayVal      = hiddenVal('pathway');
+    var readinessVal    = hiddenVal('readiness');
+    var scoreVal        = hiddenVal('score');
+    var bottleneckIdVal = hiddenVal('bottleneck');
+    var fromVal         = hiddenVal('from');
+
     try {
       var resp = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name:       nameVal,
-          email:      emailVal,
-          company:    companyVal,
-          arr:        arrVal,
-          bottleneck: bottleneckVal,
-          whyNow:     whyNowVal,
-          whatTried:  whatTriedVal
+          name:         nameVal,
+          email:        emailVal,
+          company:      companyVal,
+          arr:          arrVal,
+          bottleneck:   bottleneckVal,
+          whyNow:       whyNowVal,
+          whatTried:    whatTriedVal,
+          recTier:      recTierVal,
+          archetype:    archetypeVal,
+          archetypeId:  archetypeIdVal,
+          pathway:      pathwayVal,
+          readiness:    readinessVal,
+          score:        scoreVal,
+          bottleneckId: bottleneckIdVal,
+          from:         fromVal
         })
       });
 

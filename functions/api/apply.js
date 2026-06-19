@@ -38,7 +38,19 @@ export async function onRequestPost(context) {
       RIGHT_MOMENT:       body.whyNow    || "",
       APPLICATION_STATUS: "pending"
     },
-    listIds: [17],
+    listIds: (function () {
+      // Phase 2C.2 — tier-aware list routing.
+      // ACTION REQUIRED: verify real Brevo list IDs for T1/T2/T3 and
+      // replace the placeholders below. Until verified, every tier
+      // safely falls back to list 17 (current confirmed-live list).
+      var TIER_LIST_IDS = {
+        1: 17,   // TODO: confirm real T1 application list ID in Brevo
+        2: 17,   // TODO: confirm real T2 application list ID in Brevo
+        3: 17    // TODO: confirm real T3 application list ID in Brevo
+      };
+      var tier = parseInt(body.recTier, 10);
+      return [TIER_LIST_IDS[tier] || 17];
+    })(),
     updateEnabled: true
   };
 
@@ -77,10 +89,10 @@ export async function onRequestPost(context) {
     (body.bottleneck || "(none provided)") + "\n" +
     "\n" +
     "WHAT THEY HAVE TRIED:\n" +
-    (body.tried || "(none provided)") + "\n" +
-    "\n" +
-    "WHY NOW:\n" +
-    (body.moment || "(none provided)") + "\n" +
+(body.whatTried || "(none provided)") + "\n" +
+"\n" +
+"WHY NOW:\n" +
+(body.whyNow || "(none provided)") + "\n" +
     "\n" +
     "---\n" +
     "Apply page submission · " + new Date().toISOString() + "\n" +
@@ -89,7 +101,7 @@ export async function onRequestPost(context) {
   const notificationPayload = {
     sender: { name: "Signal Resolution Apply", email: "rome@signalresolution.com" },
     to: [{ email: "rome@signalresolution.com", name: "Rome" }],
-    subject: "New T2 application - " + (body.name || "Unknown") + " from " + (body.company || "Unknown"),
+    subject: "New T" + (body.recTier || "?") + " application - " + (body.name || "Unknown") + " from " + (body.company || "Unknown"),
     textContent: notificationBody
   };
 
