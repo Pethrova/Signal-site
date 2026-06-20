@@ -63,6 +63,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 .tier-card-bar{height:3px;width:100%;background:linear-gradient(90deg,var(--gold),var(--ember),transparent);}
 .tier-card-inner{padding:32px 28px;flex:1;display:flex;flex-direction:column;}
 .tier-badge{position:absolute;top:20px;right:20px;font-family:var(--M);font-size:8px;letter-spacing:.15em;color:#000;background:var(--gold);padding:4px 10px;}
+.tier-banner{width:100%;box-sizing:border-box;font-family:var(--M);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#000;background:var(--gold);padding:10px 28px;text-align:center;}
 .price-block{margin:24px 0 20px;}
 .price-amount{font-family:var(--F);font-size:64px;color:var(--gold);line-height:.9;letter-spacing:.02em;}
 .price-period{font-family:var(--M);font-size:10px;color:var(--muted);letter-spacing:.12em;margin-top:6px;}
@@ -282,54 +283,76 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 </section>
 
 <script>
-// Phase 2B — context-aware tier recommendation.
+// Phase 2B-banner — context-aware tier recommendation, full-width banner.
 // Additive only. Cold visitors (no recTier param) see the page exactly
-// as it has always rendered. Diagnostic-routed visitors see the badge
-// move to their recommended tier instead of always landing on T2.
+// as it has always rendered — T2's hardcoded MOST SELECTED badge is
+// untouched in the HTML and still renders by default.
 (function () {
   var params = new URLSearchParams(window.location.search);
   var recTier = params.get('recTier');
   if (!recTier) return; // cold visitor — no changes, page stays as-is
 
   var tier = parseInt(recTier, 10);
-  if (tier !== 1 && tier !== 2 && tier !== 3) return; // unrecognized value, fail safe to default
+  if (tier !== 1 && tier !== 2 && tier !== 3) return; // unrecognized value, fail safe
 
-  var badge = document.getElementById('tier-badge-t2');
-  if (!badge) return; // structure not found, fail safe — do nothing rather than break the page
 
-  // Find the CTA anchor for the recommended tier; walk up to its
-  // containing card so the badge can be appended inside that card's
-  // top area rather than only ever living next to the T2 button.
+  var ARCHETYPE_LABELS = {
+    'chaos_scaler': 'Chaos Scalers',
+    'timing_blind': 'Timing-Blind Founders',
+    'velocity_victim': 'Velocity Victims',
+    'overwhelmed_founder': 'Overwhelmed Founders',
+    'stuck_optimizer': 'Stuck Optimizers',
+    'fragmented_scale_architect': 'Velocity Victims',
+    'operator_without_prioritization': 'Stuck Optimizers'
+  };
+  var archetypeParam = (params.get('archetype') || '').toLowerCase();
+  var archetypeLabel = ARCHETYPE_LABELS[archetypeParam];
+  var bannerText = archetypeLabel
+    ? 'RECOMMENDED FOR ' + archetypeLabel.toUpperCase()
+    : 'RECOMMENDED FOR YOUR PROFILE';
+
   var ctaIdByTier = { 1: 't1-cta', 2: 't2-cta', 3: 't3-cta' };
   var targetCta = document.getElementById(ctaIdByTier[tier]);
   if (!targetCta) return;
 
-  // Locate the nearest ancestor that looks like a tier card wrapper.
-  // Falls back to the CTA's parentElement chain (up to 6 levels) if a
-  // specific .tier-card class isn't found, since exact wrapper class
-  // names were not confirmed at script-write time.
   function findCardAncestor(el) {
     var node = el;
     for (var i = 0; i < 6 && node; i++) {
-      if (node.classList && (node.classList.contains('tier-card') || node.classList.contains('pricing-card'))) {
+      if (node.classList && node.classList.contains('tier-card')) {
         return node;
       }
       node = node.parentElement;
     }
-    return el.parentElement; // last-resort fallback, still inside the card area
+    return el.parentElement;
   }
 
   var targetCard = findCardAncestor(targetCta);
   if (!targetCard) return;
 
-  // Relabel and move the badge.
-  badge.textContent = 'FOR YOUR PROFILE';
-  badge.id = 'tier-badge-active';
+  // Hide the original static T2 badge if it's still present and we're
+  // recommending a different tier — prevents two competing banners.
+  var staticBadge = document.getElementById('tier-badge-t2');
+  if (staticBadge) staticBadge.style.display = 'none';
 
-  // Insert at the top of the target card if it isn't already there.
-  if (badge.parentElement !== targetCard) {
-    targetCard.insertBefore(badge, targetCard.firstChild);
-  }
+  // Build the new in-flow banner and insert it as the first child of
+  // .tier-card-inner — below the gold .tier-card-bar stripe, above the
+  // kicker text. This corrects the Phase 2B insertion point, which
+  // placed the badge above .tier-card-bar.
+  var inner = targetCard.querySelector('.tier-card-inner');
+  if (!inner) return;
+
+  var banner = document.createElement('div');
+  banner.className = 'tier-banner';
+  banner.id = 'tier-banner-active';
+  banner.textContent = bannerText;
+
+  // .tier-card-inner has padding:32px 28px — pull the banner out to the
+  // card's full edge-to-edge width using negative margins matching that
+  // padding, then restore horizontal breathing room via the banner's own
+  // padding (already set in CSS: 10px 28px).
+  banner.style.margin = '-32px -28px 24px -28px';
+
+  inner.insertBefore(banner, inner.firstChild);
 })();
 </script>
 </body>
