@@ -160,7 +160,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
             <li><span class="check">✓</span>Unlimited diagnostic re-runs for your team — when your ICP shifts you know in a week, not a quarter</li>
           </ul>
           <p style="font-family:var(--M);font-size:9px;letter-spacing:.08em;color:var(--muted);line-height:1.7;margin:0 0 18px;text-align:left;">BEST FIT: founders who refuse to hire another agency or rebuild messaging again until they know which buyer is actually theirs.</p>
-          <a href="/apply.html" class="btn-gold">START THE SYSTEM →</a>
+          <a href="/apply.html" class="btn-gold" id="t1-cta">START THE SYSTEM →</a>
           <p class="guarantee">30-DAY GUARANTEE — 15 DEPLOYABLE, AVATAR-MATCHED SIGNALS SURFACED IN 30 DAYS OR WE REFUND.</p>
         </div>
       </div>
@@ -168,7 +168,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
       <!-- TIER 2 — FEATURED -->
       <div class="tier-card featured">
         <div class="tier-card-bar"></div>
-        <div class="tier-badge">MOST SELECTED</div>
+        <div class="tier-badge" id="tier-badge-t2">MOST SELECTED</div>
         <div class="tier-card-inner">
           <div class="kicker" style="margin-bottom:4px;">TIER 2 — DONE WITH YOU</div>
           <div style="font-family:var(--M);font-size:9px;letter-spacing:.1em;color:var(--muted);margin-bottom:12px;text-transform:uppercase;">For founders who want it built with them</div>
@@ -191,7 +191,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
           <div style="margin-bottom:16px;text-align:center;">
             <a href="/case-studies/skeptic-optimizer.html" style="font-family:var(--M);font-size:10px;letter-spacing:.1em;color:var(--gold);text-decoration:none;">READ: SKEPTIC/OPTIMIZER CASE STUDY →</a>
           </div>
-          <a href="/apply.html" class="btn-gold">APPLY FOR TIER 2 →</a>
+          <a href="/apply.html" class="btn-gold" id="t2-cta">APPLY FOR TIER 2 →</a>
           <p class="guarantee">90-DAY GUARANTEE — 3 VALIDATED AVATARS AND 50 DEPLOYABLE SIGNALS MAPPED TO YOUR BUYER STATES IN 90 DAYS OR YOUR ENGAGEMENT IS EXTENDED AT NO CHARGE.</p>
         </div>
       </div>
@@ -218,7 +218,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
             <li><span class="check">✓</span>Priority onboarding within 7 days — because paying for done-for-you and waiting six weeks is the opposite of that</li>
           </ul>
           <p style="font-family:var(--M);font-size:9px;letter-spacing:.08em;color:var(--muted);line-height:1.7;margin:0 0 18px;text-align:left;">BEST FIT: funded or scaling teams who are done paying consultants for slides — and ready to own the signal layer outright.</p>
-          <a href="mailto:rome@signalresolution.com?subject=Tier 3 Enquiry" class="btn-outline">ENQUIRE ABOUT TIER 3 →</a>
+          <a href="mailto:rome@signalresolution.com?subject=Tier 3 Enquiry" id="t3-cta" class="btn-outline">ENQUIRE ABOUT TIER 3 →</a>
           <p class="guarantee">120-DAY GUARANTEE — YOUR SIGNAL LAYER OPERATIONAL AND PRODUCING SIGNALS IN 120 DAYS OR YOUR ENGAGEMENT IS EXTENDED AT NO CHARGE.</p>
         </div>
       </div>
@@ -281,5 +281,56 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
   </div>
 </section>
 
+<script>
+// Phase 2B — context-aware tier recommendation.
+// Additive only. Cold visitors (no recTier param) see the page exactly
+// as it has always rendered. Diagnostic-routed visitors see the badge
+// move to their recommended tier instead of always landing on T2.
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var recTier = params.get('recTier');
+  if (!recTier) return; // cold visitor — no changes, page stays as-is
+
+  var tier = parseInt(recTier, 10);
+  if (tier !== 1 && tier !== 2 && tier !== 3) return; // unrecognized value, fail safe to default
+
+  var badge = document.getElementById('tier-badge-t2');
+  if (!badge) return; // structure not found, fail safe — do nothing rather than break the page
+
+  // Find the CTA anchor for the recommended tier; walk up to its
+  // containing card so the badge can be appended inside that card's
+  // top area rather than only ever living next to the T2 button.
+  var ctaIdByTier = { 1: 't1-cta', 2: 't2-cta', 3: 't3-cta' };
+  var targetCta = document.getElementById(ctaIdByTier[tier]);
+  if (!targetCta) return;
+
+  // Locate the nearest ancestor that looks like a tier card wrapper.
+  // Falls back to the CTA's parentElement chain (up to 6 levels) if a
+  // specific .tier-card class isn't found, since exact wrapper class
+  // names were not confirmed at script-write time.
+  function findCardAncestor(el) {
+    var node = el;
+    for (var i = 0; i < 6 && node; i++) {
+      if (node.classList && (node.classList.contains('tier-card') || node.classList.contains('pricing-card'))) {
+        return node;
+      }
+      node = node.parentElement;
+    }
+    return el.parentElement; // last-resort fallback, still inside the card area
+  }
+
+  var targetCard = findCardAncestor(targetCta);
+  if (!targetCard) return;
+
+  // Relabel and move the badge.
+  badge.textContent = 'FOR YOUR PROFILE';
+  badge.id = 'tier-badge-active';
+
+  // Insert at the top of the target card if it isn't already there.
+  if (badge.parentElement !== targetCard) {
+    targetCard.insertBefore(badge, targetCard.firstChild);
+  }
+})();
+</script>
 </body>
 </html>
