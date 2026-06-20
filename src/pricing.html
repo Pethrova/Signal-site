@@ -346,13 +346,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
   banner.id = 'tier-banner-active';
   banner.textContent = bannerText;
 
-  // .tier-card-inner has padding:32px 28px — pull the banner out to the
-  // card's full edge-to-edge width using negative margins matching that
-  // padding, then restore horizontal breathing room via the banner's own
-  // padding (already set in CSS: 10px 28px).
-  banner.style.margin = '-32px -28px 24px -28px';
-
-  inner.insertBefore(banner, inner.firstChild);
+  targetCard.insertBefore(banner, inner);
 })();
 </script>
 </body>
