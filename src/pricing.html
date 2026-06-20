@@ -161,7 +161,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
             <li><span class="check">✓</span>Unlimited diagnostic re-runs for your team — when your ICP shifts you know in a week, not a quarter</li>
           </ul>
           <p style="font-family:var(--M);font-size:9px;letter-spacing:.08em;color:var(--muted);line-height:1.7;margin:0 0 18px;text-align:left;">BEST FIT: founders who refuse to hire another agency or rebuild messaging again until they know which buyer is actually theirs.</p>
-          <a href="/apply.html" class="btn-gold" id="t1-cta">START THE SYSTEM →</a>
+          <a href="/apply.html" class="btn-gold" id="t1-cta" onclick="return goToCheckoutT1(event)">START THE SYSTEM →</a>
           <p class="guarantee">30-DAY GUARANTEE — 15 DEPLOYABLE, AVATAR-MATCHED SIGNALS SURFACED IN 30 DAYS OR WE REFUND.</p>
         </div>
       </div>
@@ -348,6 +348,57 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;o
 
   targetCard.insertBefore(banner, inner);
 })();
+</script>
+<script>
+// Piece 2 — T1 direct checkout wiring.
+// Mirrors tripwire.html's goToCheckout() pattern exactly. Independent
+// script block — does not depend on the Phase 2B-banner IIFE's scope.
+var t1Params = new URLSearchParams(window.location.search);
+
+async function goToCheckoutT1(evt) {
+  if (evt && evt.preventDefault) evt.preventDefault();
+
+  var btn = document.getElementById('t1-cta');
+  var originalText = btn ? btn.textContent : '';
+  if (btn) { btn.style.pointerEvents = 'none'; btn.textContent = 'Loading checkout...'; }
+
+  try {
+    var res = await fetch('/api/whop-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        plan_id:       'plan_a02SP3xiaSrh3',
+        session_id:    t1Params.get('session_id') || '',
+        archetype:     t1Params.get('archetype') || '',
+        archetype_id:  t1Params.get('archetypeId') || '',
+        pathway_id:    t1Params.get('pathway') || '',
+        readiness:     t1Params.get('readiness') || '',
+        score:         t1Params.get('score') || '',
+        bottleneck:    t1Params.get('bottleneck') || '',
+        email_segment: t1Params.get('emailSegment') || '',
+        from:          'pricing_t1',
+        redirect_url:  'https://signalresolution.com/thank-you.html',
+        source_url:    window.location.href
+      })
+    });
+
+    var data = await res.json();
+
+    if (data.ok && data.url) {
+      window.location.href = data.url;
+    } else {
+      console.error('Whop checkout error:', data.error);
+      if (btn) { btn.style.pointerEvents = 'auto'; btn.textContent = originalText; }
+      alert('Something went wrong starting checkout. Please try again, or email rome@signalresolution.com if this persists.');
+    }
+  } catch (err) {
+    console.error('Whop checkout request failed:', err);
+    if (btn) { btn.style.pointerEvents = 'auto'; btn.textContent = originalText; }
+    alert('Something went wrong starting checkout. Please try again, or email rome@signalresolution.com if this persists.');
+  }
+
+  return false; // prevent default href navigation in all cases
+}
 </script>
 </body>
 </html>
