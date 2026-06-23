@@ -3,242 +3,300 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
+<title>Thank You — Signal Resolution</title>
+<meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-<title>Purchase Confirmed — Signal Resolution</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/global.css?v=2">
 <style>
-:root{
-  --bg:#080706;--sf:#0f0e0c;--sf2:#161410;--sf3:#1d1a15;
-  --brd:rgba(255,200,80,0.07);--brdH:rgba(255,200,80,0.18);
-  --gold:#f5a623;--goldH:#ffd166;--goldD:rgba(245,166,35,0.35);
-  --ember:#ff6b35;--slate:#c8c4bb;--muted:#6e6860;--dim:#3a3530;
-  --text:#ede8df;--white:#f7f3ec;
-  --F:'Bebas Neue',sans-serif;
-  --S:'Fraunces',serif;
-  --M:'IBM Plex Mono',monospace;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:var(--S);overflow-x:hidden;min-height:100vh;}
-button,a{font-family:inherit;cursor:pointer;}
-
-/* Grain */
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.5;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.035'/%3E%3C/svg%3E");}
-
-/* Animations */
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
-.fade-up{animation:fadeUp .5s ease both;}
-.fade-in{animation:fadeIn .6s ease both;}
-
-/* Nav */
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;background:rgba(8,7,6,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--brd);}
-.nav-logo{font-family:var(--F);font-size:18px;letter-spacing:.12em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:10px;}
-.nav-logo .sigil{display:flex;align-items:center;}
-.nav-logo .sigil svg{animation:spin 28s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.nav-right{font-family:var(--M);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
-
-/* Shared */
-.gold-bar{height:3px;width:100%;background:linear-gradient(90deg,var(--gold),var(--ember),transparent);}
-.kicker{font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
-.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--M);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);}
-.eyebrow::before{content:'';width:24px;height:1px;background:var(--gold);}
-.headline{font-family:var(--F);line-height:.92;letter-spacing:.02em;color:var(--white);margin:0;}
-.body-text{font-family:var(--S);font-style:italic;font-size:15px;color:var(--slate);line-height:1.7;}
-.mono{font-family:var(--M);font-size:11px;color:var(--muted);letter-spacing:.06em;}
-
-/* Buttons */
-.btn-fire{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--gold);color:var(--bg);font-family:var(--M);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:16px 32px;border:none;text-decoration:none;transition:all .25s;}
-.btn-fire:hover{box-shadow:0 0 50px rgba(245,166,35,.4);transform:translateY(-2px);}
-.btn-line{font-family:var(--M);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:transparent;border:1px solid var(--brd);padding:12px 24px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;transition:all .2s;}
-.btn-line:hover{color:var(--gold);border-color:rgba(245,166,35,.22);}
-
-/* Ambient */
-.orb-a{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.07),transparent 70%);top:-100px;right:-150px;filter:blur(40px);pointer-events:none;}
-.orb-b{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,.05),transparent 70%);bottom:-80px;left:-80px;filter:blur(60px);pointer-events:none;}
-.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(245,166,35,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,.025) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 70% 80% at 50% 40%,black,transparent);pointer-events:none;}
-
-/* Step cards */
-.step-card{background:var(--sf);border:1px solid var(--brd);padding:24px 28px;position:relative;overflow:hidden;transition:border-color .25s;}
-.step-card:hover{border-color:var(--brdH);}
-.step-num{font-family:var(--F);font-size:48px;color:rgba(245,166,35,.12);position:absolute;top:12px;right:16px;line-height:1;pointer-events:none;}
-
-/* Feature cards */
-.feat-card{background:var(--sf2);border:1px solid var(--brd);padding:28px 24px;transition:border-color .25s;}
-.feat-card:hover{border-color:var(--brdH);}
-
-/* Responsive */
-@media(max-width:640px){
-  .nav{padding:16px 20px;}
-  .steps-grid{grid-template-columns:1fr !important;}
-  .feat-grid{grid-template-columns:1fr !important;}
-  .cta-row{flex-direction:column !important;align-items:stretch !important;}
-  .btn-fire,.btn-line{width:100%;justify-content:center;display:flex;}
-  section{padding-left:16px;padding-right:16px;}
-}
+  .ty-wrap{max-width:640px;margin:0 auto;padding:120px 24px 80px;}
+  .ty-kicker{font-family:var(--M);font-size:9px;letter-spacing:.2em;color:var(--ember);text-transform:uppercase;margin-bottom:24px;}
+  .ty-headline{font-family:var(--F);font-size:clamp(36px,6vw,64px);line-height:1;color:var(--text);margin-bottom:24px;}
+  .ty-sub{font-family:var(--S);font-size:17px;line-height:1.7;color:var(--slate);margin-bottom:48px;}
+  .pulse-wrap{display:flex;align-items:center;gap:12px;margin-bottom:48px;}
+  .pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 1.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+  .pulse-label{font-family:var(--M);font-size:10px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;}
+  .next-steps{display:grid;gap:16px;margin-bottom:64px;}
+  .step-card{border:1px solid var(--brd);padding:24px;background:var(--sf);}
+  .step-num{font-family:var(--M);font-size:9px;letter-spacing:.15em;color:var(--muted);margin-bottom:8px;}
+  .step-title{font-family:var(--M);font-size:13px;color:var(--text);margin-bottom:6px;}
+  .step-body{font-family:var(--S);font-size:14px;color:var(--slate);line-height:1.6;}
+  /* ── T1 intake form ── */
+  .intake-section{display:none;}
+  .intake-section.visible{display:block;}
+  .intake-form{display:grid;gap:20px;}
+  .form-group{display:grid;gap:8px;}
+  .form-label{font-family:var(--M);font-size:9px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;}
+  .form-label span{color:var(--ember);}
+  .form-input,.form-textarea{background:var(--sf);border:1px solid var(--brd);color:var(--text);font-family:var(--S);font-size:15px;padding:14px 16px;width:100%;box-sizing:border-box;outline:none;transition:border-color .2s;}
+  .form-input:focus,.form-textarea:focus{border-color:var(--gold);}
+  .form-textarea{min-height:80px;resize:vertical;}
+  .form-hint{font-family:var(--M);font-size:9px;color:var(--muted);letter-spacing:.05em;}
+  .intake-submit{background:var(--gold);color:#000;font-family:var(--M);font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:18px 32px;border:none;cursor:pointer;width:100%;margin-top:8px;transition:opacity .2s;}
+  .intake-submit:disabled{opacity:.5;cursor:not-allowed;}
+  .intake-error{font-family:var(--M);font-size:10px;color:var(--ember);letter-spacing:.05em;margin-top:8px;display:none;}
+  .intake-error.visible{display:block;}
+  /* ── T1 upsell (tripwire only) ── */
+  .t1-pitch{opacity:0;transition:opacity 1s ease;margin-top:64px;padding-top:48px;border-top:1px solid var(--brd);}
+  .t1-pitch.visible{opacity:1;}
+  .pitch-kicker{font-family:var(--M);font-size:9px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
+  .pitch-head{font-family:var(--F);font-size:clamp(28px,4vw,40px);color:var(--text);margin-bottom:16px;}
+  .pitch-body{font-family:var(--S);font-size:16px;color:var(--slate);line-height:1.7;margin-bottom:24px;}
+  .pitch-cta{display:inline-block;background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:var(--M);font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:14px 28px;text-decoration:none;transition:background .2s,color .2s;}
+  .pitch-cta:hover{background:var(--gold);color:#000;}
+  /* ── Confirmation (after intake submit) ── */
+  .confirm-section{display:none;}
+  .confirm-section.visible{display:block;}
+  .confirm-icon{font-size:48px;margin-bottom:24px;}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <a href="/" class="nav-logo"><span class="sigil"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="#f5a623" stroke-width="1"/><circle cx="11" cy="11" r="6" stroke="#f5a623" stroke-width=".5" stroke-dasharray="2 2"/><circle cx="11" cy="11" r="2" fill="#f5a623"/></svg></span> SIGNAL RESOLUTION</a>
-  <span class="nav-right">PURCHASE CONFIRMED</span>
+<nav id="mainNav">
+  <a href="/" class="n-logo">
+    <div class="n-sigil">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <circle cx="11" cy="11" r="10" stroke="#f5a623" stroke-width="1"/>
+        <circle cx="11" cy="11" r="6"  stroke="#f5a623" stroke-width=".5" stroke-dasharray="2 2"/>
+        <circle cx="11" cy="11" r="2"  fill="#f5a623"/>
+      </svg>
+    </div>
+    <span class="n-word">SIGNAL RESOLUTION</span>
+  </a>
 </nav>
 
-<!-- ══════════════════════════════
-     SECTION 1 — CONFIRMATION HEADER
-══════════════════════════════ -->
-<section style="position:relative;overflow:hidden;padding:120px 24px 80px;text-align:center;">
-  <div class="orb-a"></div>
-  <div class="orb-b"></div>
-  <div class="grid-bg"></div>
+<main>
+<div class="ty-wrap">
 
-  <div style="position:relative;z-index:2;max-width:720px;margin:0 auto;">
+  <!-- ══════════════════════════════════════════════
+       TRIPWIRE CONFIRMATION (default / tier=tripwire)
+       ══════════════════════════════════════════════ -->
+  <section id="tripwire-section">
+    <div class="ty-kicker">Purchase confirmed</div>
+    <h1 class="ty-headline">YOUR SIGNAL CORRECTION REPORT IS BEING BUILT</h1>
+    <p class="ty-sub">It will arrive in your inbox within 2 minutes. Check your spam folder if you don't see it — it comes from rome@signalresolution.com.</p>
 
-    <div class="eyebrow fade-up" style="justify-content:center;margin-bottom:24px;">PURCHASE CONFIRMED</div>
-
-    <h1 class="headline fade-up" style="font-size:clamp(44px,7vw,96px);margin-bottom:28px;animation-delay:.1s;">
-      YOUR SIGNAL CORRECTION<br><span style="color:var(--gold);">REPORT IS BEING BUILT</span>
-    </h1>
-
-    <p class="body-text fade-up" style="max-width:500px;margin:0 auto 40px;font-size:clamp(15px,1.6vw,18px);animation-delay:.2s;">
-      Personalized to your diagnostic result. Check your inbox — it arrives within 2 minutes.
-    </p>
-
-    <!-- Pulse indicator -->
-    <div class="fade-up" style="display:inline-flex;align-items:center;gap:12px;padding:10px 20px;border:1px solid var(--brd);background:var(--sf);animation-delay:.3s;">
-      <span style="width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 2.4s ease-in-out infinite;flex-shrink:0;"></span>
-      <span class="mono" style="font-size:10px;letter-spacing:.2em;color:var(--gold);">GENERATING YOUR REPORT...</span>
+    <div class="pulse-wrap">
+      <div class="pulse-dot"></div>
+      <div class="pulse-label">Generating your report...</div>
     </div>
 
-  </div>
-</section>
-
-<!-- ══════════════════════════════
-     SECTION 2 — WHAT HAPPENS NEXT
-══════════════════════════════ -->
-<section style="padding:0 24px 80px;">
-  <div style="max-width:840px;margin:0 auto;">
-
-    <div class="kicker" style="margin-bottom:16px;text-align:center;">WHAT HAPPENS NEXT</div>
-
-    <div class="steps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
-
-      <div class="step-card fade-up" style="animation-delay:.1s;">
-        <div class="step-num">1</div>
-        <div class="gold-bar" style="margin:-24px -28px 20px;width:calc(100% + 56px);"></div>
-        <div class="kicker" style="color:var(--gold);">CHECK YOUR INBOX</div>
-        <p class="body-text" style="font-size:13px;">Your personalized report will arrive within 2 minutes. Check spam if you don't see it.</p>
+    <div class="next-steps">
+      <div class="step-card">
+        <div class="step-num">STEP 01</div>
+        <div class="step-title">Check your inbox</div>
+        <div class="step-body">The report is being generated from your diagnostic data. It will land within 2 minutes. PDF attachment, 5–7 pages.</div>
       </div>
-
-      <div class="step-card fade-up" style="animation-delay:.18s;">
-        <div class="step-num">2</div>
-        <div class="gold-bar" style="margin:-24px -28px 20px;width:calc(100% + 56px);"></div>
-        <div class="kicker" style="color:var(--gold);">READ SECTION 1 FIRST</div>
-        <p class="body-text" style="font-size:13px;">Your primary bottleneck is named on page 1. That's the only thing that matters right now.</p>
+      <div class="step-card">
+        <div class="step-num">STEP 02</div>
+        <div class="step-title">Read page 3 first</div>
+        <div class="step-body">Page 3 names your primary constraint. That is the only page that matters right now. Everything else explains why it's upstream of your other problems.</div>
       </div>
-
-      <div class="step-card fade-up" style="animation-delay:.26s;">
-        <div class="step-num">3</div>
-        <div class="gold-bar" style="margin:-24px -28px 20px;width:calc(100% + 56px);"></div>
-        <div class="kicker" style="color:var(--gold);">COME BACK HERE AFTER</div>
-        <p class="body-text" style="font-size:13px;">The next move is waiting below this line.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════
-     SECTION 3 — T1 SOFT PITCH
-     (fades in after 8s delay)
-══════════════════════════════ -->
-<section id="pitch-section" style="padding:0 24px 80px;opacity:0;transition:opacity .8s ease;">
-  <div style="max-width:640px;margin:0 auto;">
-    <div style="background:rgba(245,166,35,.05);border:1px solid var(--brdH);padding:40px 36px;position:relative;overflow:hidden;">
-      <div class="gold-bar" style="position:absolute;top:0;left:0;right:0;margin:0;width:100%;"></div>
-
-      <div class="kicker" style="margin-top:8px;">WHILE YOU WAIT</div>
-      <h2 class="headline" style="font-size:clamp(28px,4vw,52px);margin-bottom:20px;">
-        THE REPORT NAMES<br>THE BOTTLENECK.<br><span style="color:var(--gold);">THE SYSTEM FIXES IT.</span>
-      </h2>
-      <p class="body-text" style="margin-bottom:32px;max-width:480px;">
-        The Signal Correction Report shows you exactly where your GTM signal is breaking down. The ICP Intelligence System is what you run after you know. $497/month. No application. Direct access.
-      </p>
-
-      <div class="cta-row" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-        <a href="/apply.html?ref=tripwire-thanks" class="btn-fire">START THE SYSTEM — $497/MO →</a>
-        <a href="#what-you-get" class="btn-line">SEE EXACTLY WHAT YOU GET →</a>
+      <div class="step-card">
+        <div class="step-num">STEP 03</div>
+        <div class="step-title">Follow the sequence in order</div>
+        <div class="step-body">Pages 4 and 5 contain the correction sequence. Do not skip to step 3. Resistance at step 2 is data, not failure.</div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ══════════════════════════════
-     SECTION 4 — WHAT T1 INCLUDES
-══════════════════════════════ -->
-<section id="what-you-get" style="padding:0 24px 80px;">
-  <div style="max-width:840px;margin:0 auto;">
+    <!-- T1 soft pitch fades in after 8s -->
+    <div class="t1-pitch" id="t1-pitch">
+      <div class="pitch-kicker">One more thing</div>
+      <h2 class="pitch-head">THE REPORT NAMES THE CONSTRAINT. IT DOESN'T WATCH FOR DRIFT.</h2>
+      <p class="pitch-body">The correction sequence will work — but only if the signal layer underneath is running. Most founders fix the surface problem and then optimize around it. They get better at the wrong thing faster.</p>
+      <p class="pitch-body">Tier 1 is the signal layer. It runs continuously against your actual market, flags drift before it compounds, and surfaces new buying-ready signals every week.</p>
+      <a href="/pricing.html?from=tripwire-thanks" class="pitch-cta">See what Tier 1 includes →</a>
+    </div>
+  </section>
 
-    <div class="kicker" style="margin-bottom:6px;text-align:center;">WHAT YOU GET IN TIER 1</div>
-    <div style="text-align:center;margin-bottom:28px;">
-      <span class="mono" style="font-size:10px;color:var(--dim);">$497/MONTH · UNLIMITED SEATS · DIRECT ACCESS</span>
+  <!-- ══════════════════════════════════════════════
+       T1 INTAKE FORM (tier=t1)
+       ══════════════════════════════════════════════ -->
+  <section id="t1-section" class="intake-section">
+    <div class="ty-kicker">Tier 1 confirmed — one last step</div>
+    <h1 class="ty-headline">YOUR SYSTEM NEEDS THIS TO START</h1>
+    <p class="ty-sub">Your payment is confirmed. Before your signal pipeline can run, the system needs to know your market. This takes 3 minutes. The intelligence engine cannot start without it.</p>
+
+    <div class="intake-form" id="intake-form">
+      <div class="form-group">
+        <label class="form-label">Company name <span>*</span></label>
+        <input class="form-input" id="f-company" type="text" placeholder="Acme Corp" autocomplete="organization">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your niche <span>*</span></label>
+        <input class="form-input" id="f-niche" type="text" placeholder="B2B SaaS for mid-market sales teams">
+        <div class="form-hint">Be specific. "SaaS" is not a niche. "B2B SaaS for RevOps teams at 50–200 person companies" is.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">What your product does <span>*</span></label>
+        <textarea class="form-textarea" id="f-product-purpose" placeholder="We help sales teams eliminate manual CRM updates by auto-logging every customer interaction..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Primary target role <span>*</span></label>
+        <input class="form-input" id="f-target-role" type="text" placeholder="VP of Sales, Head of RevOps, Sales Director">
+        <div class="form-hint">The person who feels the problem most acutely. Not your economic buyer — your signal source.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Top 3–5 competitors <span>*</span></label>
+        <textarea class="form-textarea" id="f-competitors" placeholder="Gong, Chorus, Clari, Salesloft" style="min-height:60px;"></textarea>
+        <div class="form-hint">Comma-separated. Include direct and category competitors.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">5–10 keywords your buyers use <span>*</span></label>
+        <textarea class="form-textarea" id="f-keywords" placeholder="sales coaching, conversation intelligence, call recording, pipeline visibility, CRM hygiene" style="min-height:60px;"></textarea>
+        <div class="form-hint">The words your buyers actually type — not your product positioning language.</div>
+      </div>
+
+      <button class="intake-submit" id="intake-submit" onclick="submitIntake(event)">
+        START MY SIGNAL PIPELINE →
+      </button>
+      <div class="intake-error" id="intake-error"></div>
     </div>
 
-    <div class="feat-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
-
-      <div class="feat-card">
-        <div style="width:32px;height:32px;border:1px solid var(--brdH);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <span style="font-family:var(--F);font-size:18px;color:var(--gold);">◈</span>
+    <!-- Confirmation shown after successful intake submit -->
+    <div class="confirm-section" id="confirm-section">
+      <div class="confirm-icon">⚡</div>
+      <div class="ty-kicker">Signal pipeline activated</div>
+      <h2 class="ty-headline">YOU'RE IN THE SYSTEM</h2>
+      <p class="ty-sub">Your Notion workspace is being configured. You'll receive an email within the next few minutes with your access link and instructions for Day 1.</p>
+      <div class="next-steps">
+        <div class="step-card">
+          <div class="step-num">WHAT HAPPENS NEXT</div>
+          <div class="step-title">Workspace provisioned</div>
+          <div class="step-body">Your 6-database Notion workspace is being built from your market data. DAY 1 directive is pre-written for your archetype.</div>
         </div>
-        <div class="kicker">NOTION INTELLIGENCE WORKSPACE</div>
-        <p class="body-text" style="font-size:13px;">Six-database buyer signal system. Pre-populated from your diagnostic result on day one.</p>
-      </div>
-
-      <div class="feat-card">
-        <div style="width:32px;height:32px;border:1px solid var(--brdH);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <span style="font-family:var(--F);font-size:18px;color:var(--gold);">⟐</span>
+        <div class="step-card">
+          <div class="step-num">WITHIN 24 HOURS</div>
+          <div class="step-title">First signals delivered</div>
+          <div class="step-body">Your retrieval engine starts running against your competitors, keywords, and niche. First buying-ready signals appear in your Listening Tracker.</div>
         </div>
-        <div class="kicker">WEEKLY SIGNAL PIPELINE</div>
-        <p class="body-text" style="font-size:13px;">88-source retrieval system surfaces buyer-ready signals every 7 days. No manual research.</p>
-      </div>
-
-      <div class="feat-card">
-        <div style="width:32px;height:32px;border:1px solid var(--brdH);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <span style="font-family:var(--F);font-size:18px;color:var(--gold);">◎</span>
+        <div class="step-card">
+          <div class="step-num">ONGOING</div>
+          <div class="step-title">Weekly intelligence</div>
+          <div class="step-body">New signals surface every week. Your Messaging Builder fills with real buyer language. Your pipeline stops relying on assumption.</div>
         </div>
-        <div class="kicker">ICP CLARITY FOUNDATION</div>
-        <p class="body-text" style="font-size:13px;">Firmographic gate, psychographic resolution, behavioral timing. The four-layer system your diagnostic just scored.</p>
       </div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════════════════════
-     SECTION 5 — GUARANTEE
-══════════════════════════════ -->
-<section style="padding:0 24px 100px;text-align:center;">
-  <div style="max-width:640px;margin:0 auto;border-top:1px solid var(--brd);padding-top:40px;">
-    <span class="mono" style="font-size:10px;color:var(--dim);line-height:1.8;display:block;letter-spacing:.12em;">
-      30-DAY GUARANTEE — 15 DEPLOYABLE, AVATAR-MATCHED SIGNALS SURFACED IN 30 DAYS OR WE REFUND. NO QUESTIONS.
-    </span>
-  </div>
-</section>
+</div>
+</main>
 
+<footer>
+  <div>
+    <div class="ft-brand">SIGNAL RESOLUTION</div>
+    <div class="ft-tag">signalresolution.com</div>
+  </div>
+  <ul class="ft-links">
+    <li><a href="/diagnostic.html">Diagnostic</a></li>
+    <li><a href="/pricing.html">Pricing</a></li>
+    <li><a href="/privacy">Privacy Policy</a></li>
+    <li><a href="/refund">Refund Policy</a></li>
+  </ul>
+  <div class="ft-copy">© 2026 Signal Resolution.<br>All rights reserved.</div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
 <script>
-// Fade in pitch section after 8 seconds
-setTimeout(function() {
-  var pitch = document.getElementById('pitch-section');
-  if (pitch) pitch.style.opacity = '1';
-}, 8000);
-</script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var tier = params.get('tier') || 'tripwire';
+  var sessionId = params.get('session_id') || '';
 
+  var tripwireSection = document.getElementById('tripwire-section');
+  var t1Section = document.getElementById('t1-section');
+
+  if (tier === 't1') {
+    // T1 buyer — hide tripwire section, show intake form
+    tripwireSection.style.display = 'none';
+    t1Section.classList.add('visible');
+  } else {
+    // Tripwire buyer (default) — show report confirmation, fade in pitch after 8s
+    tripwireSection.style.display = 'block';
+    t1Section.style.display = 'none';
+    setTimeout(function () {
+      var pitch = document.getElementById('t1-pitch');
+      if (pitch) pitch.classList.add('visible');
+    }, 8000);
+  }
+
+  // Expose sessionId for the intake form submission
+  window._srSessionId = sessionId;
+})();
+
+async function submitIntake(evt) {
+  evt.preventDefault();
+
+  var btn = document.getElementById('intake-submit');
+  var errEl = document.getElementById('intake-error');
+  var form = document.getElementById('intake-form');
+  var confirm = document.getElementById('confirm-section');
+
+  function showError(msg) {
+    errEl.textContent = msg;
+    errEl.classList.add('visible');
+    btn.disabled = false;
+    btn.textContent = 'START MY SIGNAL PIPELINE →';
+  }
+
+  errEl.classList.remove('visible');
+  btn.disabled = true;
+  btn.textContent = 'Activating your pipeline...';
+
+  var companyName   = document.getElementById('f-company').value.trim();
+  var niche         = document.getElementById('f-niche').value.trim();
+  var productPurpose = document.getElementById('f-product-purpose').value.trim();
+  var targetRole    = document.getElementById('f-target-role').value.trim();
+  var competitorsRaw = document.getElementById('f-competitors').value.trim();
+  var keywordsRaw   = document.getElementById('f-keywords').value.trim();
+
+  if (!companyName || !niche || !productPurpose || !targetRole || !competitorsRaw || !keywordsRaw) {
+    return showError('All fields are required. The system cannot run without them.');
+  }
+
+  var competitors = competitorsRaw.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  var keywords    = keywordsRaw.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+
+  if (competitors.length < 2) {
+    return showError('Please enter at least 2 competitors, comma-separated.');
+  }
+  if (keywords.length < 3) {
+    return showError('Please enter at least 3 keywords, comma-separated.');
+  }
+
+  try {
+    var res = await fetch('https://data009.app.n8n.cloud/webhook/client-intake-v2', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        session_id:      window._srSessionId,
+        company_name:    companyName,
+        email:           '',  // will be filled from clients row by session_id lookup in Trigger B
+        niche:           niche,
+        product_purpose: productPurpose,
+        target_role:     targetRole,
+        competitors:     competitors,
+        keywords:        keywords,
+        tier:            'tier_1',
+        from:            'thank-you-intake'
+      })
+    });
+
+    var data = await res.json();
+
+    if (res.ok && (data.success || data.queued)) {
+      // Hide form, show confirmation
+      form.style.display = 'none';
+      confirm.classList.add('visible');
+    } else {
+      showError(data.error || 'Something went wrong. Please email rome@signalresolution.com directly.');
+    }
+  } catch (err) {
+    showError('Connection error. Please try again or email rome@signalresolution.com.');
+  }
+}
+</script>
 </body>
 </html>

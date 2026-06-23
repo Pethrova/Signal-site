@@ -377,7 +377,7 @@ async function goToCheckoutT1(evt) {
         bottleneck:    t1Params.get('bottleneck') || '',
         email_segment: t1Params.get('emailSegment') || '',
         from:          'pricing_t1',
-        redirect_url:  'https://signalresolution.com/thank-you.html',
+        redirect_url: 'https://signalresolution.com/thank-you.html?tier=t1&session_id=' + encodeURIComponent(t1Params.get('session_id') || ''),
         source_url:    window.location.href
       })
     });

@@ -135,7 +135,7 @@ async function goToCheckout() {
         bottleneck:   bottleneck || '',
         email_segment: params.get('emailSegment') || '',
         from:         'tripwire',
-        redirect_url: 'https://signalresolution.com/thank-you.html',
+        redirect_url: 'https://signalresolution.com/thank-you.html?tier=tripwire&session_id=' + encodeURIComponent(params.get('session_id') || ''),
         source_url:   window.location.href
       })
     });
