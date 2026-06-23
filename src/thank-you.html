@@ -30,8 +30,21 @@
   .form-group{display:grid;gap:8px;}
   .form-label{font-family:var(--M);font-size:9px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;}
   .form-label span{color:var(--ember);}
-  .form-input,.form-textarea{background:var(--sf);border:1px solid var(--brd);color:var(--text);font-family:var(--S);font-size:15px;padding:14px 16px;width:100%;box-sizing:border-box;outline:none;transition:border-color .2s;}
-  .form-input:focus,.form-textarea:focus{border-color:var(--gold);}
+  #t1-section .form-input,
+  #t1-section .form-textarea{
+    display:block;width:100%;box-sizing:border-box;
+    background:#0f0e0c;border:1px solid rgba(255,200,80,0.18);
+    border-radius:0;color:#ede8df;
+    font-family:'Fraunces',serif;font-size:15px;line-height:1.5;
+    padding:14px 16px;outline:none;
+    -webkit-appearance:none;appearance:none;
+    transition:border-color .2s;
+  }
+  #t1-section .form-textarea{min-height:80px;resize:vertical;}
+  #t1-section .form-input:focus,
+  #t1-section .form-textarea:focus{border-color:#f5a623;}
+  #t1-section .form-input::placeholder,
+  #t1-section .form-textarea::placeholder{color:#6e6860;font-style:italic;}
   .form-textarea{min-height:80px;resize:vertical;}
   .form-hint{font-family:var(--M);font-size:9px;color:var(--muted);letter-spacing:.05em;}
   .intake-submit{background:var(--gold);color:#000;font-family:var(--M);font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:18px 32px;border:none;cursor:pointer;width:100%;margin-top:8px;transition:opacity .2s;}
