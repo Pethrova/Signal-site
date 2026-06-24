@@ -1109,22 +1109,20 @@ function handlePathAEbookClaim() {
     diagnosticScore: r.percentage || r.totalScore || 0,
     sessionId: r.sessionId || state.sessionId || ''
   };
-  try {
-    if (navigator.sendBeacon) {
-      var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-      navigator.sendBeacon(ENDPOINTS.pathAEbook, blob);
-    } else {
-      fetch(ENDPOINTS.pathAEbook, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        keepalive: true
-      }).catch(function() {});
-    }
-  } catch(e) {
+  // Standard fetch with keepalive:true so the request survives the
+  // immediate page navigation to godfather.html below.
+  // sendBeacon was removed — it sends body as text/plain regardless
+  // of Blob type, causing n8n to receive an unparseable payload.
+  // mode:'cors' is correct here since we're calling our own endpoint.
+  fetch(ENDPOINTS.pathAEbook, {
+    method: 'POST',
+    mode: 'cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+    keepalive: true
+  }).catch(function(e) {
     console.warn('[path-a-ebook] webhook fire failed', e);
-  }
+  });
   window.location.href = '/godfather.html?archetype='
     + encodeURIComponent(payload.buyerStateLabel)
     + '&bottleneck=' + encodeURIComponent(payload.primaryBottleneckId)
