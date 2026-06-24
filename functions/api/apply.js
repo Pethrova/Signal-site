@@ -44,9 +44,9 @@ export async function onRequestPost(context) {
       // replace the placeholders below. Until verified, every tier
       // safely falls back to list 17 (current confirmed-live list).
       var TIER_LIST_IDS = {
-        1: 17,   // TODO: confirm real T1 application list ID in Brevo
-        2: 17,   // TODO: confirm real T2 application list ID in Brevo
-        3: 17    // TODO: confirm real T3 application list ID in Brevo
+        1: 16,   // T1 onboarding list (confirmed)
+        2: 17,   // T2 application pending (confirmed)
+        3: 17    // T3 application pending — manual review (confirmed)
       };
       var tier = parseInt(body.recTier, 10);
       return [TIER_LIST_IDS[tier] || 17];
@@ -126,7 +126,12 @@ export async function onRequestPost(context) {
 
   return new Response(JSON.stringify({ ok: true }), {
     status: 200,
-    headers: { "Content-Type": "application/json; charset=utf-8" }
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
   });
 }
 
