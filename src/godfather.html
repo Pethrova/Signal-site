@@ -226,6 +226,7 @@
 (function() {
   var params = new URLSearchParams(window.location.search);
   var archetype = (params.get('archetype') || '').toLowerCase().replace(/[-_]/g, ' ').trim();
+  console.log('[godfather] archetype param:', params.get('archetype'), '| normalized:', archetype);
 
   var states = {
     'overwhelmed founder': {
