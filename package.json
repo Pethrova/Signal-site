@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@11ty/eleventy": "^2.0.1",
+    "@neondatabase/serverless": "^1.1.0",
     "luxon": "^3.4.4",
     "markdown-it": "^14.0.0"
   },
