@@ -1,7 +1,7 @@
 export async function onRequestPost(context) {
   const body = await context.request.text();
   const response = await fetch(
-    'https://data009.app.n8n.cloud/webhook/diagnostic-lead-capture',
+    'https://data009.app.n8n.cloud/webhook/diag-lead',
     { method: 'POST', headers: { 'Content-Type': 'application/json' }, body }
   );
   return new Response(await response.text(), {
