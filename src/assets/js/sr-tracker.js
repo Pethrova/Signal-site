@@ -150,12 +150,12 @@
     },
 
     // Called if user exits mid-diagnostic
-    diagnosticAbandoned: function(lastQuestionId, questionsCompleted, totalQuestions) {
+    diagnosticAbandoned: function(sessionId, lastQuestionOrder, entryFrameId, timeElapsed) {
       fire('diagnostic_abandoned', {
-        last_question_id:    lastQuestionId,
-        questions_completed: questionsCompleted,
-        total_questions:     totalQuestions,
-        completion_pct:      Math.round(questionsCompleted / totalQuestions * 100)
+        session_id:          sessionId,
+        last_question_order: lastQuestionOrder,
+        entry_frame_id:      entryFrameId,
+        time_elapsed_ms:     timeElapsed
       });
     },
 

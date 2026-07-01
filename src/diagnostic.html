@@ -384,6 +384,10 @@ async function handleFrameSelect(frameId) {
     });
     var d = data.data || data;
     state.session = d.session;
+    if (window.SRTracker) {
+      SRTracker.setSession(state.session.id);
+      SRTracker.diagnosticStarted(state.session.id, frameId);
+    }
     state.questions = d.questions;
     state.questionAssignments = d.questionAssignments || [];
     state.currentIdx = 0;
@@ -437,6 +441,7 @@ function renderQuestion() {
   var cat = q.category || CAT_LABELS[q.categoryId] || q.categoryId || '';
   var qText = q.question || q.questionText || '';
   var opts = q.options || [];
+  if (window.SRTracker) { SRTracker.questionShown(q.id, state.currentIdx + 1, qText); }
 
   var qCard = document.getElementById('question-card');
   if (!qCard) return;
@@ -487,6 +492,10 @@ function handleAnswer(idx) {
     promptSnapshot: q.question || q.questionText || '',
     metadataSnapshot: q.metadata || {},
   });
+  if (window.SRTracker) {
+    var _aText = typeof q.options[idx] === 'string' ? q.options[idx] : ((q.options[idx] && (q.options[idx].label || q.options[idx].text)) || '');
+    SRTracker.questionAnswered(q.id, state.currentIdx + 1, idx, _aText, 0);
+  }
 
   // Lock options + show maturity labels
   for (var i = 0; i < 4; i++) {
@@ -552,6 +561,9 @@ async function handleNext() {
     });
     var d = data.data || data;
     state.result = d.result || d;
+    if (window.SRTracker) {
+      SRTracker.diagnosticCompleted(state.session.id, state.result.commercialPathwayId || '', Date.now() - state.startTime);
+    }
     var pathway = state.result.commercialPathwayId || '';
     var readiness = state.result.readinessId || '';
     var isPathAComplete = (pathway === 'pathway_nurture_fallback')
@@ -1233,7 +1245,39 @@ init();
   window.dismissRequalBanner = dismissRequalBanner;
   window.startRequalification = startRequalification;
 })();
+
+// ═══════════════════════════════════════
+// PHASE 1 — ABANDONMENT WIRING
+// ═══════════════════════════════════════
+(function() {
+  function isInProgress() {
+    return !!(state.session && !state.result);
+  }
+
+  function fireAbandonment() {
+    if (!isInProgress() || !window.SRTracker) return;
+    SRTracker.diagnosticAbandoned(
+      state.session.id,
+      state.currentIdx + 1,
+      state.frameId || '',
+      state.startTime ? Date.now() - state.startTime : 0
+    );
+  }
+
+  window.addEventListener('beforeunload', fireAbandonment);
+
+  var _inTimer = null;
+  function resetInactivity() {
+    clearTimeout(_inTimer);
+    _inTimer = setTimeout(fireAbandonment, 10 * 60 * 1000);
+  }
+  ['mousedown', 'keydown', 'touchstart', 'scroll'].forEach(function(ev) {
+    document.addEventListener(ev, resetInactivity, { passive: true });
+  });
+  resetInactivity();
+})();
 </script>
+<script src="/assets/js/sr-tracker.js"></script>
 </body>
 </html>
 
