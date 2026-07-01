@@ -233,12 +233,11 @@ function $id(id) {
 // ═══════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════
-const API_BASE = 'https://data009.app.n8n.cloud/webhook';
 const ENDPOINTS = {
-  startSession:    API_BASE + '/diag-start',
-  completeSession: API_BASE + '/diag-complete',
-  leadCapture:     API_BASE + '/diag-lead',
-  pathAEbook:      API_BASE + '/path-a-ebook-delivery',
+  startSession:    '/api/diagnostic/start',
+  completeSession: '/api/diagnostic/complete',
+  leadCapture:     '/api/diagnostic/lead',
+  pathAEbook:      'https://data009.app.n8n.cloud/webhook/path-a-ebook-delivery',
 };
 
 const MATURITY = ['Ad Hoc', 'Emerging', 'Operational', 'Evidence-Led'];
