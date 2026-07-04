@@ -123,3 +123,8 @@ Script edits use exact-string find/replace with strict guards
 (bails on zero or multiple matches) â€” never freehand find/replace
 Whole-file overwrites for substantive rewrites
 One commit per logical push, push to main, Cloudflare auto-deploys
+## Output mode
+- Execution, debugging, and build tasks: invoke caveman mode (full).
+- Any output destined for documentation — handoff docs, DECISIONS.md,
+  GOTCHAS.md, commit context, STATE.md updates — use normal prose.
+  Never write caveman-compressed text into memory or context files.
