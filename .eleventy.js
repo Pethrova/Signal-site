@@ -44,6 +44,11 @@ module.exports = function(eleventyConfig) {
     return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-MM-dd");
   });
 
+  // ISO 8601 date for sitemap <lastmod>
+  eleventyConfig.addFilter("dateToISO", (dateObj) => {
+    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy-MM-dd");
+  });
+
   // Reading time estimate
   eleventyConfig.addFilter("readingTime", (content) => {
     const wordsPerMinute = 220;
