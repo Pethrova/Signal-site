@@ -8,6 +8,7 @@ module.exports = function(eleventyConfig) {
   // These folders go to output as-is (CSS, JS, fonts, images)
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy("src/admin");
+  eleventyConfig.addPassthroughCopy("src/_redirects");
   eleventyConfig.addPassthroughCopy("src/diagnostic.html");
   eleventyConfig.ignores.add("src/diagnostic.html");
   eleventyConfig.addPassthroughCopy("src/thank-you.html");
