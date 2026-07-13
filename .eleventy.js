@@ -29,8 +29,9 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.ignores.add("src/refund.html");
   eleventyConfig.addPassthroughCopy("src/about.html");
   eleventyConfig.ignores.add("src/about.html");
-  eleventyConfig.addPassthroughCopy("src/case-studies");
+  eleventyConfig.addPassthroughCopy("src/case-studies/skeptic-optimizer.html");
   eleventyConfig.ignores.add("src/case-studies/skeptic-optimizer.html");
+  eleventyConfig.addPassthroughCopy("src/case-studies/velocity-victim.html");
   eleventyConfig.ignores.add("src/case-studies/velocity-victim.html");
 
 
