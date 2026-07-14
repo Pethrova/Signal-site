@@ -8,6 +8,11 @@
  * Valid context (any one is sufficient):
  *   - URL param archetype  (from diagnostic result routing)
  *   - URL param recTier    (from diagnostic result routing)
+ *   - URL param tier       (post-purchase, attached by Whop's redirect_url
+ *                           on tripwire.html/pricing.html checkout — see
+ *                           src/thank-you.html)
+ *   - URL param session_id (post-purchase, same Whop redirect_url; also
+ *                           forwarded by diagnostic.html to tripwire.html)
  *   - URL param ref=...    (prefix: tripwire-, case-, email-, nurture-)
  *   - document.referrer is signalresolution.com or localhost
  *
@@ -20,6 +25,8 @@
     var params = new URLSearchParams(window.location.search);
     var hasArchetype = !!params.get('archetype');
     var hasRecTier = !!params.get('recTier');
+    var hasTier = !!params.get('tier');
+    var hasSessionId = !!params.get('session_id');
     var ref = (params.get('ref') || '').trim();
     var validRef = /^(tripwire-|case-|email-|nurture-)/.test(ref);
     var docRef = document.referrer || '';
@@ -28,7 +35,7 @@
       docRef.indexOf('localhost') > -1 ||
       docRef.indexOf('127.0.0.1') > -1;
 
-    var hasContext = hasArchetype || hasRecTier || validRef || internalReferrer;
+    var hasContext = hasArchetype || hasRecTier || hasTier || hasSessionId || validRef || internalReferrer;
 
     if (!hasContext) {
       var from = window.location.pathname
